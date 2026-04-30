@@ -95,6 +95,9 @@ ipch/
 
 /Lib
 Temp/
-/Bin
-/bin
+Bin/
+bin/
 *.cso
+*.pack
+Bin/imgui.ini
+*.ini
