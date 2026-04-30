@@ -87,3 +87,7 @@ ipch/
 *.pidb
 *.svclog
 *.scc
+
+*.vcxproj
+*.filters
+*.sln
