@@ -43,9 +43,9 @@ void GameState::Init(GameStateHandles aStateHandle, InputMapper* aInputMapper, T
 	myStateHandles = aStateHandle;
 	myDebugAnimationPlayer.Init();
 	myTonyFlipbookHandles.tonyFireShotgun = myFlipbookManager.MakeNewFlipbookHandle();
-	myTonyFlipbookHandles.tonyTrailFireShotgun= myFlipbookManager.MakeNewFlipbookHandle();
+	myTonyFlipbookHandles.tonyTrailFireShotgun = myFlipbookManager.MakeNewFlipbookHandle();
 	myTonyFlipbookHandles.tonyFirePowershot = myFlipbookManager.MakeNewFlipbookHandle();
-	myTonyFlipbookHandles.tonyTrailFirePowershot= myFlipbookManager.MakeNewFlipbookHandle();
+	myTonyFlipbookHandles.tonyTrailFirePowershot = myFlipbookManager.MakeNewFlipbookHandle();
 	myTonyFlipbookHandles.tonyFireRevolver = myFlipbookManager.MakeNewFlipbookHandle();
 	myEnvironmentFlipbookHandles.environmentHit = myFlipbookManager.MakeNewFlipbookHandle();
 	myEnvironmentFlipbookHandles.crateHit = myFlipbookManager.MakeNewFlipbookHandle();
@@ -60,7 +60,7 @@ void GameState::Init(GameStateHandles aStateHandle, InputMapper* aInputMapper, T
 	myFlipbookManager.RegisterFlipBook(FlipBookPresets::CRATE_HIT, myEnvironmentFlipbookHandles.crateHit);
 	myFlipbookManager.RegisterFlipBook(FlipBookPresets::METAL_CRATE_HIT, myEnvironmentFlipbookHandles.metalCrateHit);
 	myFlipbookManager.RegisterFlipBook(FlipBookPresets::ENEMY_HIT, myEnvironmentFlipbookHandles.enemyHit);
-	
+
 	myLoopingFlipbookHandles.steamEnvironment = myFlipbookManager.MakeNewFlipbookHandle();
 	myFlipbookManager.RegisterFlipBook(FlipBookPresets::STEAM_ENVIRONMENT, myLoopingFlipbookHandles.steamEnvironment, true);
 
@@ -83,7 +83,7 @@ void GameState::OnPush()
 	myModelDrawer.Init();
 
 	myPlayer.Init(sceneConfig.playerConfig);
-	
+
 	myCamera.MoveToPosition(myPlayer.GetPosition());
 
 	myShotgunMaxClip = sceneConfig.playerConfig.shotgunData.maxClip;
@@ -96,37 +96,37 @@ void GameState::OnPush()
 	myAmbienceManager.Init(&sceneConfig.ambiences);
 
 	LevelTrigger::AudioSequenceData levelTriggerAudioSequenceData{};
-	
+
 	//TODO: match timings with animations and sounds in level transitions 
 	if (sceneConfig.metaConfig.type == SceneLoader::SceneType::Level1)
 	{
-		levelTriggerAudioSequenceData = 
+		levelTriggerAudioSequenceData =
 		{
 			.audioPoolHandle = AudioHandles::elevatorOpen,
 			.bgmFadeStart = 0.1f,
 			.bgmFadeDuration = 4.f,
 			.timeUntilFadeOut = 3.f,
-		};	
-		
+		};
+
 		AudioManager::GetAudioPoolByHandle(AudioHandles::level1Ambience).Play();
 		AudioManager::GetAudioPoolByHandle(AudioHandles::level1Music).Play();
 		myIntroMusicFinished = true;
 	}
 	else if (sceneConfig.metaConfig.type == SceneLoader::SceneType::Level2)
 	{
-		levelTriggerAudioSequenceData = 
+		levelTriggerAudioSequenceData =
 		{
 			.audioPoolHandle = AudioHandles::bossDoorOpening,
 			.bgmFadeStart = 0.1f,
 			.bgmFadeDuration = 4.f,
 			.timeUntilFadeOut = 3.f,
-		};	
-		
+		};
+
 		AudioManager::GetAudioPoolByHandle(AudioHandles::level2Ambience).Play();
 		AudioManager::GetAudioPoolByHandle(AudioHandles::level2IntroMusic).Play();
 		myIntroMusicFinished = false;
 	}
-	
+
 	myLevelTrigger.Init(sceneConfig.levelTriggerConfig, levelTriggerAudioSequenceData);
 
 	myTransitionSequenceTimer = 0.f;
@@ -137,7 +137,7 @@ void GameState::OnPush()
 
 	myFadeInOut.Init(FullscreenImageState::Opaque, "textures/UI/Backgrounds/T_FadeOut.png");
 	myFadeInOut.StartFadeIn(myFadeInTime);
-	
+
 	myAmbienceManager.UpdateVolume(Options::masterVolume, Options::maxVolume);
 	AudioManager::UpdateVolume(Options::masterVolume, Options::musicVolume, Options::maxVolume);
 
@@ -165,7 +165,7 @@ void GameState::OnResolutionChange()
 	myHUD.PositionElements(myShotgunMaxClip, myRevolverMaxClip);
 }
 
-Tga::Matrix4x4f GameState::GetGunTransform(Tga::Vector2f anAimDir, float aSize, float aPivotOffset,  float aYOffset)
+Tga::Matrix4x4f GameState::GetGunTransform(Tga::Vector2f anAimDir, float aSize, float aPivotOffset, float aYOffset)
 {
 	Tga::Vector2f forward{ 1.f, 0.f };
 	float revolverAngleRad = std::atan2f(forward.Cross(anAimDir), forward.Dot(anAimDir));
@@ -175,7 +175,7 @@ Tga::Matrix4x4f GameState::GetGunTransform(Tga::Vector2f anAimDir, float aSize, 
 	const float pivotY = myPlayer.GetShotOrigin().y + aPivotOffset * std::sin(revolverAngleRad);
 
 	Tga::Matrix4x4f S = Tga::Matrix4x4f::CreateFromScale({ aSize, aSize, 1.f });
-	Tga::Matrix4x4f toPivot = Tga::Matrix4x4f::CreateFromTranslation({(aSize * 0.5f), (-aSize * 0.5f) * 0.01f + aYOffset, 0.f});
+	Tga::Matrix4x4f toPivot = Tga::Matrix4x4f::CreateFromTranslation({ (aSize * 0.5f), (-aSize * 0.5f) * 0.01f + aYOffset, 0.f });
 	Tga::Matrix4x4f R = Tga::Matrix4x4f::CreateRotationAroundZ(revolverAngleDeg);
 	Tga::Matrix4x4f T = Tga::Matrix4x4f::CreateFromTranslation({ pivotX, pivotY, 0.f });
 
@@ -185,7 +185,7 @@ Tga::Matrix4x4f GameState::GetGunTransform(Tga::Vector2f anAimDir, float aSize, 
 StateUpdateResult GameState::Update()
 {
 	SceneLoader::SceneConfig& sceneConfig = SceneLoader::GetActiveScene();
-	
+
 	if (!myIntroMusicFinished)
 	{
 		if (!AudioManager::GetAudioPoolByHandle(AudioHandles::level2IntroMusic).IsAudioPlaying())
@@ -194,19 +194,19 @@ StateUpdateResult GameState::Update()
 			myIntroMusicFinished = true;
 		}
 	}
-	
+
 	if (myInputMapper->IsActionJustActivated(GameAction::Pause))
 	{
 		std::cout << "[GameState.cpp] Pause" << '\n';
 		return StateUpdateResult::CreatePush(myStateHandles.pauseState);
 	}
-	
+
 	if (myInputMapper->IsActionJustActivated(GameAction::SkipCutscene))
 	{
 		std::cout << "[GameState.cpp] PopUp" << '\n';
 		return StateUpdateResult::CreatePush(myStateHandles.popUpState);
 	}
-	
+
 	const float deltaTime = myTimer->GetDeltaTime();
 
 	static float cameraFollowDecay = 2.0f;
@@ -239,7 +239,7 @@ StateUpdateResult GameState::Update()
 	myEnemyUpdater.Update(myTimer->GetDeltaTime(), myPlayer.GetPosition());
 	myAmbienceManager.Update(myPlayer.GetPosition());
 	myCrateUpdater.Update(myTimer->GetDeltaTime());
-	
+
 	const SceneLoader::PickupType nextPickupType = myPickupUpdater.Update(myPlayer);
 	PopUp::locNextPopupType = nextPickupType;
 	if (nextPickupType == SceneLoader::PickupType::Revolver && sceneConfig.metaConfig.type == SceneLoader::SceneType::Level1)
@@ -258,86 +258,86 @@ StateUpdateResult GameState::Update()
 	myDebugAnimationPlayer.Update();
 	myCamera.DrawScreenToWorldDebugGizmos(myInputMapper->GetMousePositionYUp());
 #endif
-	std::vector<CrateUpdater::Crate>& crates = myCrateUpdater.GetCrates();
 
-	GameStateUpdate::PlayerGroundCheck(crates, myPlayer, playerUpdateResult, scene.tileConfigs);
+	{ // -----------Collision checks-----------------
+		std::vector<CrateUpdater::Crate>& crates = myCrateUpdater.GetCrates();
+		std::vector<Enemy>& enemies = *myEnemyUpdater.GetEnemies();
+		std::vector<Projectile>* projectiles = myEnemyUpdater.GetProjectiles();
 
-	int iterations = 5;
-	float tickrate = 1 / static_cast<float>(iterations);
-	for (int i = 0; i < iterations; ++i)
-	{
-		GameStateUpdate::PlayerSweep(scene.tileConfigs, crates, myCrateUpdater, myPlayer, playerUpdateResult,
-										 &myFlipbookManager, myEnvironmentFlipbookHandles.metalCrateHit, deltaTime, tickrate);
-	}
+		GameStateUpdate::PlayerGroundCheck(crates, myPlayer, playerUpdateResult, scene.tileConfigs);
 
-	std::vector<Enemy>& enemies = *myEnemyUpdater.GetEnemies();
-
-	//-------------Updating Flipbook Locations-------------//
-	
-	Tga::Vector2f revolverAimDir = myPlayer.GetNormalizedRevolverAim();
-	Tga::Vector2f shotgunAimDir = myPlayer.GetNormalizedShotgunAim();
-		
-	const float myPowerOffset = 224.f;
-	const float myPowerPivotOffset = -200.f;
-	const float myPowerSize = 420.f;
-	
-	const float revolverPivotOffset = -34.f;
-	const float revolverOffset = 100.f;
-	const float revolverSize = 200.f;
-	
-	const float shotgunOffset = 125.f;
-	const float shotgunPivotOffset = -58.f;
-	const float shotgunSize = 230.f;
-	
-	myFlipbookManager.MovePersistent(myTonyFlipbookHandles.tonyFireRevolverInstance, GetGunTransform(revolverAimDir, revolverSize, revolverPivotOffset, revolverOffset));
-	myFlipbookManager.MovePersistent(myTonyFlipbookHandles.tonyFireShotgunInstance,  GetGunTransform(shotgunAimDir, shotgunSize, shotgunPivotOffset, shotgunOffset));
-	myFlipbookManager.MovePersistent(myTonyFlipbookHandles.tonyFirePowerShotInstance, GetGunTransform(shotgunAimDir, myPowerSize, myPowerPivotOffset, myPowerOffset));
-	
-	//-----------------------------------------------------//
-	
-	if (playerUpdateResult.action == PlayerUpdateResult::Action::Revolver && myPlayer.GetIsRevolverEnabled())
-	{
-		myFlipbookManager.PlayPersistent(myTonyFlipbookHandles.tonyFireRevolverInstance, 0.007f);
-		GameStateUpdate::RevolverRaycast(scene.tileConfigs, enemies, crates, myCrateUpdater, myPlayer,
-		                                 &myFlipbookManager, myEnvironmentFlipbookHandles.environmentHit,
-		                                 myEnvironmentFlipbookHandles.crateHit, myEnvironmentFlipbookHandles.metalCrateHit,
-		                                 myEnvironmentFlipbookHandles.enemyHit);
-	}
-	if (playerUpdateResult.action == PlayerUpdateResult::Action::Shotgun || playerUpdateResult.action == PlayerUpdateResult::Action::PowerShot)
-	{
-		
-		Tga::Vector2f forward{ 1.f, 0.f };
-		const float angle = std::atan2f(forward.Cross(shotgunAimDir), forward.Dot(shotgunAimDir));
-		const float trailOffset = 400.f;
-
-		if (playerUpdateResult.action == PlayerUpdateResult::Action::Shotgun)
+		int iterations = 5;
+		float tickrate = 1 / static_cast<float>(iterations);
+		for (int i = 0; i < iterations; ++i)
 		{
-			myFlipbookManager.PlayPersistent(myTonyFlipbookHandles.tonyFireShotgunInstance, 0.007f);
-			myFlipbookManager.PlayAt(myTonyFlipbookHandles.tonyTrailFireShotgun, myPlayer.GetShotgunPosition() + (shotgunAimDir * trailOffset), angle); 
+			GameStateUpdate::PlayerSweep(scene.tileConfigs, crates, myCrateUpdater, myPlayer, playerUpdateResult,
+				&myFlipbookManager, myEnvironmentFlipbookHandles.metalCrateHit, deltaTime, tickrate);
 		}
-		else
+
+		if (playerUpdateResult.action == PlayerUpdateResult::Action::Revolver && myPlayer.GetIsRevolverEnabled())
 		{
-			myFlipbookManager.PlayPersistent(myTonyFlipbookHandles.tonyFirePowerShotInstance, 0.007f); 
-			myFlipbookManager.PlayAt(myTonyFlipbookHandles.tonyTrailFirePowershot, myPlayer.GetShotgunPosition() + (shotgunAimDir * trailOffset), angle); 
+			myFlipbookManager.PlayPersistent(myTonyFlipbookHandles.tonyFireRevolverInstance, 0.007f);
+			GameStateUpdate::RevolverRaycast(scene.tileConfigs, enemies, crates, myCrateUpdater, myPlayer,
+				&myFlipbookManager, myEnvironmentFlipbookHandles.environmentHit,
+				myEnvironmentFlipbookHandles.crateHit, myEnvironmentFlipbookHandles.metalCrateHit,
+				myEnvironmentFlipbookHandles.enemyHit);
 		}
-		
-		GameStateUpdate::ShotgunRaycast(myPlayer, scene.tileConfigs, enemies, crates, myCrateUpdater, &myFlipbookManager,myEnvironmentFlipbookHandles.environmentHit,
-		                                myEnvironmentFlipbookHandles.crateHit, myEnvironmentFlipbookHandles.metalCrateHit, myEnvironmentFlipbookHandles.enemyHit);
-	}
+		if (playerUpdateResult.action == PlayerUpdateResult::Action::Shotgun || playerUpdateResult.action == PlayerUpdateResult::Action::PowerShot)
+		{
+			Tga::Vector2f shotgunAimDir = myPlayer.GetNormalizedShotgunAim();
+			Tga::Vector2f forward{ 1.f, 0.f };
+			const float angle = std::atan2f(forward.Cross(shotgunAimDir), forward.Dot(shotgunAimDir));
+			const float trailOffset = 400.f;
 
-	GameStateUpdate::EnemyCollision(enemies, myPlayer, scene.tileConfigs);
+			if (playerUpdateResult.action == PlayerUpdateResult::Action::Shotgun)
+			{
+				myFlipbookManager.PlayPersistent(myTonyFlipbookHandles.tonyFireShotgunInstance, 0.007f);
+				myFlipbookManager.PlayAt(myTonyFlipbookHandles.tonyTrailFireShotgun, myPlayer.GetShotgunPosition() + (shotgunAimDir * trailOffset), angle);
+			}
+			else
+			{
+				myFlipbookManager.PlayPersistent(myTonyFlipbookHandles.tonyFirePowerShotInstance, 0.007f);
+				myFlipbookManager.PlayAt(myTonyFlipbookHandles.tonyTrailFirePowershot, myPlayer.GetShotgunPosition() + (shotgunAimDir * trailOffset), angle);
+			}
 
-	std::vector<Projectile>* projectiles = myEnemyUpdater.GetProjectiles();
-	for (int i = 0; i < iterations; ++i)
-	{
-		GameStateUpdate::ProjectileCollision(myPlayer, *projectiles, scene.tileConfigs, crates, deltaTime, tickrate,
-		                                     &myFlipbookManager, myEnvironmentFlipbookHandles.environmentHit,
-		                                     myEnvironmentFlipbookHandles.crateHit, myEnvironmentFlipbookHandles.metalCrateHit,
-		                                     myEnvironmentFlipbookHandles.enemyHit);
+			GameStateUpdate::ShotgunRaycast(myPlayer, scene.tileConfigs, enemies, crates, myCrateUpdater, &myFlipbookManager, myEnvironmentFlipbookHandles.environmentHit,
+				myEnvironmentFlipbookHandles.crateHit, myEnvironmentFlipbookHandles.metalCrateHit, myEnvironmentFlipbookHandles.enemyHit);
+		}
+
+		GameStateUpdate::EnemyCollision(enemies, myPlayer, scene.tileConfigs);
+
+		for (int i = 0; i < iterations; ++i)
+		{
+			GameStateUpdate::ProjectileCollision(myPlayer, *projectiles, scene.tileConfigs, crates, deltaTime, tickrate,
+				&myFlipbookManager, myEnvironmentFlipbookHandles.environmentHit,
+				myEnvironmentFlipbookHandles.crateHit, myEnvironmentFlipbookHandles.metalCrateHit,
+				myEnvironmentFlipbookHandles.enemyHit);
+		}
 	}
 
 	myPlayer.LateUpdate(deltaTime);
-	
+
+	{ //-------------Updating Flipbook Locations-------------//
+		Tga::Vector2f revolverAimDir = myPlayer.GetNormalizedRevolverAim();
+		Tga::Vector2f shotgunAimDir = myPlayer.GetNormalizedShotgunAim();
+
+		const float myPowerOffset = 224.f;
+		const float myPowerPivotOffset = -200.f;
+		const float myPowerSize = 420.f;
+
+		const float revolverPivotOffset = -34.f;
+		const float revolverOffset = 100.f;
+		const float revolverSize = 200.f;
+
+		const float shotgunOffset = 125.f;
+		const float shotgunPivotOffset = -58.f;
+		const float shotgunSize = 230.f;
+
+		myFlipbookManager.MovePersistent(myTonyFlipbookHandles.tonyFireRevolverInstance, GetGunTransform(revolverAimDir, revolverSize, revolverPivotOffset, revolverOffset));
+		myFlipbookManager.MovePersistent(myTonyFlipbookHandles.tonyFireShotgunInstance, GetGunTransform(shotgunAimDir, shotgunSize, shotgunPivotOffset, shotgunOffset));
+		myFlipbookManager.MovePersistent(myTonyFlipbookHandles.tonyFirePowerShotInstance, GetGunTransform(shotgunAimDir, myPowerSize, myPowerPivotOffset, myPowerOffset));
+	} //-----------------------------------------------------//
+
 	myLevelTrigger.UpdateAnimation(deltaTime);
 
 	if (GameStateUpdate::PlayerLevelTriggerCheck(myPlayer, myLevelTrigger))
@@ -348,10 +348,10 @@ StateUpdateResult GameState::Update()
 	if (!myLevelTrigger.GetActive())
 	{
 		if (myLevelTrigger.DelayTimerFinished())
-		{	
+		{
 			UpdateTransitionSequence(scene.metaConfig.type);
 			myTransitionSequenceTimer += deltaTime;
-			
+
 			if (TransitionSequenceFinished())
 			{
 				if (myFadeInOut.GetState() == FullscreenImageAnimationState::Stopped && myFadeInOut.GetAlpha() < 1.f)
@@ -361,7 +361,7 @@ StateUpdateResult GameState::Update()
 
 				if (myFadeInOut.GetAlpha() >= 1.f)
 				{
-					
+
 					if (sceneConfig.metaConfig.type == SceneLoader::SceneType::Level1)
 					{
 						AudioManager::GetAudioPoolByHandle(AudioHandles::level1Ambience).Stop();
@@ -372,7 +372,7 @@ StateUpdateResult GameState::Update()
 						AudioManager::GetAudioPoolByHandle(AudioHandles::level2Ambience).Stop();
 						AudioManager::GetAudioPoolByHandle(AudioHandles::level2Music).Stop();
 					}
-					
+
 					sceneConfig = SceneLoader::LoadSceneByPath(myLevelTrigger.GetPath().GetString()); // Waiting for GameWorld Init before uncomment
 					if (sceneConfig.metaConfig.type == SceneLoader::SceneType::BossScene)
 					{
@@ -390,7 +390,6 @@ StateUpdateResult GameState::Update()
 			myLevelTrigger.UpdateDelayTimer(deltaTime);
 		}
 	}
-
 	if (myFadeInOut.GetState() != FullscreenImageAnimationState::Stopped && myFrameCount != 0)
 	{
 		myFadeInOut.Update(deltaTime);
@@ -400,75 +399,55 @@ StateUpdateResult GameState::Update()
 		myFrameCount++;
 	}
 
-	//Next Cutscene needs to be loaded
-
 	myFlipbookManager.Update(deltaTime);
-	
-// 	myHUD.UpdateAimLine(
-// {
-// 			.type = AimLineType::First,
-// 			.aimOrigin = myPlayer.GetShotOrigin(),
-// 			.aimDirection = myPlayer.GetNormalizedShotgunAim(),
-// 			.tiles = scene.tileConfigs,
-// 			.enemies = enemies,
-// 			.crates = crates,
-// 		}
-// 	);
-// 	if (Options::enableDualStick && !myInputMapper->GetIsUsingMouse() && myPlayer.GetIsRevolverEnabled())
-// 	{
-// 		myHUD.UpdateAimLine(
-// 	{
-// 				.type = AimLineType::Second,
-// 				.aimOrigin = myPlayer.GetShotOrigin(),
-// 				.aimDirection = myPlayer.GetNormalizedRevolverAim(),
-// 				.tiles = scene.tileConfigs,
-// 				.enemies = enemies,
-// 				.crates = crates,
-// 			}	
-// 		);	
-// 	}
-	
-	if (Options::enableDualStick && !myInputMapper->GetIsUsingMouse())
-	{
-		if (myPlayer.GetIsRevolverEnabled())
+
+	{ //---------------- HUD Aim line-------------------------
+
+		std::vector<CrateUpdater::Crate>& crates = myCrateUpdater.GetCrates();
+		std::vector<Enemy>& enemies = *myEnemyUpdater.GetEnemies();
+
+		if (Options::enableDualStick && !myInputMapper->GetIsUsingMouse())
 		{
-			myHUD.UpdateAimLine(
-		{
-					.type = AimLineType::Second,
-					.aimOrigin = myPlayer.GetShotOrigin(),
-					.aimDirection = myPlayer.GetNormalizedRevolverAim(),
-					.tiles = scene.tileConfigs,
-					.enemies = enemies,
-					.crates = crates,
-				}	
-			);	
+			if (myPlayer.GetIsRevolverEnabled())
+			{
+				myHUD.UpdateAimLine(
+					{
+								.type = AimLineType::Second,
+								.aimOrigin = myPlayer.GetShotOrigin(),
+								.aimDirection = myPlayer.GetNormalizedRevolverAim(),
+								.tiles = scene.tileConfigs,
+								.enemies = enemies,
+								.crates = crates,
+					}
+					);
+			}
+			else
+			{
+				myHUD.UpdateAimLine(
+					{
+						.type = AimLineType::First,
+						.aimOrigin = myPlayer.GetShotOrigin(),
+						.aimDirection = myPlayer.GetNormalizedShotgunAim(),
+						.tiles = scene.tileConfigs,
+						.enemies = enemies,
+						.crates = crates,
+					}
+					);
+			}
 		}
 		else
 		{
 			myHUD.UpdateAimLine(
 				{
-					.type = AimLineType::First,
-					.aimOrigin = myPlayer.GetShotOrigin(),
-					.aimDirection = myPlayer.GetNormalizedShotgunAim(),
-					.tiles = scene.tileConfigs,
-					.enemies = enemies,
-					.crates = crates,
+						.type = AimLineType::First,
+						.aimOrigin = myPlayer.GetShotOrigin(),
+						.aimDirection = myPlayer.GetNormalizedShotgunAim(),
+						.tiles = scene.tileConfigs,
+						.enemies = enemies,
+						.crates = crates,
 				}
-			);
+				);
 		}
-	}
-	else
-	{
-		myHUD.UpdateAimLine(
-		{
-				.type = AimLineType::First,
-				.aimOrigin = myPlayer.GetShotOrigin(),
-				.aimDirection = myPlayer.GetNormalizedShotgunAim(),
-				.tiles = scene.tileConfigs,
-				.enemies = enemies,
-				.crates = crates,
-			}
-		);
 	}
 
 	return StateUpdateResult::CreateContinue();
@@ -560,8 +539,8 @@ void GameState::Render()
 	myHUD.RenderAimline();
 	myFlipbookManager.Render();
 	graphicsStateStack.Pop();
-	
-	
+
+
 	if (myFadeInOut.GetAlpha() > FLT_EPSILON)
 	{
 		myFadeInOut.Render();
@@ -579,15 +558,15 @@ bool GameState::TransitionSequenceFinished() const
 void GameState::UpdateTransitionSequence(SceneLoader::SceneType aSceneType)
 {
 	auto& sequence = myLevelTrigger.GetAudioSequenceData();
-	
-	float percentage =  1.f - (myTransitionSequenceTimer - sequence.bgmFadeStart) / sequence.bgmFadeDuration;
+
+	float percentage = 1.f - (myTransitionSequenceTimer - sequence.bgmFadeStart) / sequence.bgmFadeDuration;
 	percentage = std::clamp(percentage, 0.f, 1.f);
-	
-	const float masterVolume = percentage * static_cast<float>(Options::masterVolume)/static_cast<float>(Options::maxVolume);
-	const float musicVolume = percentage * masterVolume * static_cast<float>(Options::musicVolume)/static_cast<float>(Options::maxVolume);
-	
+
+	const float masterVolume = percentage * static_cast<float>(Options::masterVolume) / static_cast<float>(Options::maxVolume);
+	const float musicVolume = percentage * masterVolume * static_cast<float>(Options::musicVolume) / static_cast<float>(Options::maxVolume);
+
 	if (sequence.bgmFadeStart <= myTransitionSequenceTimer)
-	{	
+	{
 		if (aSceneType == SceneLoader::SceneType::Level1)
 		{
 			AudioManager::GetAudioPoolByHandle(AudioHandles::level1Ambience).SetVolume(masterVolume);
@@ -599,14 +578,14 @@ void GameState::UpdateTransitionSequence(SceneLoader::SceneType aSceneType)
 			AudioManager::GetAudioPoolByHandle(AudioHandles::level2Music).SetVolume(musicVolume);
 		}
 	}
-	
+
 	if (!myLevelTrigger.GetHasSfxPlayed())
 	{
 		myLevelTrigger.SetHasSfxPlayed(true);
 		AudioManager::GetAudioPoolByHandle(sequence.audioPoolHandle).Play();
 		myLevelTrigger.OpenDoor();
 	}
-	
+
 	if (aSceneType == SceneLoader::SceneType::Level1 && !myElevatorDingHasPlayed)
 	{
 		AudioManager::GetAudioPoolByHandle(AudioHandles::elevatorDing).Play();
