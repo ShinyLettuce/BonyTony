@@ -33,7 +33,7 @@
 *.a
 *.lib
 !libfbxsdk.lib
-!avcodex.lib
+!avcodec.lib
 
 # Executables
 *.out
