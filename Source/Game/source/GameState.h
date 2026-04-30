@@ -104,13 +104,7 @@ private:
 	Tga::SpriteSharedData myFadeOutSharedData;
 	Tga::Sprite2DInstanceData myFadeOutInstance;
 
-	/*float myFadeOutTimer = 0.f;*/
-
 	int myFrameCount = 0;
-
-	/*bool myFadeInTimerStarted = false;
-	float myFadeInTimer = 0.f;*/
-
 		
 	float myFadeInTime = 2.f;
 	float myFadeOutTime = 1.f;
@@ -121,12 +115,6 @@ private:
 	
 	bool myIntroMusicFinished = false;
 	bool myElevatorDingHasPlayed = false;
-
-
-	//bool FadeOutTimerFinished() const;
-	//void UpdateFadeOut();
-	//bool FadeInTimerFinished() const;
-	//void UpdateFadeIn();
 	
 	bool TransitionSequenceFinished() const;
 	
