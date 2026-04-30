@@ -99,5 +99,3 @@ Bin/
 bin/
 *.cso
 *.pack
-Bin/imgui.ini
-*.ini
