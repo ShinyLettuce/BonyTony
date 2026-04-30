@@ -31,23 +31,6 @@
 *.lai
 *.la
 *.a
-*.lib
-!libfbxsdk.lib
-!avcodec.lib
-!avdevice.lib
-!avfilter.lib
-!avutil.lib
-!avformat.lib
-!bass.lib
-!swscale.lib
-!swresample.lib
-!postproc.lib
-!portaudio_static_x64.lib
-!freetype_Release_x64.lib
-!freetype_Debug_x64.lib
-
-
-
 
 # Executables
 *.out
@@ -110,6 +93,8 @@ ipch/
 *.res
 *.recipe
 
-*GameMain_Debug.exe
-*GameMain_Release.exe
-*GameMain_Retail.exe
+/Lib
+Temp/
+/Bin
+/bin
+*.cso
