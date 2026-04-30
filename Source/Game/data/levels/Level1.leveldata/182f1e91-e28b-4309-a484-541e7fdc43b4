@@ -1,0 +1,20 @@
+{
+  "name": "Tutorial6_MicroAdjust",
+  "object-definition": "Tutorial6_MicroAdjust",
+  "path": "",
+  "rotation": [
+    -179.99990844726563,
+    1.707546402940352e-06,
+    -179.99990844726563
+  ],
+  "scale": [
+    2.0,
+    2.0,
+    2.0
+  ],
+  "translation": [
+    407.4227294921875,
+    11527.6279296875,
+    17.78407096862793
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "TileFull_Level1(2465)",
+  "object-definition": "TileFull_Level1",
+  "path": "FrontTilesArea3",
+  "rotation": [
+    4.071102992480452e-13,
+    1.4463463289190955e-27,
+    -4.071102992480452e-13
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -350.0,
+    13000.0,
+    1.52587890625e-05
+  ]
+}

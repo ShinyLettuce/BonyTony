@@ -1,0 +1,32 @@
+{
+  "name": "Pickup",
+  "object-definition": "Pickup",
+  "path": "",
+  "properties": [
+    {
+      "name": "Is Revolver Pickup",
+      "type": "Bool",
+      "value": false
+    },
+    {
+      "name": "Is Powershot Pickup",
+      "type": "Bool",
+      "value": true
+    }
+  ],
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    0.5400000214576721,
+    0.5400000214576721,
+    0.5400000214576721
+  ],
+  "translation": [
+    153.51202392578125,
+    101.02336883544922,
+    -0.900726318359375
+  ]
+}

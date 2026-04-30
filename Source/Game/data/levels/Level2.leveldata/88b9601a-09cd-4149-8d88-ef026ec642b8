@@ -1,0 +1,20 @@
+{
+  "name": "ChandelierChains(2)",
+  "object-definition": "ChandelierChains",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    0.6698236465454102,
+    1.0
+  ],
+  "translation": [
+    500.0,
+    3184.031494140625,
+    50.0
+  ]
+}

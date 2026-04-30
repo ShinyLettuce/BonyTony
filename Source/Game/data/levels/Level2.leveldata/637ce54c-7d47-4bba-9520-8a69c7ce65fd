@@ -1,0 +1,20 @@
+{
+  "name": "TileFullHighligh_Level2(164)",
+  "object-definition": "TileFullHighligh_Level2",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -250.0,
+    9200.0,
+    0.0
+  ]
+}

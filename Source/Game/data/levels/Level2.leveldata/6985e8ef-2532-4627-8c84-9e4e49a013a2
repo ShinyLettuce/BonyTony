@@ -1,0 +1,20 @@
+{
+  "name": "Crate_Metal(83)",
+  "object-definition": "Crate_Metal",
+  "path": "MetalCratesArea5",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -650.0,
+    26600.0,
+    0.0
+  ]
+}

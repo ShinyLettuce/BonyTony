@@ -1,0 +1,74 @@
+{
+  "name": "LevelEndTrigger",
+  "object-definition": "LevelEndTrigger",
+  "path": "",
+  "properties": [
+    {
+      "name": "Scene To Load",
+      "type": "StringId",
+      "value": "levels/BossRoomScene.tgs"
+    },
+    {
+      "name": "Model",
+      "type": "Model",
+      "value": {
+        "path": "models\\Props\\Animated_Props\\BossDoor\\SK_BossDoor.fbx",
+        "textures": [
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "name": "Open",
+      "type": "Animation Clip",
+      "value": {
+        "clip_path": "models\\Props\\Animated_Props\\BossDoor\\SK_BossDoor_Open.fbx"
+      }
+    },
+    {
+      "name": "Close",
+      "type": "Animation Clip",
+      "value": {
+        "clip_path": "models\\Props\\Animated_Props\\Elevator\\SK_Elevator_Close.fbx"
+      }
+    }
+  ],
+  "rotation": [
+    -179.99989318847656,
+    2.9028273274889216e-05,
+    -179.99989318847656
+  ],
+  "scale": [
+    0.9999991655349731,
+    1.0,
+    0.9999991655349731
+  ],
+  "translation": [
+    600.000244140625,
+    26699.998046875,
+    100.00008392333984
+  ]
+}

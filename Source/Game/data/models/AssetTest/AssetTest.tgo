@@ -1,0 +1,42 @@
+{
+  "parent-object-definition": "",
+  "properties": [
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Mesh",
+      "type": "Model",
+      "value": {
+        "path": "models\\SM_TestProp.fbx",
+        "textures": [
+          [
+            "textures\\T_TestAtlas_c",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    }
+  ]
+}

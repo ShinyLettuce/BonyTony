@@ -1,0 +1,20 @@
+{
+  "name": "Setdressing_Level1_End",
+  "object-definition": "Setdressing_Level1_End",
+  "path": "Background_Setdressing",
+  "rotation": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    0.0,
+    22100.0,
+    750.00048828125
+  ]
+}

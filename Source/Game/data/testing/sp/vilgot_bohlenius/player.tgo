@@ -1,0 +1,54 @@
+{
+  "parent-object-definition": "",
+  "properties": [
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "model",
+      "type": "Model",
+      "value": {
+        "path": "models\\SM_TestProp.fbx",
+        "textures": [
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "position",
+      "type": "Float2",
+      "value": [
+        0.0,
+        0.0
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Borderwall(2)",
+  "object-definition": "Borderwall",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    0.0,
+    2200.0,
+    750.0
+  ]
+}

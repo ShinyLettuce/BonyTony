@@ -1,0 +1,42 @@
+{
+  "name": "Ambience(1)",
+  "object-definition": "Ambience",
+  "path": "",
+  "properties": [
+    {
+      "name": "Path",
+      "type": "StringId",
+      "value": "\"D:\\GameProjects\\P3\\Source\\Game\\data\\Audio\\SFX\\SFX_Burning_Stove.wav\""
+    },
+    {
+      "name": "Volume",
+      "type": "Float",
+      "value": 1.0
+    },
+    {
+      "name": "Max Volume Distance",
+      "type": "Float",
+      "value": 100.0
+    },
+    {
+      "name": "Mute Distance",
+      "type": "Float",
+      "value": 1500.0
+    }
+  ],
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -600.0,
+    700.0,
+    400.0
+  ]
+}

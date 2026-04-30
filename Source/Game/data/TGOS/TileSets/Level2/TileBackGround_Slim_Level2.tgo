@@ -1,0 +1,42 @@
+{
+  "parent-object-definition": "",
+  "properties": [
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Model",
+      "type": "Model",
+      "value": {
+        "path": "models\\PlatformMeshes\\SM_Backblock_Slim_Level2.fbx",
+        "textures": [
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    }
+  ]
+}

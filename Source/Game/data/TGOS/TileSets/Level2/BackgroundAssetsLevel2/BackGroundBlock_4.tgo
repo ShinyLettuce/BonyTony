@@ -1,0 +1,42 @@
+{
+  "parent-object-definition": "",
+  "properties": [
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Model",
+      "type": "Model",
+      "value": {
+        "path": "models\\PlatformMeshes\\BackGround Lvl 2\\SM_BackGround_4_Block_Lvl2.fbx",
+        "textures": [
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    }
+  ]
+}

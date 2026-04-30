@@ -1,0 +1,20 @@
+{
+  "name": "tile(1)",
+  "object-definition": "tile",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -100.0,
+    0.0,
+    0.0
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "parent-object-definition": "",
+  "properties": [
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Aim Line",
+      "type": "Sprite",
+      "value": {
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "size": [
+          100.0,
+          50.0
+        ],
+        "textures": [
+          "textures\\UI\\HUD\\T_AimLine_C.dds",
+          "",
+          "",
+          ""
+        ]
+      }
+    }
+  ]
+}

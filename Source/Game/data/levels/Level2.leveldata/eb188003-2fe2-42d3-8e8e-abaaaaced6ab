@@ -1,0 +1,20 @@
+{
+  "name": "PotPlant3(3)",
+  "object-definition": "PotPlant3",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    855.15234375,
+    8683.158203125,
+    125.54219055175781
+  ]
+}

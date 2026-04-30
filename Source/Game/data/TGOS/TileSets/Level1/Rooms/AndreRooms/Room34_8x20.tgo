@@ -1,0 +1,42 @@
+{
+  "parent-object-definition": "",
+  "properties": [
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Model",
+      "type": "Model",
+      "value": {
+        "path": "models\\Rooms\\Level1\\AndreRooms\\Room34_8x20.fbx",
+        "textures": [
+          [
+            "textures\\T_BonyTony_GradientAtlas_BackGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "textures\\T_BonyTony_GradientAtlas_BackGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    }
+  ]
+}

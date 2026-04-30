@@ -1,0 +1,20 @@
+{
+  "name": "Chandelier_Wheel(7)",
+  "object-definition": "Chandelier_Wheel",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    53.065887451171875,
+    13154.1953125,
+    -19.876174926757813
+  ]
+}

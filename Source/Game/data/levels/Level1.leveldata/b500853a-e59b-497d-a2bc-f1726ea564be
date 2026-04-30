@@ -1,0 +1,20 @@
+{
+  "name": "Setdressing_Level1_BoxGroup1",
+  "object-definition": "Setdressing_Level1_BoxGroup1",
+  "path": "Background_Setdressing",
+  "rotation": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    0.0,
+    11700.0,
+    750.00048828125
+  ]
+}

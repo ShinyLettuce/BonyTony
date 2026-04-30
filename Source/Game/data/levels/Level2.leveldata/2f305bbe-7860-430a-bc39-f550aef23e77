@@ -1,0 +1,20 @@
+{
+  "name": "StatueBoss-A-Foreground",
+  "object-definition": "StatueBoss-A-Foreground",
+  "path": "",
+  "rotation": [
+    0.0,
+    28.25350570678711,
+    0.0
+  ],
+  "scale": [
+    0.9999999403953552,
+    1.0,
+    0.9999999403953552
+  ],
+  "translation": [
+    -933.127197265625,
+    26146.203125,
+    73.49358367919922
+  ]
+}

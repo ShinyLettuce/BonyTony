@@ -1,0 +1,20 @@
+{
+  "name": "ForegroundStick(78)",
+  "object-definition": "ForegroundStick",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.05592558905482292
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    748.350830078125,
+    12826.2734375,
+    -635.4095458984375
+  ]
+}

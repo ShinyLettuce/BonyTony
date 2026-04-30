@@ -1,0 +1,20 @@
+{
+  "name": "LastRooms-A(2)",
+  "object-definition": "LastRooms-A",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    0.0,
+    24400.0,
+    1050.0
+  ]
+}

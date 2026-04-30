@@ -1,0 +1,20 @@
+{
+  "name": "TileFull_Level2(2516)",
+  "object-definition": "TileFull_Level2",
+  "path": "FrontTilesArea4",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -250.0,
+    18300.0,
+    0.0
+  ]
+}

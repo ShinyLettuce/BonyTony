@@ -1,0 +1,20 @@
+{
+  "name": "HotelRoom-D",
+  "object-definition": "HotelRoom-D",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    0.0,
+    18200.0,
+    1400.0
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "parent-object-definition": "",
+  "properties": [
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Break Clip",
+      "type": "Animation Clip",
+      "value": {
+        "clip_path": "models\\BreakableMeshes\\SM_MetallicBoxDestruction_Beta.fbx"
+      }
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Is Metal",
+      "type": "Bool",
+      "value": true
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Model",
+      "type": "Model",
+      "value": {
+        "path": "models\\BreakableMeshes\\SM_MetallicBoxDestruction_Beta.fbx",
+        "textures": [
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    }
+  ]
+}

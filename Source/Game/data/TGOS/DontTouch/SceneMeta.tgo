@@ -1,0 +1,32 @@
+{
+  "parent-object-definition": "",
+  "properties": [
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Is Boss Room",
+      "type": "Bool",
+      "value": false
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Level1",
+      "type": "Bool",
+      "value": false
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Level2",
+      "type": "Bool",
+      "value": false
+    }
+  ]
+}

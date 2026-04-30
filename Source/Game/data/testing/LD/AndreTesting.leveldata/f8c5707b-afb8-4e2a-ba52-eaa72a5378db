@@ -1,0 +1,20 @@
+{
+  "name": "BackgroundPlane1_4x4_Level1(34)",
+  "object-definition": "BackgroundPlane1_4x4_Level1",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    400.0,
+    4200.0,
+    300.0
+  ]
+}

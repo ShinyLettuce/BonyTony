@@ -1,0 +1,20 @@
+{
+  "name": "SideWall(2)",
+  "object-definition": "SideWall",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    1000.0,
+    1200.0,
+    350.0
+  ]
+}

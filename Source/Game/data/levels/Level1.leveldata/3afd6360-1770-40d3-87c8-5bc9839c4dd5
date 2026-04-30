@@ -1,0 +1,20 @@
+{
+  "name": "Setdressing_Level1_Large_Hangout",
+  "object-definition": "Setdressing_Level1_Large_Hangout",
+  "path": "",
+  "rotation": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    0.0,
+    21300.0,
+    750.00048828125
+  ]
+}

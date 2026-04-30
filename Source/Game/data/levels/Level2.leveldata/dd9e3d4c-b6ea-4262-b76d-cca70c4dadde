@@ -1,0 +1,20 @@
+{
+  "name": "TileFull_Level2(2475)",
+  "object-definition": "TileFull_Level2",
+  "path": "FrameTilesArea5",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -1150.0,
+    24100.0,
+    0.0
+  ]
+}

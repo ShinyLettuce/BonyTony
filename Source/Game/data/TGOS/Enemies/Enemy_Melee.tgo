@@ -1,0 +1,133 @@
+{
+  "parent-object-definition": "",
+  "properties": [
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Death Duration",
+      "type": "Float",
+      "value": 2.0
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Death Model",
+      "type": "Model",
+      "value": {
+        "path": "models\\Characters\\EnemyMelee\\SK_EnemyMeleeDeath.fbx",
+        "textures": [
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Melee Knockback",
+      "type": "Float2",
+      "value": [
+        1750.0,
+        1300.0
+      ]
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Model",
+      "type": "Model",
+      "value": {
+        "path": "models\\Characters\\EnemyMelee\\SK_EnemyMelee_R.fbx",
+        "textures": [
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "description": "",
+      "group": "Animation",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Animation Death",
+      "type": "Animation Clip",
+      "value": {
+        "clip_path": "models\\Characters\\EnemyMelee\\SK_EnemyMeleeDeath.fbx"
+      }
+    },
+    {
+      "description": "",
+      "group": "Animation",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Animation Idle",
+      "type": "Animation Clip",
+      "value": {
+        "clip_path": "models\\Characters\\EnemyMelee\\SK_EnemyMelee_R_Idle.fbx"
+      }
+    },
+    {
+      "description": "",
+      "group": "Animation",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Animation Melee",
+      "type": "Animation Clip",
+      "value": {
+        "clip_path": "models\\Characters\\EnemyMelee\\SK_EnemyMelee_R_Batswing.fbx"
+      }
+    }
+  ]
+}

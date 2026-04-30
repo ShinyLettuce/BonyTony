@@ -1,0 +1,42 @@
+{
+  "parent-object-definition": "",
+  "properties": [
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Mesh",
+      "type": "Model",
+      "value": {
+        "path": "testing\\LD\\Ignore\\Faces.fbx",
+        "textures": [
+          [
+            "testing\\LD\\Ignore\\Textures\\1.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "testing\\LD\\Ignore\\Textures\\1.dds",
+            "testing\\LD\\Ignore\\Textures\\1.dds",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    }
+  ]
+}

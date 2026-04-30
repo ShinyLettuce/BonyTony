@@ -1,0 +1,20 @@
+{
+  "name": "TileHalf_Level1(82)",
+  "object-definition": "TileHalf_Level1",
+  "path": "FrontTilesArea2",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -350.0,
+    9350.0,
+    0.0
+  ]
+}

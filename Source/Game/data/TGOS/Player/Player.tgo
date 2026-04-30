@@ -1,0 +1,422 @@
+{
+  "parent-object-definition": "",
+  "properties": [
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Model",
+      "type": "Model",
+      "value": {
+        "path": "models\\Characters\\SK_PlayerCharacter.fbx",
+        "textures": [
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Revolver Model",
+      "type": "Model",
+      "value": {
+        "path": "models\\Characters\\SM_Revolver.fbx",
+        "textures": [
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Shotgun Model",
+      "type": "Model",
+      "value": {
+        "path": "models\\Characters\\SM_Shotgun.fbx",
+        "textures": [
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "description": "",
+      "group": "Bullet Time",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Bullet Time Lerp From Speed",
+      "type": "Float",
+      "value": 10.0
+    },
+    {
+      "description": "",
+      "group": "Bullet Time",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Bullet Time Lerp To Speed",
+      "type": "Float",
+      "value": 10.0
+    },
+    {
+      "description": "",
+      "group": "Bullet Time",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Bullet Time Time In Bullet Time",
+      "type": "Float",
+      "value": 1.0
+    },
+    {
+      "description": "",
+      "group": "Bullet Time",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Bullet Time Timescale",
+      "type": "Float",
+      "value": 0.4000000059604645
+    },
+    {
+      "description": "",
+      "group": "Camera",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "CameraDepth",
+      "type": "Float",
+      "value": 1300.0
+    },
+    {
+      "description": "",
+      "group": "Camera",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "CameraFov",
+      "type": "Float",
+      "value": 90.0
+    },
+    {
+      "description": "",
+      "group": "Camera",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "CameraHeight",
+      "type": "Float",
+      "value": 200.0
+    },
+    {
+      "description": "",
+      "group": "Player",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Air Friction",
+      "type": "Float",
+      "value": 2.5
+    },
+    {
+      "description": "",
+      "group": "Player",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Arm Pivot Height",
+      "type": "Float",
+      "value": 55.0
+    },
+    {
+      "description": "",
+      "group": "Player",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Grounded Friction",
+      "type": "Float",
+      "value": 9.800000190734863
+    },
+    {
+      "description": "",
+      "group": "Player",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Grounded Gravity",
+      "type": "Float",
+      "value": 0.0
+    },
+    {
+      "description": "",
+      "group": "Player",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Stun Duration",
+      "type": "Float",
+      "value": 2.0
+    },
+    {
+      "description": "",
+      "group": "Power Shot",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Power Shot Duration",
+      "type": "Float",
+      "value": 0.4000000059604645
+    },
+    {
+      "description": "",
+      "group": "Power Shot",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Power Shot Fall Time",
+      "type": "Float",
+      "value": 0.44999998807907104
+    },
+    {
+      "description": "",
+      "group": "Power Shot",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Power Shot Gravity",
+      "type": "Float",
+      "value": 2.5
+    },
+    {
+      "description": "",
+      "group": "Power Shot",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Power Shot Knockback Distance",
+      "type": "Float",
+      "value": 800.0
+    },
+    {
+      "description": "",
+      "group": "Power Shot",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Power Shot Knockback Duration",
+      "type": "Float",
+      "value": 0.5
+    },
+    {
+      "description": "",
+      "group": "Revolver",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Revolver Clip",
+      "type": "Int",
+      "value": 5
+    },
+    {
+      "description": "",
+      "group": "Revolver",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Revolver Cooldown",
+      "type": "Float",
+      "value": 0.20000000298023224
+    },
+    {
+      "description": "",
+      "group": "Revolver",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Revolver Fall Time",
+      "type": "Float",
+      "value": 0.09000000357627869
+    },
+    {
+      "description": "",
+      "group": "Revolver",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Revolver Gravity",
+      "type": "Float",
+      "value": 2.0
+    },
+    {
+      "description": "",
+      "group": "Revolver",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Revolver Knockback Distance",
+      "type": "Float",
+      "value": 30.0
+    },
+    {
+      "description": "",
+      "group": "Revolver",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Revolver Knockback Duration",
+      "type": "Float",
+      "value": 0.10000000149011612
+    },
+    {
+      "description": "",
+      "group": "Revolver",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Revolver Range",
+      "type": "Float",
+      "value": 2000.0
+    },
+    {
+      "description": "",
+      "group": "Shotgun",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Shotgun Bullet Amount",
+      "type": "Int",
+      "value": 7
+    },
+    {
+      "description": "",
+      "group": "Shotgun",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Shotgun Bullet Spread Angle",
+      "type": "Float",
+      "value": 0.7799999713897705
+    },
+    {
+      "description": "",
+      "group": "Shotgun",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Shotgun Clip",
+      "type": "Int",
+      "value": 2
+    },
+    {
+      "description": "",
+      "group": "Shotgun",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Shotgun Cooldown",
+      "type": "Float",
+      "value": 0.05000000074505806
+    },
+    {
+      "description": "",
+      "group": "Shotgun",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Shotgun Fall Time",
+      "type": "Float",
+      "value": 0.30000001192092896
+    },
+    {
+      "description": "",
+      "group": "Shotgun",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Shotgun Gravity",
+      "type": "Float",
+      "value": 2.0
+    },
+    {
+      "description": "",
+      "group": "Shotgun",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Shotgun Hangtime",
+      "type": "Float",
+      "value": 0.17499999701976776
+    },
+    {
+      "description": "",
+      "group": "Shotgun",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Shotgun Knockback Distance",
+      "type": "Float",
+      "value": 390.0
+    },
+    {
+      "description": "",
+      "group": "Shotgun",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Shotgun Knockback Duration",
+      "type": "Float",
+      "value": 0.4000000059604645
+    },
+    {
+      "description": "",
+      "group": "Shotgun",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Shotgun Range",
+      "type": "Float",
+      "value": 650.0
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "BackGroundBlock_4(77)",
+  "object-definition": "BackGroundBlock_4",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    1150.0,
+    15300.0,
+    0.0
+  ]
+}

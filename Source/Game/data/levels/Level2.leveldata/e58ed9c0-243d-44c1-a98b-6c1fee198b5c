@@ -1,0 +1,27 @@
+{
+  "name": "Pickup",
+  "object-definition": "Pickup",
+  "path": "",
+  "properties": [
+    {
+      "name": "Is Powershot Pickup",
+      "type": "Bool",
+      "value": true
+    }
+  ],
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    368.8499755859375,
+    6447.29296875,
+    74.642578125
+  ]
+}

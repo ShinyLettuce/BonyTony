@@ -1,0 +1,85 @@
+{
+  "parent-object-definition": "",
+  "properties": [
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Close",
+      "type": "Animation Clip",
+      "value": {
+        "clip_path": ""
+      }
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Model",
+      "type": "Model",
+      "value": {
+        "path": "models\\Props\\SM_ElevatorDecoClosed.fbx",
+        "textures": [
+          [
+            "textures\\T_BonyTony_GradientAtlas_BackGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Open",
+      "type": "Animation Clip",
+      "value": {
+        "clip_path": ""
+      }
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Scene To Load",
+      "type": "StringId",
+      "value": "levels/Level2.tgs"
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Size",
+      "type": "Float2",
+      "value": [
+        200.0,
+        200.0
+      ]
+    }
+  ]
+}

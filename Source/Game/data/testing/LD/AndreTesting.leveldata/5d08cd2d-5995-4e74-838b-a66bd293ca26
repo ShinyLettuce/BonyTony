@@ -1,0 +1,20 @@
+{
+  "name": "Sidewall_Level1(6)",
+  "object-definition": "Sidewall_Level1",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    0.6466859579086304,
+    1.0
+  ],
+  "translation": [
+    -600.0,
+    2450.0,
+    750.0
+  ]
+}

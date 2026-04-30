@@ -1,0 +1,20 @@
+{
+  "name": "TileBackground_Level1(27)",
+  "object-definition": "TileBackground_Level1",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    250.0,
+    1200.0,
+    200.0
+  ]
+}

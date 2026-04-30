@@ -1,0 +1,20 @@
+{
+  "name": "ChandelierRoom(1)",
+  "object-definition": "ChandelierRoom",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    0.0,
+    3500.0,
+    1350.0
+  ]
+}

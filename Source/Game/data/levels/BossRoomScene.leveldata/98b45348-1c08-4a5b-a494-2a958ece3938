@@ -1,0 +1,20 @@
+{
+  "name": "Bossroom",
+  "object-definition": "Bossroom",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -49.99993896484375,
+    500.0,
+    1250.0
+  ]
+}

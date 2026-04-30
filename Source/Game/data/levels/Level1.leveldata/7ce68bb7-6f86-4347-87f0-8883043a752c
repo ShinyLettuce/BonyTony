@@ -1,0 +1,20 @@
+{
+  "name": "Setdressing_Level1_Pipes_and_Doors",
+  "object-definition": "Setdressing_Level1_Pipes_and_Doors",
+  "path": "Background_Setdressing",
+  "rotation": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    0.0,
+    16500.0,
+    750.00048828125
+  ]
+}

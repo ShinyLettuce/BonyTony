@@ -1,0 +1,20 @@
+{
+  "name": "Enemy_Melee(28)",
+  "object-definition": "Enemy_Melee",
+  "path": "MeleeEnemiesArea5",
+  "rotation": [
+    0.0,
+    -5.008955668017734e-06,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -550.00048828125,
+    20199.998046875,
+    -0.0004752419772557914
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Setdressing_Level1_Wine_and_Boxes",
+  "object-definition": "Setdressing_Level1_Wine_and_Boxes",
+  "path": "Background_Setdressing",
+  "rotation": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    0.0,
+    12500.0,
+    750.00048828125
+  ]
+}

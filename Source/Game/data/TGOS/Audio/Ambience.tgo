@@ -1,0 +1,41 @@
+{
+  "parent-object-definition": "",
+  "properties": [
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Max Volume Distance",
+      "type": "Float",
+      "value": 0.0
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Mute Distance",
+      "type": "Float",
+      "value": 0.0
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Path",
+      "type": "StringId",
+      "value": ""
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Volume",
+      "type": "Float",
+      "value": 0.0
+    }
+  ]
+}

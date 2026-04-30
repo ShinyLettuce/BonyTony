@@ -1,0 +1,20 @@
+{
+  "name": "SideTableLamps(2)",
+  "object-definition": "SideTableLamps",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    346.08270263671875,
+    26703.244140625,
+    108.68331909179688
+  ]
+}

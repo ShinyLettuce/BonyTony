@@ -1,0 +1,20 @@
+{
+  "name": "Setdressing_Level1_Boxes_and_Gunes(1)",
+  "object-definition": "Setdressing_Level1_Boxes_and_Gunes",
+  "path": "Background_Setdressing",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    0.0,
+    15100.0,
+    750.00048828125
+  ]
+}

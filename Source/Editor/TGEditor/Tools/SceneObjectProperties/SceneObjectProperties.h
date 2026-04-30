@@ -1,0 +1,26 @@
+#pragma once
+
+#include <Tools/ToolsInterface.h>
+#include "Commands/TransformCommand.h"
+
+#include <memory>
+#include <vector>
+
+namespace Tga
+{
+	class Scene;
+	struct Transform;
+	class TransformCommand;
+
+	class SceneObjectProperties
+	{
+	public:
+		SceneObjectProperties() = default;
+		~SceneObjectProperties() = default;
+
+		void Draw();
+
+	private:
+		TransformCommand myTransformCommand;
+	};
+}

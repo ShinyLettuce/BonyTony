@@ -1,0 +1,20 @@
+{
+  "name": "LuggageCart",
+  "object-definition": "LuggageCart",
+  "path": "",
+  "rotation": [
+    0.0,
+    48.15251159667969,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -566.7150268554688,
+    100.0,
+    474.4923400878906
+  ]
+}

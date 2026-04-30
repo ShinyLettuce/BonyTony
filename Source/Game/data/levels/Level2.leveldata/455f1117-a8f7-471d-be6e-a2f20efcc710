@@ -1,0 +1,20 @@
+{
+  "name": "TileSlim_Level2(99)",
+  "object-definition": "TileSlim_Level2",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    7.951379914331079e-16
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -1200.010498046875,
+    22522.58984375,
+    29.78400421142578
+  ]
+}

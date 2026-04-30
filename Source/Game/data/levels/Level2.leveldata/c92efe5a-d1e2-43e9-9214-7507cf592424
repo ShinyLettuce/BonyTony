@@ -1,0 +1,20 @@
+{
+  "name": "CornerPieceL(24)",
+  "object-definition": "CornerPieceL",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -950.0,
+    3300.0,
+    0.0
+  ]
+}

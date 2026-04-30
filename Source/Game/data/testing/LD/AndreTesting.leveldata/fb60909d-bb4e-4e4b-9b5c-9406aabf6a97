@@ -1,0 +1,20 @@
+{
+  "name": "Crate_Wood(144)",
+  "object-definition": "Crate_Wood",
+  "path": "WoodCratesArea6",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    500.0,
+    25300.0,
+    0.0
+  ]
+}

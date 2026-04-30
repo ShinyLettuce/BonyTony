@@ -1,0 +1,20 @@
+{
+  "name": "Room27_8x20",
+  "object-definition": "Room27_8x20",
+  "path": "Background_Rooms",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    0.0,
+    6100.0,
+    750.0
+  ]
+}

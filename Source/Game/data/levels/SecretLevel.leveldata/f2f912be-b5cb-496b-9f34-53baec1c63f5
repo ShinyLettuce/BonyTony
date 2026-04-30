@@ -1,0 +1,20 @@
+{
+  "name": "Player",
+  "object-definition": "Player",
+  "path": "WoodCratesArea3",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0000004768371582,
+    1.0,
+    1.0000004768371582
+  ],
+  "translation": [
+    650.0,
+    100.0,
+    -6.480143643905478e-10
+  ]
+}

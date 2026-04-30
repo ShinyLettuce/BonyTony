@@ -1,0 +1,42 @@
+{
+  "name": "Ambience",
+  "object-definition": "Ambience",
+  "path": "",
+  "properties": [
+    {
+      "name": "Path",
+      "type": "StringId",
+      "value": "\"D:\\Ella LD25\\P3\\Source\\Game\\data\\Audio\\SFX\\SFX_SlotMachine.wav\""
+    },
+    {
+      "name": "Volume",
+      "type": "Float",
+      "value": 1.0
+    },
+    {
+      "name": "Max Volume Distance",
+      "type": "Float",
+      "value": 200.0
+    },
+    {
+      "name": "Mute Distance",
+      "type": "Float",
+      "value": 500.0
+    }
+  ],
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -820.731201171875,
+    7122.16845703125,
+    45.272491455078125
+  ]
+}

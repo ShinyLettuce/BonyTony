@@ -1,0 +1,20 @@
+{
+  "name": "ChandelierWheelFOREGROUND(5)",
+  "object-definition": "ChandelierWheelFOREGROUND",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    748.7412109375,
+    12426.2734375,
+    -635.4095458984375
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Chandelier_Support",
+  "object-definition": "Chandelier_Support",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    0.71507728099823,
+    1.0
+  ],
+  "translation": [
+    0.0,
+    736.2327880859375,
+    0.0
+  ]
+}

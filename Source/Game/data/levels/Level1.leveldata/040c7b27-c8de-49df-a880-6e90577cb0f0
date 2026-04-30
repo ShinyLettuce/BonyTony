@@ -1,0 +1,20 @@
+{
+  "name": "Room9",
+  "object-definition": "Room9",
+  "path": "Background_Rooms",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    0.0,
+    22100.0,
+    750.0
+  ]
+}

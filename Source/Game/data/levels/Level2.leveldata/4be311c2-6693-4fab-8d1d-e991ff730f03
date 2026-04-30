@@ -1,0 +1,20 @@
+{
+  "name": "CornerPieceR(32)",
+  "object-definition": "CornerPieceR",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    850.0,
+    600.0,
+    0.0
+  ]
+}

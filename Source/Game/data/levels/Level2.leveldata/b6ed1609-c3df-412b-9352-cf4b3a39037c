@@ -1,0 +1,20 @@
+{
+  "name": "TileFullHighligh_Level2(379)",
+  "object-definition": "TileFullHighligh_Level2",
+  "path": "",
+  "rotation": [
+    -3.816663714131634e-14,
+    1.6949388721455687e-29,
+    -9.099639435285397e-21
+  ],
+  "scale": [
+    1.0000003576278687,
+    1.0,
+    1.0000003576278687
+  ],
+  "translation": [
+    350.0000305175781,
+    18300.0,
+    0.0
+  ]
+}

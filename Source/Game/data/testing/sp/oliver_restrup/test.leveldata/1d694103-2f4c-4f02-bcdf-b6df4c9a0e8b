@@ -1,0 +1,42 @@
+{
+  "name": "TestAmbience1",
+  "object-definition": "Ambience",
+  "path": "Ambiences",
+  "properties": [
+    {
+      "name": "Volume",
+      "type": "Float",
+      "value": 1.0
+    },
+    {
+      "name": "Max Volume Distance",
+      "type": "Float",
+      "value": 100.0
+    },
+    {
+      "name": "Mute Distance",
+      "type": "Float",
+      "value": 500.0
+    },
+    {
+      "name": "Path",
+      "type": "StringId",
+      "value": "Audio/test-sfx.mp3"
+    }
+  ],
+  "rotation": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -400.0,
+    200.0,
+    0.0
+  ]
+}

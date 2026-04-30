@@ -1,0 +1,20 @@
+{
+  "name": "Enemy_Ranged(2)",
+  "object-definition": "Enemy_Ranged",
+  "path": "Enemies",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -550.0,
+    2500.0,
+    0.0
+  ]
+}

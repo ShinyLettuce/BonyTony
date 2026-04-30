@@ -1,0 +1,20 @@
+{
+  "name": "Roullette(1)",
+  "object-definition": "Roullette",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    865.9910278320313,
+    14900.236328125,
+    48.1263427734375
+  ]
+}

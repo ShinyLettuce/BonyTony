@@ -1,0 +1,307 @@
+{
+  "parent-object-definition": "",
+  "properties": [
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Aim Speed",
+      "type": "Float",
+      "value": 10.0
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Death Duration",
+      "type": "Float",
+      "value": 2.0
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Death Model",
+      "type": "Model",
+      "value": {
+        "path": "models\\Characters\\EnemyRanged\\SK_EnemyRangedDeath.fbx",
+        "textures": [
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Detection Angle",
+      "type": "Float",
+      "value": 45.0
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Detection Range",
+      "type": "Float",
+      "value": 800.0
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Distance to Fire",
+      "type": "Float",
+      "value": 5.0
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Melee Knockback",
+      "type": "Float2",
+      "value": [
+        1750.0,
+        1300.0
+      ]
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Model",
+      "type": "Model",
+      "value": {
+        "path": "models\\Characters\\EnemyRanged\\SK_EnemyRanged_R.fbx",
+        "textures": [
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "No Hand Model",
+      "type": "Model",
+      "value": {
+        "path": "models\\Characters\\EnemyRanged\\SK_EnemyRanged_NOHAND.fbx",
+        "textures": [
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Projectile Knockback",
+      "type": "Float",
+      "value": 450.0
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Projectile Model",
+      "type": "Model",
+      "value": {
+        "path": "models\\Characters\\SM_ProjectileRevolver.fbx",
+        "textures": [
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Projectile Speed",
+      "type": "Float",
+      "value": 1000.0
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Shot Cooldown",
+      "type": "Float",
+      "value": 0.5
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Weapon Model",
+      "type": "Model",
+      "value": {
+        "path": "models\\Characters\\SM_Revolver.fbx",
+        "textures": [
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "description": "",
+      "group": "Animation",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Animation Death",
+      "type": "Animation Clip",
+      "value": {
+        "clip_path": "models\\Characters\\EnemyRanged\\SK_EnemyRangedDeath.fbx"
+      }
+    },
+    {
+      "description": "",
+      "group": "Animation",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Animation Idle",
+      "type": "Animation Clip",
+      "value": {
+        "clip_path": "models\\Characters\\EnemyRanged\\SK_EnemyRanged_NOHAND_Idle.fbx"
+      }
+    },
+    {
+      "description": "",
+      "group": "Animation",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Animation Melee",
+      "type": "Animation Clip",
+      "value": {
+        "clip_path": "models\\Characters\\EnemyRanged\\SK_EnemyRanged_R_PistolWhip.fbx"
+      }
+    }
+  ]
+}

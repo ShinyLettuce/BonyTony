@@ -1,0 +1,20 @@
+{
+  "name": "TileFull_Level2(57)",
+  "object-definition": "TileFull_Level2",
+  "path": "",
+  "rotation": [
+    0.0,
+    -2.5613198886276223e-06,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    500.0,
+    1000.0,
+    -400.0
+  ]
+}

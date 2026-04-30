@@ -1,0 +1,81 @@
+{
+  "parent-object-definition": "",
+  "properties": [
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Model",
+      "type": "Model",
+      "value": {
+        "path": "models\\Props\\Upgrade_Crates\\SM_Pistol_Upgrade_Crate.fbx",
+        "textures": [
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Size",
+      "type": "Float2",
+      "value": [
+        200.0,
+        200.0
+      ]
+    },
+    {
+      "description": "",
+      "group": "Type",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Is Powershot Pickup",
+      "type": "Bool",
+      "value": false
+    },
+    {
+      "description": "",
+      "group": "Type",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Is Revolver Pickup",
+      "type": "Bool",
+      "value": false
+    },
+    {
+      "description": "",
+      "group": "Type",
+      "is-dynamic": false,
+      "is-per-instance": true,
+      "name": "Is Shotgun Pickup",
+      "type": "Bool",
+      "value": false
+    }
+  ]
+}

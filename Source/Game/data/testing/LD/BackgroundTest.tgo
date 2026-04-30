@@ -1,0 +1,16 @@
+{
+  "parent-object-definition": "",
+  "properties": [
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "background",
+      "type": "Scene",
+      "value": {
+        "scene_path": "testing\\LD\\AndreTesting.tgs"
+      }
+    }
+  ]
+}

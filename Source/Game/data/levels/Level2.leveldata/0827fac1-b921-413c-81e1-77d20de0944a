@@ -1,0 +1,20 @@
+{
+  "name": "Chandelier_5(2)",
+  "object-definition": "Chandelier_5",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    50.0,
+    12200.0,
+    13.3759765625
+  ]
+}

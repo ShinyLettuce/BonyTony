@@ -1,0 +1,20 @@
+{
+  "name": "CasinoRoom-D(2)",
+  "object-definition": "CasinoRoom-D",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    0.0,
+    14600.0,
+    1300.0
+  ]
+}
