@@ -18,9 +18,13 @@ public:
 	void OnGainFocus() override;
 
 private:
+	static const int myImageCount = 3;
+	int myCurrentImage = 0;
+
 	FullscreenImage myTgaLogo;
 	FullscreenImage myAPALogo;
 	FullscreenImage myStudioLogo;
+	FullscreenImage myImageQueue[myImageCount];
 
 	SplashScreenStateHandles myStateHandles;
 
@@ -34,9 +38,7 @@ private:
 	bool hasStartedShowingStudioLogo = false;
 	bool hasShownStudioLogo = false;
 
-	float myTgaLogoTimeShowing = 1.f;
-	float myAPALogoTimeShowing = 1.f;
-	float myStudioLogoTimeShowing = 1.f;
+	float myLogoTimeShowing = 1.f;
 
 	Timer* myTimer;
 };

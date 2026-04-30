@@ -2,118 +2,64 @@
 #include "Go.h"
 #include <tge/engine.h>
 
-void SplashScreenState::Init(SplashScreenStateHandles aStateHandles, Timer* aTimer)
+void SplashScreenState::Init(SplashScreenStateHandles aStateHandles, Timer* aTimer) // TODO: Change this to happen on push
 {
 	myTimer = aTimer;
 	myStateHandles = aStateHandles;
 
-	Tga::Engine::GetInstance()->SetClearColor(Tga::Color{0.f, 0.f, 0.f, 1.f});
+	Tga::Engine::GetInstance()->SetClearColor(Tga::Color{ 0.f, 0.f, 0.f, 1.f });
 	myTgaLogo.Init(FullscreenImageState::Transparent, "textures/UI/Backgrounds/T_TGALogo_C.png");
 	myAPALogo.Init(FullscreenImageState::Transparent, "textures/UI/Backgrounds/T_APALogo_C.png");
 	myStudioLogo.Init(FullscreenImageState::Transparent, "textures/UI/Backgrounds/T_G4Logo_C.png");
-	myTgaLogo.StartFadeOut(1.f);
-}
 
-//void SplashScreenState::OnPush()
-//{
-//	Tga::Engine::GetInstance()->SetClearColor(Tga::Color{0.f, 0.f, 0.f, 1.f});
-//	myTgaLogo.Init(FullscreenImageState::Transparent, "textures/UI/Backgrounds/T_TGALogo_C.png");
-//	myAPALogo.Init(FullscreenImageState::Transparent, "textures/UI/Backgrounds/T_APALogo_C.png");
-//	myTgaLogo.StartFadeOut(3.f);
-//}
+	myImageQueue[0] = myTgaLogo;
+	myImageQueue[1] = myAPALogo;
+	myImageQueue[2] = myStudioLogo;
+
+	myImageQueue[0].StartFadeOut(1.f);
+}
 
 StateUpdateResult SplashScreenState::Update()
 {
 	float deltaTime = myTimer->GetDeltaTime();
 
-
-	if (myTgaLogo.GetState() != FullscreenImageAnimationState::Stopped && !startBufferBool)
-	{
-		myTgaLogo.Update(deltaTime);
-	}
-
 	if (startBufferBool)
 	{
 		startBufferBool = false;
+		return StateUpdateResult::CreateContinue();;
 	}
 
-	if (myTgaLogo.GetAlpha() >= 1.f)
+	if (myImageQueue[myCurrentImage].GetState() != FullscreenImageAnimationState::Stopped)
+	{
+		myImageQueue[myCurrentImage].Update(deltaTime);
+	}
+
+	if (myImageQueue[myCurrentImage].GetAlpha() >= 1.f)
 	{
 		myLogoTimer += deltaTime;
-		if (myLogoTimer >= myTgaLogoTimeShowing)
+		if (myLogoTimer >= myLogoTimeShowing)
 		{
-			myTgaLogo.StartFadeIn(1.f);
-			myLogoTimer = 0.f;
-			hasShownTGALogo = true;
+			myImageQueue[myCurrentImage].StartFadeIn(1.f);
 		}
 	}
-
-	if (hasShownTGALogo && myTgaLogo.GetAlpha() < FLT_EPSILON && !hasStartedShowingAPALogo)
+	if (myImageQueue[myCurrentImage].GetAlpha() < FLT_EPSILON && myLogoTimer > 0.f)
 	{
-		hasStartedShowingAPALogo = true;
-		myAPALogo.StartFadeOut(1.f);
-	}
+		myCurrentImage++;
 
-	if (myAPALogo.GetState() != FullscreenImageAnimationState::Stopped)
-	{
-		myAPALogo.Update(deltaTime);
-	}
-
-	if (myAPALogo.GetAlpha() >= 1.f)
-	{
-		myLogoTimer += deltaTime;
-		if (myLogoTimer >= myAPALogoTimeShowing)
+		if (myCurrentImage == myImageCount)
 		{
-			myAPALogo.StartFadeIn(1.f);
-			myLogoTimer = 0.f;
-			hasShownAPALogo = true;
+			return StateUpdateResult::CreateClearAndPush(myStateHandles.mainMenuState);
 		}
-	}
 
-	if (hasShownAPALogo && myAPALogo.GetAlpha() < FLT_EPSILON && !hasStartedShowingStudioLogo)
-	{
-		hasStartedShowingStudioLogo = true;
-		myStudioLogo.StartFadeOut(1.f);
+		myLogoTimer = 0.f;
+		myImageQueue[myCurrentImage].StartFadeOut(1.f);
 	}
-
-	if (myStudioLogo.GetState() != FullscreenImageAnimationState::Stopped)
-	{
-		myStudioLogo.Update(deltaTime);
-	}
-
-	if (myStudioLogo.GetAlpha() >= 1.f)
-	{
-		myLogoTimer += deltaTime;
-		if (myLogoTimer >= myStudioLogoTimeShowing)
-		{
-			myStudioLogo.StartFadeIn(1.f);
-			myLogoTimer = 0.f;
-			hasShownStudioLogo = true;
-		}
-	}
-
-	if (hasShownTGALogo && hasShownAPALogo  && hasShownStudioLogo && myStudioLogo.GetAlpha() < FLT_EPSILON)
-	{
-		return StateUpdateResult::CreateClearAndPush(myStateHandles.mainMenuState);
-	}
-
 	return StateUpdateResult::CreateContinue();
 }
 
 void SplashScreenState::Render()
 {
-	if (myTgaLogo.GetAlpha() > FLT_EPSILON)
-	{
-		myTgaLogo.Render();
-	}
-	if (myAPALogo.GetAlpha() > FLT_EPSILON)
-	{
-		myAPALogo.Render();
-	}
-	if (myStudioLogo.GetAlpha() > FLT_EPSILON)
-	{
-		myStudioLogo.Render();
-	}
+	myImageQueue[myCurrentImage].Render();
 }
 
 void SplashScreenState::OnGainFocus()
