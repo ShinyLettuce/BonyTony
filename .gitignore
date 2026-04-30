@@ -35,6 +35,14 @@
 !libfbxsdk.lib
 !avcodec.lib
 !avdevice.lib
+!avfilter.lib
+!avutil.lib
+!avformat.lib
+!bass.lib
+!swscale.lib
+!swresample.lib
+!postproc.lib
+!portaudio_static_x64.lib
 
 
 # Executables
