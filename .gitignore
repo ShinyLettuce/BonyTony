@@ -32,6 +32,8 @@
 *.la
 *.a
 *.lib
+!libfbxsdk.lib
+!avcodex.lib
 
 # Executables
 *.out
@@ -91,3 +93,9 @@ ipch/
 *.vcxproj
 *.filters
 *.sln
+*.res
+*.recipe
+
+*GameMain_Debug.exe
+*GameMain_Release.exe
+*GameMain_Retail.exe
