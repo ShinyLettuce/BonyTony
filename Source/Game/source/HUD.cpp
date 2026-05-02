@@ -27,7 +27,8 @@ void HUD::Init(const int aShotgunMaxClip, const int aRevolverMaxClip, float cons
 	myShellData.myTexture = textureManager.GetTexture(UI.shellTexture);              
 	mySpentShellData.myTexture = textureManager.GetTexture(UI.spentShellTexture);    
 	myBulletData.myTexture = textureManager.GetTexture(UI.bulletTexture);            
-	mySpentBulletData.myTexture = textureManager.GetTexture(UI.spentBulletTexture);  
+	mySpentBulletData.myTexture = textureManager.GetTexture(UI.spentBulletTexture); 
+	myVignetteData.myTexture = textureManager.GetTexture(UI.vignetteTexture);
 
 	myShellInstances.resize(aShotgunMaxClip);
 	myBulletInstances.resize(aRevolverMaxClip);
@@ -280,6 +281,22 @@ void HUD::RenderHitPoint(Camera& aCamera)
 	myFirstAimline.shouldRender = false;
 	mySecondAimline.shouldRender = false;
 	Tga::DX11::SetDepthEnabled(true);
+}
+
+void HUD::RenderVignette()
+{
+	Tga::Engine* engine = Tga::Engine::GetInstance();
+	Tga::Vector2ui resolution = engine->GetRenderSize();
+	Tga::Vector2ui size = myVignetteData.myTexture->CalculateTextureSize();
+	Tga::SpriteDrawer& spriteDrawer = engine->GetGraphicsEngine().GetSpriteDrawer();
+
+	Tga::Sprite2DInstanceData vignetteInstance = {
+		.myPosition{0.5f * static_cast<float>(resolution.x), 0.5f * static_cast<float>(resolution.y)},
+		.myPivot{0.5f},
+		.mySize{Tga::Vector2f{static_cast<float>(size.x), static_cast<float>(size.y)}}
+	};
+
+	spriteDrawer.Draw(myVignetteData, vignetteInstance);
 }
 
 void HUD::PositionElements(const int aShotgunMaxClip, const int aRevolverMaxClip)

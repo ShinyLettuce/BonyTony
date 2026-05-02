@@ -531,23 +531,26 @@ void GameState::Render()
 
 	}
 #endif
+	graphicsStateStack.Push();
+	graphicsStateStack.SetBlendState(Tga::BlendState::AlphaBlend);
 
 	myAmbienceManager.RenderDebugVisuals();
-
 	myDebugAnimationPlayer.Render();
-
 	myHUD.RenderAimline();
 	myFlipbookManager.Render();
 	graphicsStateStack.Pop();
 
+	graphicsStateStack.Pop();
+	graphicsStateStack.SetBlendState(Tga::BlendState::AlphaBlend);
 
+	myHUD.RenderVignette();
+	myHUD.RenderClips(myPlayer.GetShotgunClip(), myPlayer.GetIsRevolverEnabled(), myPlayer.GetRevolverClip());
+	myHUD.RenderHitPoint(myCamera);
 	if (myFadeInOut.GetAlpha() > FLT_EPSILON)
 	{
 		myFadeInOut.Render();
 	}
 
-	myHUD.RenderHitPoint(myCamera);
-	myHUD.RenderClips(myPlayer.GetShotgunClip(), myPlayer.GetIsRevolverEnabled(), myPlayer.GetRevolverClip());
 }
 
 bool GameState::TransitionSequenceFinished() const

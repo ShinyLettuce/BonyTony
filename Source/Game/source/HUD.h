@@ -36,6 +36,7 @@ public:
     void RenderClips(const int aShotgunClip, const bool aRevolverReady, const int aRevolverClip) const;
     void RenderAimline();
     void RenderHitPoint(Camera& aCamera);
+    void RenderVignette();
     
     void PositionElements(const int aShotgunMaxClip, const int aRevolverMaxClip);
     
@@ -48,7 +49,8 @@ private:
         const char* shellTexture = "textures/UI/HUD/T_Shell_C.dds";  
         const char* spentShellTexture = "textures/UI/HUD/T_SpentShell_C.dds";  
         const char* bulletTexture = "textures/UI/HUD/T_Bullet_C.dds";  
-        const char* spentBulletTexture = "textures/UI/HUD/T_SpentBullet_C.dds";  
+        const char* spentBulletTexture = "textures/UI/HUD/T_SpentBullet_C.dds";
+        const char* vignetteTexture = "textures/UI/HUD/UltraTemporaryVignette.png";
 
         float shellSizeMultiplier = 1.4f;
         float bulletSizeMultiplier = 1.1f; 
@@ -93,6 +95,7 @@ private:
     Tga::SpriteSharedData myBulletData;
     Tga::SpriteSharedData mySpentShellData;
     Tga::SpriteSharedData mySpentBulletData;
+    Tga::SpriteSharedData myVignetteData;
     
     std::vector<Tga::Sprite2DInstanceData> myShellInstances;
     std::vector<Tga::Sprite2DInstanceData> myBulletInstances;
