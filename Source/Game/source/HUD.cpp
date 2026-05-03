@@ -287,7 +287,7 @@ void HUD::RenderVignette()
 {
 	Tga::Engine* engine = Tga::Engine::GetInstance();
 	Tga::Vector2ui resolution = engine->GetRenderSize();
-	Tga::Vector2ui size = myVignetteData.myTexture->CalculateTextureSize();
+	Tga::Vector2ui size = resolution;
 	Tga::SpriteDrawer& spriteDrawer = engine->GetGraphicsEngine().GetSpriteDrawer();
 
 	Tga::Sprite2DInstanceData vignetteInstance = {
