@@ -1,5 +1,5 @@
 {
-  "name": "TileFull_Level1(63)",
+  "name": "TileFull_Level1(28)",
   "object-definition": "TileFull_Level1",
   "path": "SideTilesArea1",
   "rotation": [
@@ -14,7 +14,7 @@
   ],
   "translation": [
     1050.0,
-    400.0,
-    0.0
+    200.0,
+    -7.62939453125e-06
   ]
 }
