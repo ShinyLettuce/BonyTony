@@ -28,11 +28,6 @@ float MathUtils::Clamp01(float aValue)
     return MathUtils::Min(MathUtils::Max(aValue, 0.0f), 1.0f);
 }
 
-float MathUtils::LerpClamped(float aStart, float aEnd, float aPercent)
-{
-    return (aStart + MathUtils::Clamp01(aPercent) * (aEnd - aStart));
-}
-
 float MathUtils::LerpUnclamped(float aStart, float aEnd, float aPercent)
 {
     return (aStart + aPercent * (aEnd - aStart));

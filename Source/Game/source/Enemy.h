@@ -101,7 +101,6 @@ class Enemy
 		bool myLineOfSight = false;
 		bool myCanRespawn = true;
 
-
 		bool myIsBobbingUp = true;
 		bool myIsAimingRight = true;
 
@@ -116,4 +115,5 @@ class Enemy
 		float myBobbingOffset = 0.0f;
 		float myBobbingMaxOffset = 3.f;
 		float myBobbingSpeed = 12.5f;
+		float myTimeSinceShot = 0.0f;
 };

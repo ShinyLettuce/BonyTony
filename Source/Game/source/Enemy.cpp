@@ -74,6 +74,7 @@ void Enemy::Update(const float aDeltaTime, const Tga::Vector2f aPlayerPosition)
 {
 	myTimeSincePreviousAim += aDeltaTime;
 	myTimer += aDeltaTime;
+	myTimeSinceShot += aDeltaTime;
 	
 	if (myShouldPlayReviveSfx)
 	{
@@ -162,6 +163,8 @@ void Enemy::Update(const float aDeltaTime, const Tga::Vector2f aPlayerPosition)
 				return;
 			}
 
+			myTimeSinceShot = 0.0f;
+
 			myTimer = 0.f;
 			myProjectileCollection->emplace_back(
 				myProjectileModelInstance,
@@ -223,7 +226,7 @@ void Enemy::AnimateWeapon(float aDeltaTime)
 	float revolverRightOffset = myRevolverRightOffset;
 	float revolverDecayFactor = myRevolverDecayFactor;
 	float weaponForwardOffset = myIsAimingRight ? myWeaponForwardOffset : -myWeaponForwardOffset;
-	
+
 	Tga::Matrix4x4f& revolverTransform = myWeaponModelInstance.GetTransform();
 	
 	const Tga::Vector2f pivot = { 0.0f, 50.0f };
@@ -248,7 +251,9 @@ void Enemy::AnimateWeapon(float aDeltaTime)
 
 	myRevolverAngle = MathUtils::Decay(myRevolverAngle, targetAngle, revolverDecayFactor, aDeltaTime);
 
-	const Tga::Vector2f direction = Tga::Vector2f::Lerp(worldUp, myNormalizedAim.GetNormalized(), animationPercent);
+	const Tga::Vector2f aimAndRecoil = MathUtils::LerpClamped(worldUp, myNormalizedAim.GetNormalized(), myTimeSinceShot * 7.0f);
+
+	const Tga::Vector2f direction = Tga::Vector2f::Lerp(worldUp, aimAndRecoil, animationPercent);
 
 	const Tga::Vector3f right = Tga::Vector3f{ direction, 0.0f };
 	Tga::Vector3f up = right.Cross(Tga::Vector3f::Forward);
@@ -256,7 +261,7 @@ void Enemy::AnimateWeapon(float aDeltaTime)
 	const Tga::Quaternionf rotation = Tga::Quaternionf{ right, myRevolverAngle };
 	up = Tga::Quaternionf::RotateVectorByQuaternion(rotation, up);
 
-	const Tga::Vector3f forward = up.Cross(right);
+	const Tga::Vector3f forward = Tga::Vector3f::Forward;
 
 	const Tga::Vector2f revolverOffset = worldRight * (myIsAimingRight ? revolverRightOffset : -revolverRightOffset);
 
@@ -265,7 +270,6 @@ void Enemy::AnimateWeapon(float aDeltaTime)
 	const Tga::Vector2f endPosition = myPosition + pivot + revolverOffset;
 
 	const Tga::Vector2f animationPosition = Tga::Vector2f::Lerp(startPosition, endPosition, animationPercent);
-	
 	
 	if (myBobbingMaxOffset < myBobbingOffset)
 	{
@@ -282,7 +286,7 @@ void Enemy::AnimateWeapon(float aDeltaTime)
 	revolverTransform.SetRight(right);
 	revolverTransform.SetForward(forward);
 	revolverTransform.SetUp(up);
-	revolverTransform.Scale(Tga::Vector3f{ 0.8f, 0.8f, -0.9f });
+	revolverTransform.Scale(Tga::Vector3f{ 1.0f, 1.0f, -1.0f });
 }
 
 void Enemy::PerformMelee()

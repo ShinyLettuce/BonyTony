@@ -10,7 +10,12 @@ namespace MathUtils
     float Clamp(float aValue, float aMin, float aMax);
     float Clamp01(float aValue);
 
-    float LerpClamped(float aStart, float aEnd, float aPercent);
+    template<typename T>
+    T LerpClamped(T aStart, T aEnd, float aPercent)
+    {
+        return (aStart + MathUtils::Clamp01(aPercent) * (aEnd - aStart));
+    }
+
     float LerpUnclamped(float aStart, float aEnd, float aPercent);
 
     float RandFloat(float aMin, float aMax);

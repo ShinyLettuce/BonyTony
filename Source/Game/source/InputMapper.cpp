@@ -481,3 +481,8 @@ Tga::Vector2f InputMapper::GetLeftStickPosition() const
     
     return {x, y};
 }
+
+const Tga::InputManager* InputMapper::GetInputManager() const
+{
+    return myInputManager;
+}

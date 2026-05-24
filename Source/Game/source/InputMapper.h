@@ -127,6 +127,9 @@ public:
     
     Tga::Vector2f GetRightStickPosition() const;
     Tga::Vector2f GetLeftStickPosition() const;
+
+    // Inputs polled through input manager breaks does not work with input map! Only use for debug purposes!
+    const Tga::InputManager* GetInputManager() const;
     
 private:
     static constexpr int STICK_USE_DEADZONE = 20000;

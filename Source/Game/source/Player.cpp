@@ -5,6 +5,7 @@
 #include "tge/drawers/ModelDrawer.h"
 #include "tge/graphics/GraphicsEngine.h"
 #include "tge/drawers/LineDrawer.h"
+#include <tge/input/InputManager.h>
 
 #include <math.h>
 #include "MathUtils.h"
@@ -98,6 +99,56 @@ PlayerUpdateResult Player::Update(const float aDeltaTime, Camera& aCamera)
 	myShotgunWasFiredThisFrame = false;
 	myPowershotWasFiredThisFrame = false;
 	myWasHitByEnemyThisFrame = false;
+
+#if !defined(_RETAIL)
+	static bool godMode = false;
+
+	if (ImGui::Begin("Player"))
+	{
+		ImGui::Separator();
+		ImGui::Checkbox("GodMode", &godMode);
+	}
+	ImGui::End();
+
+	if (myInputMapper->GetInputManager()->IsKeyPressed('G'))
+	{
+		godMode = !godMode;
+	}
+
+	if (godMode)
+	{
+		const float godModeSpeed = 1000.0f;
+
+		Tga::Vector2f velocity = 0.0f;
+
+		if (myInputMapper->GetInputManager()->IsKeyHeld('W'))
+		{
+			velocity.y += godModeSpeed;
+		}
+
+		if (myInputMapper->GetInputManager()->IsKeyHeld('A'))
+		{
+			velocity.x -= godModeSpeed;
+		}
+
+		if (myInputMapper->GetInputManager()->IsKeyHeld('S'))
+		{
+			velocity.y -= godModeSpeed;
+		}
+
+		if (myInputMapper->GetInputManager()->IsKeyHeld('D'))
+		{
+			velocity.x += godModeSpeed;
+		}
+
+		return PlayerUpdateResult
+		{
+			.action = PlayerUpdateResult::Action::None,
+			.position = myPosition,
+			.velocity = velocity
+		};
+	}
+#endif
 
 	// Quick and dirty fix so that the player acts differently in the boss room
 	if (myFreezeShotgunSoThatItOnlyPointsRightAndCantBeMovedWithMouseOrController)
