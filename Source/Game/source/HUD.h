@@ -52,8 +52,8 @@ private:
         const char* spentBulletTexture = "textures/UI/HUD/T_SpentBullet_C.dds";
         const char* vignetteTexture = "textures/UI/HUD/UltraTemporaryVignette.png";
 
-        float shellSizeMultiplier = 1.4f;
-        float bulletSizeMultiplier = 1.1f; 
+        float shellSizeMultiplier = 10.0f;
+        float bulletSizeMultiplier = 10.0f; 
 
         float shellLeftMarginRef = -10.0f;     
         float shellBottomMarginRef = 300.0f;   
