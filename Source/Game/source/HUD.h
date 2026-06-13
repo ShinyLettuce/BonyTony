@@ -52,16 +52,16 @@ private:
         const char* spentBulletTexture = "textures/UI/HUD/T_SpentBullet_C.dds";
         const char* vignetteTexture = "textures/UI/HUD/UltraTemporaryVignette.png";
 
-        float shellSizeMultiplier = 10.0f;
-        float bulletSizeMultiplier = 10.0f; 
+        float shellSizeMultiplier = 1.0f;
+        float bulletSizeMultiplier = 1.0f; 
 
         float shellLeftMarginRef = -10.0f;     
-        float shellBottomMarginRef = 300.0f;   
+        float shellBottomMarginRef = 275.0f;   
         float bulletRightMarginRef = 10.0f;    
         float bulletBottomMarginRef = 250.0f;   
 
         //Spacing in reference units (scaled)  
-        float shellSpacingRef = -70.0f;   
+        float shellSpacingRef = -50.0f;   
         float bulletSpacingRef = -70.0f;  
 
         //Aim line  
