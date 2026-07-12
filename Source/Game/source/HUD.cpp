@@ -156,7 +156,7 @@ void HUD::UpdateAimLine(const AimLineContext& aContext)
 		Tga::Vector2f size = aContext.enemies.at(aimToEnemies.indexToEntityCollidedWith).GetSize();
 		aimline->hitPointInstance.myPosition = { pos.x, pos.y + (size.y * 0.5f) };
 
-		aimline->hitPointInstance.myColor = { 249.f / 255.f, 147.f / 255.f, 157.f / 255.f, 1.f };
+		aimline->hitPointInstance.myColor = { 249.f / 255.f, 145.f / 255.f, 140.f / 255.f, 1.f };
 		aimline->hitPointInstance.mySize = hitTexSize * uiScale * UI.hitPointScaleHighlight; 
 	}
 	else if (distanceToClosestCollision == aimToCrates.pointOfCollisionAlongVelocity && aContext.crates.size() != 0)
@@ -165,7 +165,7 @@ void HUD::UpdateAimLine(const AimLineContext& aContext)
 		Tga::Vector2f size = aContext.crates.at(aimToCrates.indexToEntityCollidedWith).size;
 		aimline->hitPointInstance.myPosition = { pos.x, pos.y + (size.y * 0.5f) };
 
-		aimline->hitPointInstance.myColor = { 0.f, 1.f, 0.f, 1.f };  
+		aimline->hitPointInstance.myColor = { 1.f, 1.f, 1.f, 1.f };  
 		aimline->hitPointInstance.mySize = hitTexSize * uiScale * UI.hitPointScaleHighlight;
 	}
 	else
