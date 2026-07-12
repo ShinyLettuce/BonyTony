@@ -32,6 +32,8 @@ class Player
 		PlayerUpdateResult Update(float aDeltaTime, Camera& aCamera);
 		void LateUpdate(float aDeltaTime);
 		void Render();
+
+		void SetCamera(Camera* aCamera) { myCamera = aCamera; }
 		
 		void OnCollision(const Physics::CollisionResult& aCollisionResult);
 		void StunPlayer(Tga::Vector2f aKnockbackVelocity);
@@ -166,4 +168,6 @@ class Player
 		Gun myShotgun {};
 		Gun myRevolver {};
 		Gun myPowerShot {}; // Based on ShotGun other than physics variables, will drain Shotgun bullets
+
+		Camera* myCamera;
 };

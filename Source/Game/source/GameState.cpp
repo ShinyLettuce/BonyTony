@@ -70,6 +70,7 @@ void GameState::OnPush()
 	myModelDrawer.Init();
 
 	myPlayer.Init(sceneConfig.playerConfig);
+	myPlayer.SetCamera(&myCamera);
 
 	myCamera.MoveToPosition(myPlayer.GetPosition());
 

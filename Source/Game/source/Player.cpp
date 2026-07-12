@@ -692,6 +692,17 @@ void Player::StopVelocityY()
 void Player::SetGrounded(bool aIsGroundedBool)
 {
 	myIsGrounded = aIsGroundedBool;
+
+	if (myIsGrounded)
+	{
+		if (myVelocity.y < 0.0f)
+		{
+			if (myCamera)
+			{
+				myCamera->Shake(3.7f, 6.0f, 0.4f);
+			}
+		}
+	}
 }
 
 void Player::SetPosition(const Tga::Vector2f& aPosition)
