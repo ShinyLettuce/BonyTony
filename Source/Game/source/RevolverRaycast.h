@@ -12,7 +12,5 @@ namespace GameStateUpdate
 {
 	void RevolverRaycast(const std::vector<SceneLoader::TileConfig>& aTiles, std::vector<Enemy>& aEnemies,
 	                     std::vector<CrateUpdater::Crate>& aCrates, CrateUpdater& aCrateUpdater, Player& aPlayer,
-	                     FlipbookManager* aFlipbookManager, FlipbookManager::FlipbookHandle anEnvironmentHit,
-	                     FlipbookManager::FlipbookHandle aCrateHit, FlipbookManager::FlipbookHandle aMetalCrateHit,
-	                     FlipbookManager::FlipbookHandle anEnemyHit);
+	                     FlipbookManager* aFlipbookManager);
 }

@@ -6,9 +6,7 @@ namespace GameStateUpdate
 {
 	void RevolverRaycast(const std::vector<SceneLoader::TileConfig>& aTiles, std::vector<Enemy>& aEnemies,
 	                     std::vector<CrateUpdater::Crate>& aCrates, CrateUpdater& aCrateUpdater, Player& aPlayer,
-	                     FlipbookManager* aFlipbookManager, FlipbookManager::FlipbookHandle anEnvironmentHit,
-	                     FlipbookManager::FlipbookHandle aCrateHit, FlipbookManager::FlipbookHandle aMetalCrateHit,
-	                     FlipbookManager::FlipbookHandle anEnemyHit)
+	                     FlipbookManager* aFlipbookManager)
 	{
 		if (!aPlayer.GetIsRevolverEnabled())
 		{
@@ -106,14 +104,18 @@ namespace GameStateUpdate
 				enemy.Kill();
 				aPlayer.Reload();
 				//myTimer->BulletTime(0.2f, 1.f, 20.f, 30.f);
-				aFlipbookManager->PlayAt(anEnemyHit, Tga::Vector2f{ enemy.GetPosition().x, enemy.GetPosition().y + 50.f }, angle + randomizationAngle * MathUtils::RandFloat(-1, 1));
+				aFlipbookManager->PlayAt(FlipbookHandle::EnemyHit, Tga::Vector2f{ enemy.GetPosition().x, enemy.GetPosition().y + 50.f }, angle + randomizationAngle * MathUtils::RandFloat(-1, 1));
 			}
 			
 		}
 		if (Physics::AreCollisionResultsEqual(revolverClosestCollisionResult, &rayAndTile) && rayAndTile.didCollide)
 		{
 			// We hit a tile
-			aFlipbookManager->PlayAt(anEnvironmentHit, aPlayer.GetShotOrigin() + aimDir * aPlayer.GetRevolverRange() * revolverClosestCollisionResult->pointOfCollisionAlongVelocity, environmentHitAngleOffset + angle + randomizationAngle * MathUtils::RandFloat(-1, 1));
+			aFlipbookManager->PlayAt(
+				FlipbookHandle::EnvironmentHit,
+				aPlayer.GetShotOrigin() + aimDir * aPlayer.GetRevolverRange() * revolverClosestCollisionResult->pointOfCollisionAlongVelocity,
+				environmentHitAngleOffset + angle + randomizationAngle * MathUtils::RandFloat(-1, 1)
+			);
 		}
 		if (Physics::AreCollisionResultsEqual(revolverClosestCollisionResult, &rayAndCrate) && rayAndCrate.didCollide)
 		{
@@ -121,14 +123,21 @@ namespace GameStateUpdate
 			if (!aCrateUpdater.GetCrates()[rayAndCrate.indexToEntityCollidedWith].metal)
 			{
 				aCrateUpdater.DeactivateCrate(rayAndCrate.indexToEntityCollidedWith);
-				aFlipbookManager->PlayAt(aCrateHit, aPlayer.GetShotOrigin() + aimDir * aPlayer.GetRevolverRange() * revolverClosestCollisionResult->pointOfCollisionAlongVelocity, angle + randomizationAngle * MathUtils::RandFloat(-1, 1));
+				aFlipbookManager->PlayAt(
+					FlipbookHandle::CrateHit,
+					aPlayer.GetShotOrigin() + aimDir * aPlayer.GetRevolverRange() * revolverClosestCollisionResult->pointOfCollisionAlongVelocity,
+					angle + randomizationAngle * MathUtils::RandFloat(-1, 1)
+				);
 			}
 			else
 			{
 				AudioManager::GetAudioPoolByHandle(AudioHandles::bulletHittingIronCrate).Play();
-				aFlipbookManager->PlayAt(aMetalCrateHit, aPlayer.GetShotOrigin() + aimDir * aPlayer.GetRevolverRange() * revolverClosestCollisionResult->pointOfCollisionAlongVelocity, angle + randomizationAngle * MathUtils::RandFloat(-1, 1));
+				aFlipbookManager->PlayAt(
+					FlipbookHandle::MetalCrateHit,
+					aPlayer.GetShotOrigin() + aimDir * aPlayer.GetRevolverRange() * revolverClosestCollisionResult->pointOfCollisionAlongVelocity,
+					angle + randomizationAngle * MathUtils::RandFloat(-1, 1)
+				);
 			}
 		}
-		//std::erase_if(aCrates, [](const CrateUpdater::Crate& aCrate) { return aCrate.dead; });
 	}
 }

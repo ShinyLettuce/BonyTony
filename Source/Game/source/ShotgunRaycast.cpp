@@ -6,9 +6,7 @@ namespace GameStateUpdate
 {
 	void ShotgunRaycast(Player& aPlayer, const std::vector<SceneLoader::TileConfig>& aTiles,
 	                    std::vector<Enemy>& aEnemies, std::vector<CrateUpdater::Crate>& aCrates,
-	                    CrateUpdater& aCrateUpdater, FlipbookManager* aFlipbookManager,
-	                    FlipbookManager::FlipbookHandle anEnvironmentHit, FlipbookManager::FlipbookHandle aCrateHit,
-	                    FlipbookManager::FlipbookHandle aMetalCrateHit, FlipbookManager::FlipbookHandle anEnemyHit)
+	                    CrateUpdater& aCrateUpdater, FlipbookManager* aFlipbookManager)
 	{
 		const int numberOfShots = aPlayer.GetShotgunBulletAmount();
 
@@ -126,14 +124,20 @@ namespace GameStateUpdate
 				{
 					enemy.Kill();
 					aPlayer.Reload();
-					aFlipbookManager->PlayAt(anEnemyHit, Tga::Vector2f{ enemy.GetPosition().x, enemy.GetPosition().y + 50.f }, randomizationAngle * MathUtils::RandFloat(-1, 1) + startAngle + deltaAngle * i);
+					aFlipbookManager->PlayAt(
+						FlipbookHandle::EnemyHit,
+						Tga::Vector2f{enemy.GetPosition().x, enemy.GetPosition().y + 50.f},
+						randomizationAngle * MathUtils::RandFloat(-1, 1) + startAngle + deltaAngle * i
+					);
 				}
 			}
 			
 			if (Physics::AreCollisionResultsEqual(revolverClosestCollisionResult, &rayAndTile[i]) && rayAndTile[i].didCollide)
 			{
 				// We hit a tile
-				aFlipbookManager->PlayAt(anEnvironmentHit, aPlayer.GetShotOrigin() + aimDir * aPlayer.GetShotgunRange() * revolverClosestCollisionResult->pointOfCollisionAlongVelocity, environmentHitAngleOffset + randomizationAngle * MathUtils::RandFloat(-1, 1) + startAngle + deltaAngle * i);
+				aFlipbookManager->PlayAt(FlipbookHandle::EnvironmentHit,
+					aPlayer.GetShotOrigin() + aimDir * aPlayer.GetShotgunRange() * revolverClosestCollisionResult->pointOfCollisionAlongVelocity,
+					environmentHitAngleOffset + randomizationAngle * MathUtils::RandFloat(-1, 1) + startAngle + deltaAngle * i);
 			}
 			
 			if (Physics::AreCollisionResultsEqual(revolverClosestCollisionResult, &rayAndCrate[i]) && rayAndCrate[i].didCollide)
@@ -142,7 +146,11 @@ namespace GameStateUpdate
 				if (!aCrateUpdater.GetCrates()[rayAndCrate[i].indexToEntityCollidedWith].metal)
 				{
 					aCrateUpdater.DeactivateCrate(rayAndCrate[i].indexToEntityCollidedWith);
-					aFlipbookManager->PlayAt(aCrateHit, aPlayer.GetShotOrigin() + aimDir * aPlayer.GetShotgunRange() * revolverClosestCollisionResult->pointOfCollisionAlongVelocity, randomizationAngle * MathUtils::RandFloat(-1, 1) + startAngle + deltaAngle * i);
+					aFlipbookManager->PlayAt(
+						FlipbookHandle::CrateHit,
+						aPlayer.GetShotOrigin() + aimDir * aPlayer.GetShotgunRange() * revolverClosestCollisionResult->pointOfCollisionAlongVelocity,
+						randomizationAngle * MathUtils::RandFloat(-1, 1) + startAngle + deltaAngle * i
+					);
 				}
 				else
 				{
@@ -151,7 +159,11 @@ namespace GameStateUpdate
 						AudioManager::GetAudioPoolByHandle(AudioHandles::bulletHittingIronCrate).Play();
 						aCrateUpdater.ShotgunBulletHit();
 					}
-					aFlipbookManager->PlayAt(aMetalCrateHit, aPlayer.GetShotOrigin() + aimDir * aPlayer.GetShotgunRange() * revolverClosestCollisionResult->pointOfCollisionAlongVelocity, randomizationAngle * MathUtils::RandFloat(-1, 1) + startAngle + deltaAngle * i);
+					aFlipbookManager->PlayAt(
+						FlipbookHandle::MetalCrateHit,
+						aPlayer.GetShotOrigin() + aimDir * aPlayer.GetShotgunRange() * revolverClosestCollisionResult->pointOfCollisionAlongVelocity,
+						randomizationAngle * MathUtils::RandFloat(-1, 1) + startAngle + deltaAngle * i
+					);
 				}
 			}
 		}

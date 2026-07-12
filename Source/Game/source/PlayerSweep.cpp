@@ -4,7 +4,7 @@
 
 namespace GameStateUpdate
 {
-	void PlayerSweep(const std::vector<SceneLoader::TileConfig>& aTiles, std::vector<CrateUpdater::Crate>& aCrates, CrateUpdater& aCrateUpdater, Player& aPlayer, PlayerUpdateResult& aPlayerUpdateResult, FlipbookManager* aFlipbookManager, FlipbookManager::FlipbookHandle anMetalCrateHit, const float aDeltaTime, const float aTickRate)
+	void PlayerSweep(const std::vector<SceneLoader::TileConfig>& aTiles, std::vector<CrateUpdater::Crate>& aCrates, CrateUpdater& aCrateUpdater, Player& aPlayer, PlayerUpdateResult& aPlayerUpdateResult, FlipbookManager* aFlipbookManager, const float aDeltaTime, const float aTickRate)
 	{
 		Physics::CollisionResult tileCollisionResult = Physics::SweepAABBCollisionOverContainer<SceneLoader::TileConfig>(
 			Physics::AABB{
@@ -47,10 +47,10 @@ namespace GameStateUpdate
 			const Tga::Vector2f dir = crateCollisionResult.normal;
 			const float angle = std::atan2f(forward.Cross(dir), forward.Dot(dir));
 			const float randomizationAngle = 0.5f;
-			aFlipbookManager->PlayAt(anMetalCrateHit, aPlayerUpdateResult.position + (aPlayerUpdateResult.position - aCrates[collisionResult.indexToEntityCollidedWith].position) * 0.1f , angle + randomizationAngle * MathUtils::RandFloat(-1, 1));
+			aFlipbookManager->PlayAt(FlipbookHandle::MetalCrateHit, aPlayerUpdateResult.position + (aPlayerUpdateResult.position - aCrates[collisionResult.indexToEntityCollidedWith].position) * 0.1f , angle + randomizationAngle * MathUtils::RandFloat(-1, 1));
 			aCrateUpdater.DeactivateCrate(collisionResult.indexToEntityCollidedWith);
 
-			PlayerSweep(aTiles, aCrates, aCrateUpdater, aPlayer, aPlayerUpdateResult, aFlipbookManager, anMetalCrateHit, aDeltaTime, aTickRate);
+			PlayerSweep(aTiles, aCrates, aCrateUpdater, aPlayer, aPlayerUpdateResult, aFlipbookManager, aDeltaTime, aTickRate);
 			return;
 		}
 		else if (isTileCloser && tileCollisionResult.didCollide && aPlayer.GetPowerBreakActive())

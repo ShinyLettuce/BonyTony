@@ -7,9 +7,7 @@ namespace GameStateUpdate
 	void ProjectileCollision(Player& aPlayer, std::vector<Projectile>& aProjectiles,
 		const std::vector<SceneLoader::TileConfig>& aTiles,
 		const std::vector<CrateUpdater::Crate>& aCrates, const float aDeltaTime,
-		const float aTickRate, FlipbookManager* aFlipbookManager,
-		FlipbookManager::FlipbookHandle anEnvironmentHit, FlipbookManager::FlipbookHandle aCrateHit,
-		FlipbookManager::FlipbookHandle aMetalCrateHit, FlipbookManager::FlipbookHandle anEnemyHit)
+		const float aTickRate, FlipbookManager* aFlipbookManager)
 	{
 		const float randomizationAngle = 0.5f;
 		const Tga::Vector2f forward{ 1.f, 0.f };
@@ -43,7 +41,7 @@ namespace GameStateUpdate
 				projectile.Hit();
 				const Tga::Vector2f dir = projectileToTiles.normal * -1.f;
 				const float angle = std::atan2f(forward.Cross(dir), forward.Dot(dir));
-				aFlipbookManager->PlayAt(anEnvironmentHit, projectile.GetPosition() + dir * projectile.GetVelocity().Length() * projectileToTiles.pointOfCollisionAlongVelocity, angle + randomizationAngle * MathUtils::RandFloat(-1, 1));
+				aFlipbookManager->PlayAt(FlipbookHandle::EnvironmentHit, projectile.GetPosition() + dir * projectile.GetVelocity().Length() * projectileToTiles.pointOfCollisionAlongVelocity, angle + randomizationAngle * MathUtils::RandFloat(-1, 1));
 			}
 		}
 
@@ -76,12 +74,12 @@ namespace GameStateUpdate
 				if (aCrates.at(projectileToCrates.indexToEntityCollidedWith).metal)
 				{
 					AudioManager::GetAudioPoolByHandle(AudioHandles::bulletHittingIronCrate).Play();
-					aFlipbookManager->PlayAt(aMetalCrateHit, projectile.GetPosition() + dir * projectile.GetVelocity().Length() * projectileToCrates.pointOfCollisionAlongVelocity, angle + randomizationAngle * MathUtils::RandFloat(-1, 1));
+					aFlipbookManager->PlayAt(FlipbookHandle::MetalCrateHit, projectile.GetPosition() + dir * projectile.GetVelocity().Length() * projectileToCrates.pointOfCollisionAlongVelocity, angle + randomizationAngle * MathUtils::RandFloat(-1, 1));
 				}
 				else
 				{
 					AudioManager::GetAudioPoolByHandle(AudioHandles::bulletHittingWallOrFloor).Play();
-					aFlipbookManager->PlayAt(aCrateHit, projectile.GetPosition() + dir * projectile.GetVelocity().Length() * projectileToCrates.pointOfCollisionAlongVelocity, angle + randomizationAngle * MathUtils::RandFloat(-1, 1));
+					aFlipbookManager->PlayAt(FlipbookHandle::CrateHit, projectile.GetPosition() + dir * projectile.GetVelocity().Length() * projectileToCrates.pointOfCollisionAlongVelocity, angle + randomizationAngle * MathUtils::RandFloat(-1, 1));
 				}
 
 				projectile.Hit();
@@ -120,7 +118,11 @@ namespace GameStateUpdate
 				projectile.Hit();
 				const Tga::Vector2f dir = playerToProjectilesCollision.normal * -1.f;
 				const float angle = std::atan2f(forward.Cross(dir), forward.Dot(dir));
-				aFlipbookManager->PlayAt(anEnemyHit, projectile.GetPosition() + dir * projectile.GetVelocity().Length() * playerToProjectilesCollision.pointOfCollisionAlongVelocity, angle + randomizationAngle * MathUtils::RandFloat(-1, 1));
+				aFlipbookManager->PlayAt(
+					FlipbookHandle::EnemyHit,
+					projectile.GetPosition() + dir * projectile.GetVelocity().Length() * playerToProjectilesCollision.pointOfCollisionAlongVelocity,
+					angle + randomizationAngle * MathUtils::RandFloat(-1, 1)
+				);
 			}
 		}
 	}

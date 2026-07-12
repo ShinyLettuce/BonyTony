@@ -41,8 +41,7 @@ void BossRoomState::Init(StateHandle aMainMenuHandle, StateHandle aCutsceneState
 	myTimings.timeWhenBossStartsYapping = 0.0f;
 	myTimings.gibberishDelay = 0.8f;
 	
-	mySpeechBubbleFlipbookHandle = myFlipBookManager.MakeNewFlipbookHandle();
-	myFlipBookManager.RegisterFlipBook({.flipbookAssetPath = "Sprites/T_DialogeBubble.png", .frameAmount = 2}, mySpeechBubbleFlipbookHandle, true);
+	myFlipBookManager.RegisterFlipBook({.flipbookAssetPath = "Sprites/T_DialogeBubble.png", .frameAmount = 2}, FlipbookHandle::BossSpeechBubble, true);
 }
 
 void BossRoomState::OnPush()
@@ -82,7 +81,7 @@ void BossRoomState::OnPush()
 	const Tga::Vector3f bossPos3D = myBoss.animatedModelInstance->GetTransform().GetPosition();
 	const Tga::Vector2f bossPos2D = {bossPos3D.x, bossPos3D.y};
 	const Tga::Vector2f speechBubblePos = bossPos2D + mySpeechBubbleOffset;
-	myFlipBookManager.PlayAt(mySpeechBubbleFlipbookHandle, speechBubblePos, mySpeechBubbleSize ,mySpeechBubbleSpeed, 0.f);
+	myFlipBookManager.PlayAt(FlipbookHandle::BossSpeechBubble, speechBubblePos, mySpeechBubbleSize ,mySpeechBubbleSpeed, 0.f);
 }
 
 void BossRoomState::OnPop()

@@ -42,35 +42,22 @@ void GameState::Init(GameStateHandles aStateHandle, InputMapper* aInputMapper, T
 	myPlayer.SetInput(aInputMapper);
 	myStateHandles = aStateHandle;
 	myDebugAnimationPlayer.Init();
-	myTonyFlipbookHandles.tonyFireShotgun = myFlipbookManager.MakeNewFlipbookHandle();
-	myTonyFlipbookHandles.tonyTrailFireShotgun = myFlipbookManager.MakeNewFlipbookHandle();
-	myTonyFlipbookHandles.tonyFirePowershot = myFlipbookManager.MakeNewFlipbookHandle();
-	myTonyFlipbookHandles.tonyTrailFirePowershot = myFlipbookManager.MakeNewFlipbookHandle();
-	myTonyFlipbookHandles.tonyFireRevolver = myFlipbookManager.MakeNewFlipbookHandle();
-	myEnvironmentFlipbookHandles.environmentHit = myFlipbookManager.MakeNewFlipbookHandle();
-	myEnvironmentFlipbookHandles.crateHit = myFlipbookManager.MakeNewFlipbookHandle();
-	myEnvironmentFlipbookHandles.metalCrateHit = myFlipbookManager.MakeNewFlipbookHandle();
-	myEnvironmentFlipbookHandles.enemyHit = myFlipbookManager.MakeNewFlipbookHandle();
-	myFlipbookManager.RegisterFlipBook(FlipBookPresets::TONY_SHOTGUN_FIRE, myTonyFlipbookHandles.tonyFireShotgun);
-	myFlipbookManager.RegisterFlipBook(FlipBookPresets::TONY_SHOTGUN_FIRE_TRAIL, myTonyFlipbookHandles.tonyTrailFireShotgun);
-	myFlipbookManager.RegisterFlipBook(FlipBookPresets::TONY_POWERSHOT_FIRE, myTonyFlipbookHandles.tonyFirePowershot);
-	myFlipbookManager.RegisterFlipBook(FlipBookPresets::TONY_POWERSHOT_FIRE_TRAIL, myTonyFlipbookHandles.tonyTrailFirePowershot);
-	myFlipbookManager.RegisterFlipBook(FlipBookPresets::TONY_REVOLVER_FIRE, myTonyFlipbookHandles.tonyFireRevolver);
-	myFlipbookManager.RegisterFlipBook(FlipBookPresets::ENVIRONMENT_HIT, myEnvironmentFlipbookHandles.environmentHit);
-	myFlipbookManager.RegisterFlipBook(FlipBookPresets::CRATE_HIT, myEnvironmentFlipbookHandles.crateHit);
-	myFlipbookManager.RegisterFlipBook(FlipBookPresets::METAL_CRATE_HIT, myEnvironmentFlipbookHandles.metalCrateHit);
-	myFlipbookManager.RegisterFlipBook(FlipBookPresets::ENEMY_HIT, myEnvironmentFlipbookHandles.enemyHit);
 
-	myLoopingFlipbookHandles.steamEnvironment = myFlipbookManager.MakeNewFlipbookHandle();
-	myFlipbookManager.RegisterFlipBook(FlipBookPresets::STEAM_ENVIRONMENT, myLoopingFlipbookHandles.steamEnvironment, true);
+	myFlipbookManager.RegisterFlipBook(FlipBookPresets::TONY_SHOTGUN_FIRE, FlipbookHandle::ShotgunFire);
+	myFlipbookManager.RegisterFlipBook(FlipBookPresets::TONY_SHOTGUN_FIRE_TRAIL, FlipbookHandle::ShotgunFireTrail);
+	myFlipbookManager.RegisterFlipBook(FlipBookPresets::TONY_POWERSHOT_FIRE, FlipbookHandle::PowershotFire);
+	myFlipbookManager.RegisterFlipBook(FlipBookPresets::TONY_POWERSHOT_FIRE_TRAIL, FlipbookHandle::PowershotFireTrail);
+	myFlipbookManager.RegisterFlipBook(FlipBookPresets::TONY_REVOLVER_FIRE, FlipbookHandle::RevolverFire);
+	myFlipbookManager.RegisterFlipBook(FlipBookPresets::ENVIRONMENT_HIT, FlipbookHandle::EnvironmentHit);
+	myFlipbookManager.RegisterFlipBook(FlipBookPresets::CRATE_HIT, FlipbookHandle::CrateHit);
+	myFlipbookManager.RegisterFlipBook(FlipBookPresets::METAL_CRATE_HIT, FlipbookHandle::MetalCrateHit);
+	myFlipbookManager.RegisterFlipBook(FlipBookPresets::ENEMY_HIT, FlipbookHandle::EnemyHit);
+	myFlipbookManager.RegisterFlipBook(FlipBookPresets::STEAM_ENVIRONMENT, FlipbookHandle::SteamEnvironment, true);
 
-	myTonyFlipbookHandles.tonyFireShotgunInstance = myFlipbookManager.CreatePersistentInstanceHandle();
-	myTonyFlipbookHandles.tonyFirePowerShotInstance = myFlipbookManager.CreatePersistentInstanceHandle();
-	myTonyFlipbookHandles.tonyFireRevolverInstance = myFlipbookManager.CreatePersistentInstanceHandle();
-
-	myFlipbookManager.SetPersistentInstanceFlipbook(myTonyFlipbookHandles.tonyFireShotgunInstance, myTonyFlipbookHandles.tonyFireShotgun);
-	myFlipbookManager.SetPersistentInstanceFlipbook(myTonyFlipbookHandles.tonyFirePowerShotInstance, myTonyFlipbookHandles.tonyFirePowershot);
-	myFlipbookManager.SetPersistentInstanceFlipbook(myTonyFlipbookHandles.tonyFireRevolverInstance, myTonyFlipbookHandles.tonyFireRevolver);
+	myFlipbookManager.InitPersistentFlipbooks();
+	myFlipbookManager.SetPersistentInstanceFlipbook(PersistentInstanceHandle::ShotgunFire, FlipbookHandle::ShotgunFire);
+	myFlipbookManager.SetPersistentInstanceFlipbook(PersistentInstanceHandle::PowerShotFire, FlipbookHandle::PowershotFire);
+	myFlipbookManager.SetPersistentInstanceFlipbook(PersistentInstanceHandle::RevolverFire, FlipbookHandle::RevolverFire);
 }
 
 void GameState::OnPush()
@@ -272,16 +259,13 @@ StateUpdateResult GameState::Update()
 		for (int i = 0; i < iterations; ++i)
 		{
 			GameStateUpdate::PlayerSweep(scene.tileConfigs, crates, myCrateUpdater, myPlayer, playerUpdateResult,
-				&myFlipbookManager, myEnvironmentFlipbookHandles.metalCrateHit, deltaTime, tickrate);
+				&myFlipbookManager, deltaTime, tickrate);
 		}
 
 		if (playerUpdateResult.action == PlayerUpdateResult::Action::Revolver && myPlayer.GetIsRevolverEnabled())
 		{
-			myFlipbookManager.PlayPersistent(myTonyFlipbookHandles.tonyFireRevolverInstance, 0.007f);
-			GameStateUpdate::RevolverRaycast(scene.tileConfigs, enemies, crates, myCrateUpdater, myPlayer,
-				&myFlipbookManager, myEnvironmentFlipbookHandles.environmentHit,
-				myEnvironmentFlipbookHandles.crateHit, myEnvironmentFlipbookHandles.metalCrateHit,
-				myEnvironmentFlipbookHandles.enemyHit);
+			myFlipbookManager.PlayPersistent(PersistentInstanceHandle::RevolverFire, 0.007f);
+			GameStateUpdate::RevolverRaycast(scene.tileConfigs, enemies, crates, myCrateUpdater, myPlayer, &myFlipbookManager);
 		}
 		if (playerUpdateResult.action == PlayerUpdateResult::Action::Shotgun || playerUpdateResult.action == PlayerUpdateResult::Action::PowerShot)
 		{
@@ -292,27 +276,23 @@ StateUpdateResult GameState::Update()
 
 			if (playerUpdateResult.action == PlayerUpdateResult::Action::Shotgun)
 			{
-				myFlipbookManager.PlayPersistent(myTonyFlipbookHandles.tonyFireShotgunInstance, 0.007f);
-				myFlipbookManager.PlayAt(myTonyFlipbookHandles.tonyTrailFireShotgun, myPlayer.GetShotgunPosition() + (shotgunAimDir * trailOffset), angle);
+				myFlipbookManager.PlayPersistent(PersistentInstanceHandle::ShotgunFire, 0.007f);
+				myFlipbookManager.PlayAt(FlipbookHandle::ShotgunFireTrail, myPlayer.GetShotgunPosition() + (shotgunAimDir * trailOffset), angle);
 			}
 			else
 			{
-				myFlipbookManager.PlayPersistent(myTonyFlipbookHandles.tonyFirePowerShotInstance, 0.007f);
-				myFlipbookManager.PlayAt(myTonyFlipbookHandles.tonyTrailFirePowershot, myPlayer.GetShotgunPosition() + (shotgunAimDir * trailOffset), angle);
+				myFlipbookManager.PlayPersistent(PersistentInstanceHandle::PowerShotFire, 0.007f);
+				myFlipbookManager.PlayAt(FlipbookHandle::PowershotFireTrail, myPlayer.GetShotgunPosition() + (shotgunAimDir * trailOffset), angle);
 			}
 
-			GameStateUpdate::ShotgunRaycast(myPlayer, scene.tileConfigs, enemies, crates, myCrateUpdater, &myFlipbookManager, myEnvironmentFlipbookHandles.environmentHit,
-				myEnvironmentFlipbookHandles.crateHit, myEnvironmentFlipbookHandles.metalCrateHit, myEnvironmentFlipbookHandles.enemyHit);
+			GameStateUpdate::ShotgunRaycast(myPlayer, scene.tileConfigs, enemies, crates, myCrateUpdater, &myFlipbookManager);
 		}
 
 		GameStateUpdate::EnemyCollision(enemies, myPlayer, scene.tileConfigs);
 
 		for (int i = 0; i < iterations; ++i)
 		{
-			GameStateUpdate::ProjectileCollision(myPlayer, *projectiles, scene.tileConfigs, crates, deltaTime, tickrate,
-				&myFlipbookManager, myEnvironmentFlipbookHandles.environmentHit,
-				myEnvironmentFlipbookHandles.crateHit, myEnvironmentFlipbookHandles.metalCrateHit,
-				myEnvironmentFlipbookHandles.enemyHit);
+			GameStateUpdate::ProjectileCollision(myPlayer, *projectiles, scene.tileConfigs, crates, deltaTime, tickrate, &myFlipbookManager);
 		}
 	}
 
@@ -334,9 +314,9 @@ StateUpdateResult GameState::Update()
 		const float shotgunPivotOffset = -58.f;
 		const float shotgunSize = 230.f;
 
-		myFlipbookManager.MovePersistent(myTonyFlipbookHandles.tonyFireRevolverInstance, GetGunTransform(revolverAimDir, revolverSize, revolverPivotOffset, revolverOffset));
-		myFlipbookManager.MovePersistent(myTonyFlipbookHandles.tonyFireShotgunInstance, GetGunTransform(shotgunAimDir, shotgunSize, shotgunPivotOffset, shotgunOffset));
-		myFlipbookManager.MovePersistent(myTonyFlipbookHandles.tonyFirePowerShotInstance, GetGunTransform(shotgunAimDir, myPowerSize, myPowerPivotOffset, myPowerOffset));
+		myFlipbookManager.MovePersistent(PersistentInstanceHandle::RevolverFire, GetGunTransform(revolverAimDir, revolverSize, revolverPivotOffset, revolverOffset));
+		myFlipbookManager.MovePersistent(PersistentInstanceHandle::ShotgunFire, GetGunTransform(shotgunAimDir, shotgunSize, shotgunPivotOffset, shotgunOffset));
+		myFlipbookManager.MovePersistent(PersistentInstanceHandle::PowerShotFire, GetGunTransform(shotgunAimDir, myPowerSize, myPowerPivotOffset, myPowerOffset));
 	} //-----------------------------------------------------//
 
 	myLevelTrigger.UpdateAnimation(deltaTime);

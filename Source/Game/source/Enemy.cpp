@@ -17,7 +17,7 @@ namespace Tga
 }
 
 void Enemy::Init(const SceneLoader::EnemyConfig& aEnemyConfig, const SceneLoader::EnemySharedConfig* aSharedConfig, std::vector<Projectile>* aProjectileCollection, 
-	FlipbookManager* aFlipbookManager, FlipbookManager::FlipbookHandle* aFireMeleeFlipbookHandle, FlipbookManager::FlipbookHandle* aFireRevolverFlipbookHandle)
+	FlipbookManager* aFlipbookManager)
 {
 	myPosition = aEnemyConfig.position;
 	mySize = { 100.f, 100.f };
@@ -65,9 +65,7 @@ void Enemy::Init(const SceneLoader::EnemyConfig& aEnemyConfig, const SceneLoader
 	
 	myIsAimingRight = myModelInstance->GetTransform().GetRight().x > 0.f;
 
-	myFlipbookData.aFlipbookManager = aFlipbookManager;
-	myFlipbookData.aFireMeleeHandle = aFireMeleeFlipbookHandle;
-	myFlipbookData.aFireRevolverHandle = aFireRevolverFlipbookHandle;
+	myFlipbookManager = aFlipbookManager;
 }
 
 void Enemy::Update(const float aDeltaTime, const Tga::Vector2f aPlayerPosition)
@@ -175,7 +173,7 @@ void Enemy::Update(const float aDeltaTime, const Tga::Vector2f aPlayerPosition)
 			
 			const Tga::Vector2f forward{ 1.f, 0.f };
 			const float angle = std::atan2f(forward.Cross(myNormalizedAim), forward.Dot(myNormalizedAim));
-			myFlipbookData.aFlipbookManager->PlayAt(*myFlipbookData.aFireRevolverHandle, myShotSpawnPosition + myNormalizedAim * 100.f, Tga::Vector2f{0.4f, 0.4f}, angle);
+			myFlipbookManager->PlayAt(FlipbookHandle::EnemyRevolverFire, myShotSpawnPosition + myNormalizedAim * 100.f, Tga::Vector2f{0.4f, 0.4f}, angle);
 		}
 	}
 }
@@ -306,7 +304,7 @@ void Enemy::PerformMelee()
 	myAnimationState = EnemyState::MeleeAttack;
 	myMeleeAnimation->SetTime(0.0f);
 	myMeleeAnimation->Play();
-	myFlipbookData.aFlipbookManager->PlayAt(*myFlipbookData.aFireMeleeHandle, myPosition + Tga::Vector2f{0.f, 100.f}, Tga::Vector2f{0.8f, 0.8f}, 0.f, !myIsAimingRight);
+	myFlipbookManager->PlayAt(FlipbookHandle::EnemyBaseballFire, myPosition + Tga::Vector2f{0.f, 100.f}, Tga::Vector2f{0.8f, 0.8f}, 0.f, !myIsAimingRight);
 }
 
 void Enemy::Kill()

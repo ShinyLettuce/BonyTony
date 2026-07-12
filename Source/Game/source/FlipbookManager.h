@@ -76,20 +76,40 @@ namespace FlipBookPresets
 	};
 }
 
+enum class FlipbookHandle
+{
+	ShotgunFire,
+	ShotgunFireTrail,
+	PowershotFire,
+	PowershotFireTrail,
+	RevolverFire,
+	EnemyBaseballFire,
+	EnemyRevolverFire,
+	EnemyHit,
+	EnvironmentHit,
+	CrateHit,
+	MetalCrateHit,
+	SteamEnvironment,
+	BossSpeechBubble,
+	
+	Count
+};
+
+enum class PersistentInstanceHandle
+{
+	ShotgunFire,
+	PowerShotFire,
+	RevolverFire
+};
+
 class FlipbookManager
 {
 	public:
-		
-		using FlipbookHandle = unsigned int;
-		using PersistentInstanceHandle = unsigned int;
-		~FlipbookManager();
-
-		FlipbookHandle MakeNewFlipbookHandle();
 
 		//Registers a Flipbook Based on a preset
 		void RegisterFlipBook(FlipBookPresets::FlipbookPreset aPreset, FlipbookHandle aHandle, bool aLooping = false);
+		void InitPersistentFlipbooks();
 		void RemoveAllLoopingInstances();
-		PersistentInstanceHandle CreatePersistentInstanceHandle();
 		void SetPersistentInstanceFlipbook(PersistentInstanceHandle anInstanceHandle, FlipbookHandle aFlipbookHandle);
 		bool GetPersistentInstanceActive(PersistentInstanceHandle anInstanceHandle) const;
 		void PlayPersistent(PersistentInstanceHandle anInstanceHandle, float aFrameUpdateRate);
@@ -164,7 +184,7 @@ class FlipbookManager
 			float timer = 0.f;
 		};
 		
-		std::vector<Flipbook*> myFlipbooks;
+		std::array<Flipbook, (int)FlipbookHandle::Count> myFlipbooks;
 
 		//Created upon playing a flipbook, removed when done
 		std::vector<FlipbookInstance> myFlipbookInstances;

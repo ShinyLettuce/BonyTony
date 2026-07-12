@@ -10,17 +10,13 @@ void EnemyUpdater::Init(const std::vector<SceneLoader::EnemyConfig>& aEnemyConfi
     myProjectiles.clear();
     myEnemies.clear();
 
-    myEnemyFlipBookHandles.fireMeleeHandle = myEnemyFlipbookManager.MakeNewFlipbookHandle();
-    myEnemyFlipBookHandles.fireRevolverHandle = myEnemyFlipbookManager.MakeNewFlipbookHandle();
-
-    myEnemyFlipbookManager.RegisterFlipBook(FlipBookPresets::ENEMY_BASEBALL_FIRE, myEnemyFlipBookHandles.fireMeleeHandle);
-    myEnemyFlipbookManager.RegisterFlipBook(FlipBookPresets::ENEMY_REVOLVER_FIRE, myEnemyFlipBookHandles.fireRevolverHandle);
+    myEnemyFlipbookManager.RegisterFlipBook(FlipBookPresets::ENEMY_BASEBALL_FIRE, FlipbookHandle::EnemyBaseballFire);
+    myEnemyFlipbookManager.RegisterFlipBook(FlipBookPresets::ENEMY_REVOLVER_FIRE, FlipbookHandle::EnemyRevolverFire);
     
     for (auto& enemyConfig : aEnemyConfigs)
     {
         myEnemies.emplace_back();
-        myEnemies.back().Init(enemyConfig, aEnemySharedConfig, &myProjectiles, &myEnemyFlipbookManager,
-                    &myEnemyFlipBookHandles.fireMeleeHandle, &myEnemyFlipBookHandles.fireRevolverHandle);
+        myEnemies.back().Init(enemyConfig, aEnemySharedConfig, &myProjectiles, &myEnemyFlipbookManager);
     }
 }
 
