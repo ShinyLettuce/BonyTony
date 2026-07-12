@@ -45,7 +45,7 @@ private:
     {
         //Textures  
         const char* aimLineTexture = "textures/UI/HUD/T_AimLine_C.dds";  
-        const char* crosshairTexture = "textures/UI/HUD/T_Crosshair_C.dds";  
+        const char* crosshairTexture = "textures/UI/HUD/T_Target_C.dds";  
         const char* shellTexture = "textures/UI/HUD/T_Shell_C.dds";  
         const char* spentShellTexture = "textures/UI/HUD/T_SpentShell_C.dds";  
         const char* bulletTexture = "textures/UI/HUD/T_Bullet_C.dds";  
@@ -68,8 +68,8 @@ private:
         float aimLineGapSize = 100.f; 
 
         //Hit point visual tuning  
-        float hitPointScaleNormal = 1.0f;    
-        float hitPointScaleHighlight = 2.0f;   
+        float hitPointScaleNormal = 0.5f;    
+        float hitPointScaleHighlight = 1.0f;   
 
         //Misc  
         float hitboxForgiveness = 0.9f;
