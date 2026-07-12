@@ -100,6 +100,10 @@ class Player
 		/// </summary>
 		bool GetPowerBreakActive() const;
 		void DisablePowerBreak();
+
+		float GetTimeSinceFiredShotgun() const { return myTimeSinceFiredShotgun; }
+		float GetTimeSinceFiredRevolver() const { return myTimeSinceFiredRevolver; }
+		float GetTimeSinceFiredPowerShot() const { return myTimeSinceFiredPowerShot; }
 	
 		void FreezeTheShotgunSoThatItCanOnlyPointRightAndCantBeMovedWithMouseOrControllerOrAnyOtherInputDeviceForThatMatter();
 	private:
@@ -122,6 +126,10 @@ class Player
 		bool myIsGrounded = false;
 		bool myIsFrozen = false;
 		
+		float myTimeSinceFiredShotgun;
+		float myTimeSinceFiredRevolver;
+		float myTimeSinceFiredPowerShot;
+
 		float myStunDuration = 0;
 		float myPlayerArmPivotHeight = 0;
 		float myStunTimer = 0;

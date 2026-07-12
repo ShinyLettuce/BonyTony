@@ -7,7 +7,7 @@ float3 EvaluateAmbianceLambert(TextureCube lysBurleyCube, float3 vN, float3 dfco
 {
     int numMips = GetNumMips(lysBurleyCube);
     const int nrBrdMips = numMips - nMipOffset;
-    float3 diffRad = lysBurleyCube.SampleLevel(defaultSampler, vN, (float) (nrBrdMips - 1)).xyz;
+    float3 diffRad = float3(1.0f, 1.0f, 1.0f); //lysBurleyCube.SampleLevel(defaultSampler, vN, (float) (nrBrdMips - 1)).xyz;
     return dfcol * diffRad;
 }
 
@@ -29,7 +29,7 @@ float3 EvaluatePointLightLambert(float3 albedoColor, float3 normal, float3 light
 {
     // Compute som useful values
     float3 lightDir = lightPos.xyz - pixelPos.xyz;
-    float lightDistance = 0.01f * length(lightDir); // centimeter to meter
+    float lightDistance = 0.01f * length(lightPos.xyz - float3(pixelPos.xy, pixelPos.z * 0.2f)); // centimeter to meter
     lightDir = normalize(lightDir);
 	
     float lambert = saturate(dot(normal, lightDir));
@@ -51,7 +51,7 @@ float3 EvaluateSoftAreaLightLambert(float3 albedoColor, float3 normal,
 {
     // Compute som useful values
     float3 lightDir = lightPos.xyz - pixelPos.xyz;
-    float lightDistance = 0.01f * length(lightDir);
+    float lightDistance = 0.01f * length(lightPos.xyz - float3(pixelPos.xy, pixelPos.z * 0.4f));
     lightDir = normalize(lightDir);
 
     float NdL;

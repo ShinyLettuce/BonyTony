@@ -448,7 +448,67 @@ void GameState::Render()
 
 	// Draw opaque objects
 
+	Tga::Vector2f playerPosition2d = myPlayer.GetPosition();
+	Tga::Vector3f playerPosition3d(playerPosition2d, 0.0f);
+
+	static float lightIntensity = 2.0f;
+	static float lightRange = 50.0f;
+	static float lightRadius = 200.0f;
+
+#if !defined(_RETAIL)
+	if (ImGui::Begin("Lights", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::DragFloat("Red", &lightIntensity, 0.1f);
+		ImGui::DragFloat("Range", &lightRange, 1.0f);
+		ImGui::DragFloat("Radius", &lightRadius, 1.0f);
+	}
+	ImGui::End();
+#endif
+
+	const float shotgunLightDuration = 0.06f;
+	const float revolverLightDuration = 0.05f;
+	const float powerShotLightDuration = 0.07f;
+
+	const float shotgunLightIntensityMultiplier = 1.0f;
+	const float revolverLightIntensityMultiplier = 0.5f;
+	const float powerShotLightIntensityMultiplier = 1.2f;
+
 	graphicsStateStack.Push();
+	if (myPlayer.GetTimeSinceFiredShotgun() < shotgunLightDuration)
+	{
+		const float intensity = lightIntensity * shotgunLightIntensityMultiplier;
+
+		graphicsStateStack.AddPointLight(Tga::PointLight{
+			.position = playerPosition3d,
+			.color = Tga::Color{ intensity * 0.5f, intensity * 0.7f, intensity * 1.0f, 1.0f },
+			.range = lightRange * 100.0f,
+			.radius = lightRadius
+		});
+	}
+
+	if (myPlayer.GetTimeSinceFiredRevolver() < revolverLightDuration)
+	{
+		const float intensity = lightIntensity * revolverLightIntensityMultiplier;
+
+		graphicsStateStack.AddPointLight(Tga::PointLight{
+			.position = playerPosition3d,
+			.color = Tga::Color{ intensity * 0.5f, intensity * 0.7f, intensity * 1.0f, 1.0f },
+			.range = lightRange * 100.0f,
+			.radius = lightRadius
+		});
+	}
+
+	if (myPlayer.GetTimeSinceFiredPowerShot() < powerShotLightDuration)
+	{
+		const float intensity = lightIntensity * powerShotLightIntensityMultiplier;
+
+		graphicsStateStack.AddPointLight(Tga::PointLight{
+			.position = playerPosition3d,
+			.color = Tga::Color{ intensity * 0.5f, intensity * 0.7f, intensity * 1.0f, 1.0f },
+			.range = lightRange * 100.0f,
+			.radius = lightRadius
+		});
+	}
 	{
 		myCamera.Prepare();
 
@@ -479,7 +539,32 @@ void GameState::Render()
 			}
 		}
 
+		// Draw lit models
+
 		for (const auto& object : sceneConfig.modelConfigs)
+		{
+			Tga::Model& model = *object.modelInstance.GetModel();
+
+			float maxRadius = 0.0f;
+			for (int i = 0; i < model.GetMeshCount(); ++i)
+			{
+				const Tga::Model::MeshData& meshData = model.GetMeshData(i);
+				const float radius = meshData.Bounds.Radius;
+				if (maxRadius < radius)
+				{
+					maxRadius = radius;
+				}
+			}
+
+			if (myCamera.IsPointWithinFrustum(object.modelInstance.GetTransform().GetPosition(), maxRadius))
+			{
+				myModelDrawer.DrawLambert(object.modelInstance);
+			}
+		}
+
+		// Draw unlit models
+
+		for (const auto& object : sceneConfig.unlitModelConfigs)
 		{
 			Tga::Model& model = *object.modelInstance.GetModel();
 
