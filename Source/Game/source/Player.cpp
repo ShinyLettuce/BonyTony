@@ -699,7 +699,7 @@ void Player::SetGrounded(bool aIsGroundedBool)
 		{
 			if (myCamera)
 			{
-				myCamera->Shake(3.7f, 6.0f, 0.4f);
+				myCamera->Shake(4.0f, 6.0f, 0.4f);
 			}
 		}
 	}

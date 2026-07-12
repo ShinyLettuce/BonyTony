@@ -908,6 +908,13 @@ namespace SceneLoader
 
 				sceneConfig.metaConfig = sceneMetaConfig;
 			}
+			else if (id == "SpotLight_Level1"_tgaid || id == "SpotLight_Level2"_tgaid || id == "PointLight_Level1"_tgaid || id == "PointLight_Level2"_tgaid)
+			{
+				ModelConfig modelConfig;
+				modelConfig.modelInstance = cso.GetFirstModelInstance();
+
+				sceneConfig.transparentObjectConfig.push_back(modelConfig);
+			}
 			else
 			{
 				ModelConfig modelConfig;

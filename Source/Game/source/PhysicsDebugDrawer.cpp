@@ -78,7 +78,7 @@ namespace PhysicsDebugDrawer
 				const Tga::Vector2f halfExtents = tile.size / 2.0f;
 				const Tga::Vector2f position = tile.position + Tga::Vector2f{ 0.0f, halfExtents.y };
 
-				if (aCamera.IsPointWithinFrustum(Tga::Vector3f{ position + Tga::Vector2f{ -halfExtents.x, halfExtents.y }, -51.0f }) || aCamera.IsPointWithinFrustum(Tga::Vector3f{ position + Tga::Vector2f{ halfExtents.x, halfExtents.y }, -51.0f }))
+				if (aCamera.IsPointWithinFrustum(Tga::Vector3f{ position + Tga::Vector2f{ -halfExtents.x, halfExtents.y }, -51.0f }, 0.0f) || aCamera.IsPointWithinFrustum(Tga::Vector3f{ position + Tga::Vector2f{ halfExtents.x, halfExtents.y }, -51.0f }, 0.0f))
 				{
 					Tga::LinePrimitive top
 					{
@@ -89,7 +89,7 @@ namespace PhysicsDebugDrawer
 					lineDrawer.Draw(top);
 				}
 
-				if (aCamera.IsPointWithinFrustum(Tga::Vector3f{ position + Tga::Vector2f{ -halfExtents.x, -halfExtents.y }, -51.0f }) || aCamera.IsPointWithinFrustum(Tga::Vector3f{ position + Tga::Vector2f{ halfExtents.x, -halfExtents.y }, -51.0f }))
+				if (aCamera.IsPointWithinFrustum(Tga::Vector3f{ position + Tga::Vector2f{ -halfExtents.x, -halfExtents.y }, -51.0f }, 0.0f) || aCamera.IsPointWithinFrustum(Tga::Vector3f{ position + Tga::Vector2f{ halfExtents.x, -halfExtents.y }, -51.0f }, 0.0f))
 				{
 					Tga::LinePrimitive bottom
 					{
@@ -100,7 +100,7 @@ namespace PhysicsDebugDrawer
 					lineDrawer.Draw(bottom);
 				}
 
-				if (aCamera.IsPointWithinFrustum(Tga::Vector3f{ position + Tga::Vector2f{ -halfExtents.x, -halfExtents.y }, -51.0f }) || aCamera.IsPointWithinFrustum(Tga::Vector3f{ position + Tga::Vector2f{ -halfExtents.x, halfExtents.y }, -51.0f }))
+				if (aCamera.IsPointWithinFrustum(Tga::Vector3f{ position + Tga::Vector2f{ -halfExtents.x, -halfExtents.y }, -51.0f }, 0.0f) || aCamera.IsPointWithinFrustum(Tga::Vector3f{ position + Tga::Vector2f{ -halfExtents.x, halfExtents.y }, -51.0f }, 0.0f))
 				{
 					Tga::LinePrimitive left
 					{
@@ -111,7 +111,7 @@ namespace PhysicsDebugDrawer
 					lineDrawer.Draw(left);
 				}
 
-				if (aCamera.IsPointWithinFrustum(Tga::Vector3f{ position + Tga::Vector2f{ halfExtents.x, -halfExtents.y }, -51.0f }) || aCamera.IsPointWithinFrustum(Tga::Vector3f{ position + Tga::Vector2f{ halfExtents.x, halfExtents.y }, -51.0f }))
+				if (aCamera.IsPointWithinFrustum(Tga::Vector3f{ position + Tga::Vector2f{ halfExtents.x, -halfExtents.y }, -51.0f }, 0.0f) || aCamera.IsPointWithinFrustum(Tga::Vector3f{ position + Tga::Vector2f{ halfExtents.x, halfExtents.y }, -51.0f }, 0.0f))
 				{
 					Tga::LinePrimitive right
 					{

@@ -460,98 +460,147 @@ void GameState::Render()
 	Tga::GraphicsEngine& graphicsEngine = engine.GetGraphicsEngine();
 	Tga::GraphicsStateStack& graphicsStateStack = graphicsEngine.GetGraphicsStateStack();
 
-	graphicsStateStack.Push();
-
-	myCamera.Prepare();
-
 	SceneLoader::SceneConfig& sceneConfig = SceneLoader::GetActiveScene();
 
-	myPlayer.Render();
-	myEnemyUpdater.Render();
-	myCrateUpdater.Render();
-	myPickupUpdater.Render();
-	myLevelTrigger.Render();
+	// Draw opaque objects
 
-	for (const auto& object : sceneConfig.tileConfigs)
+	graphicsStateStack.Push();
 	{
-		if (myCamera.IsPointWithinFrustum({ object.position, 0.f }))
+		myCamera.Prepare();
+
+		myPlayer.Render();
+		myEnemyUpdater.Render();
+		myCrateUpdater.Render();
+		myPickupUpdater.Render();
+		myLevelTrigger.Render();
+
+		for (const auto& object : sceneConfig.tileConfigs)
 		{
-			myModelDrawer.Draw(object.modelInstance);
-		}
-	}
+			Tga::Model& model = *object.modelInstance.GetModel();
 
-	for (const auto& object : sceneConfig.modelConfigs)
-	{
-		if (myCamera.IsPointWithinFrustum(object.modelInstance.GetTransform().GetPosition()))
+			float maxRadius = 0.0f;
+			for (int i = 0; i < model.GetMeshCount(); ++i)
+			{
+				const Tga::Model::MeshData& meshData = model.GetMeshData(i);
+				const float radius = meshData.Bounds.Radius;
+				if (maxRadius < radius)
+				{
+					maxRadius = radius;
+				}
+			}
+
+			if (myCamera.IsPointWithinFrustum({ object.position, 0.f }, maxRadius))
+			{
+				myModelDrawer.Draw(object.modelInstance);
+			}
+		}
+
+		for (const auto& object : sceneConfig.modelConfigs)
 		{
-			myModelDrawer.Draw(object.modelInstance);
+			Tga::Model& model = *object.modelInstance.GetModel();
+
+			float maxRadius = 0.0f;
+			for (int i = 0; i < model.GetMeshCount(); ++i)
+			{
+				const Tga::Model::MeshData& meshData = model.GetMeshData(i);
+				const float radius = meshData.Bounds.Radius;
+				if (maxRadius < radius)
+				{
+					maxRadius = radius;
+				}
+			}
+
+			if (myCamera.IsPointWithinFrustum(object.modelInstance.GetTransform().GetPosition(), maxRadius))
+			{
+				myModelDrawer.Draw(object.modelInstance);
+			}
 		}
-	}
 
-	PhysicsDebugDrawer::DrawDebugColliders(myCamera);
-
-	PhysicsDebugDrawer::DrawDebugRayCone(
-		Physics::Ray{
-				.origin = myPlayer.GetShotOrigin(),
-				.direction = myPlayer.GetNormalizedShotgunAim(),
-				.magnitude = myPlayer.GetShotgunRange()
-		},
-		myPlayer.GetShotgunBulletAmount(),
-		myPlayer.GetShotgunSpreadAngle()
-	);
+		PhysicsDebugDrawer::DrawDebugColliders(myCamera);
+		PhysicsDebugDrawer::DrawDebugRayCone(
+			Physics::Ray{
+					.origin = myPlayer.GetShotOrigin(),
+					.direction = myPlayer.GetNormalizedShotgunAim(),
+					.magnitude = myPlayer.GetShotgunRange()
+			},
+			myPlayer.GetShotgunBulletAmount(),
+			myPlayer.GetShotgunSpreadAngle()
+		);
 
 #if defined(_DEBUG)
-	for (const auto& enemy : *myEnemyUpdater.GetEnemies())
-	{
-		if (!enemy.GetHasGun())
+		for (const auto& enemy : *myEnemyUpdater.GetEnemies())
 		{
-			continue;
+			if (!enemy.GetHasGun())
+			{
+				continue;
+			}
+
+			const Tga::Matrix2x2f rotationUp = Tga::Matrix2x2f::CreateFromRotation(FMath::DegToRad * enemy.GetDetectionAngle() * 0.5f);
+			const Tga::Matrix2x2f rotationDown = Tga::Matrix2x2f::CreateFromRotation(FMath::DegToRad * -(enemy.GetDetectionAngle() * 0.5f));
+
+			Physics::Ray peripheralUp
+			{
+				.origin = enemy.GetViewPosition(),
+				.direction = enemy.GetFaceDirection() * rotationUp,
+				.magnitude = 1.f,
+			};
+
+			Physics::Ray peripheralDown
+			{
+				.origin = enemy.GetViewPosition(),
+				.direction = -1.f * (enemy.GetFaceDirection() * rotationDown),
+				.magnitude = 1.f,
+			};
+
+			PhysicsDebugDrawer::DrawDebugRay(Physics::Ray{ peripheralUp.origin, peripheralUp.direction, enemy.GetDetectionRange() });
+			PhysicsDebugDrawer::DrawDebugRay(Physics::Ray{ peripheralDown.origin - peripheralDown.direction * enemy.GetDetectionRange(), peripheralDown.direction, enemy.GetDetectionRange() });
+
+			PhysicsDebugDrawer::DrawDebugAABB(myLevelTrigger.GetPosition(), myLevelTrigger.GetSize());
+
+		}
+#endif
+
+		// Draw hud
+
+		graphicsStateStack.Push();
+		graphicsStateStack.SetBlendState(Tga::BlendState::AlphaBlend);
+		{
+			myAmbienceManager.RenderDebugVisuals();
+			myDebugAnimationPlayer.Render();
+			myFlipbookManager.Render();
+
+			myHUD.RenderAimline();
+		}
+		graphicsStateStack.Pop();
+
+		// Draw transparent objects
+
+		graphicsStateStack.Push();
+		graphicsStateStack.SetBlendState(Tga::BlendState::AdditiveBlend);
+
+		for (SceneLoader::ModelConfig& object : sceneConfig.transparentObjectConfig)
+		{
+			myModelDrawer.Draw(object.modelInstance);
 		}
 
-		const Tga::Matrix2x2f rotationUp = Tga::Matrix2x2f::CreateFromRotation(FMath::DegToRad * enemy.GetDetectionAngle() * 0.5f);
-		const Tga::Matrix2x2f rotationDown = Tga::Matrix2x2f::CreateFromRotation(FMath::DegToRad * -(enemy.GetDetectionAngle() * 0.5f));
-
-		Physics::Ray peripheralUp
-		{
-			.origin = enemy.GetViewPosition(),
-			.direction = enemy.GetFaceDirection() * rotationUp,
-			.magnitude = 1.f,
-		};
-
-		Physics::Ray peripheralDown
-		{
-			.origin = enemy.GetViewPosition(),
-			.direction = -1.f * (enemy.GetFaceDirection() * rotationDown),
-			.magnitude = 1.f,
-		};
-
-		PhysicsDebugDrawer::DrawDebugRay(Physics::Ray{ peripheralUp.origin, peripheralUp.direction, enemy.GetDetectionRange() });
-		PhysicsDebugDrawer::DrawDebugRay(Physics::Ray{ peripheralDown.origin - peripheralDown.direction * enemy.GetDetectionRange(), peripheralDown.direction, enemy.GetDetectionRange() });
-
-		PhysicsDebugDrawer::DrawDebugAABB(myLevelTrigger.GetPosition(), myLevelTrigger.GetSize());
-
+		graphicsStateStack.Pop();
 	}
-#endif
+	graphicsStateStack.Pop();
+	
+	// Draw screenspace hud
+
 	graphicsStateStack.Push();
 	graphicsStateStack.SetBlendState(Tga::BlendState::AlphaBlend);
-
-	myAmbienceManager.RenderDebugVisuals();
-	myDebugAnimationPlayer.Render();
-	myHUD.RenderAimline();
-	myFlipbookManager.Render();
-	graphicsStateStack.Pop();
-
-	graphicsStateStack.Pop();
-	graphicsStateStack.SetBlendState(Tga::BlendState::AlphaBlend);
-
-	myHUD.RenderVignette();
-	myHUD.RenderClips(myPlayer.GetShotgunClip(), myPlayer.GetIsRevolverEnabled(), myPlayer.GetRevolverClip());
-	myHUD.RenderHitPoint(myCamera);
-	if (myFadeInOut.GetAlpha() > FLT_EPSILON)
 	{
-		myFadeInOut.Render();
+		myHUD.RenderVignette();
+		myHUD.RenderClips(myPlayer.GetShotgunClip(), myPlayer.GetIsRevolverEnabled(), myPlayer.GetRevolverClip());
+		myHUD.RenderHitPoint(myCamera);
+		if (myFadeInOut.GetAlpha() > FLT_EPSILON)
+		{
+			myFadeInOut.Render();
+		}
 	}
-
+	graphicsStateStack.Pop();
 }
 
 bool GameState::TransitionSequenceFinished() const
