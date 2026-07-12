@@ -74,6 +74,16 @@ namespace FlipBookPresets
 		.flipbookAssetPath = "textures/Flipbooks/T_Steam_Flip.DDS",
 		.frameAmount = 4
 	};
+	inline constexpr FlipbookPreset SHELL_EJECT
+	{
+		.flipbookAssetPath = "textures/Flipbooks/T_ShellEject_flip.dds",
+		.frameAmount = 4
+	};
+	inline constexpr FlipbookPreset BULLET_EJECT
+	{
+		.flipbookAssetPath = "textures/Flipbooks/T_BulletEject_flip.dds",
+		.frameAmount = 4
+	};
 }
 
 enum class FlipbookHandle
@@ -91,6 +101,8 @@ enum class FlipbookHandle
 	MetalCrateHit,
 	SteamEnvironment,
 	BossSpeechBubble,
+	ShellEject,
+	BulletEject,
 	
 	Count
 };
@@ -155,6 +167,7 @@ class FlipbookManager
 			unsigned int frameIndex = 0;
 
 			bool flipped = false;
+			bool ignoreDepth = false;
 			
 			FlipbookHandle flipbookHandle;
 
@@ -170,7 +183,6 @@ class FlipbookManager
 
 		struct Flipbook3DInstance
 		{
-			unsigned int id;
 			unsigned int frameIndex = 0;
 
 			bool active = true;

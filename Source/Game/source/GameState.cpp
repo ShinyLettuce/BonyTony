@@ -40,6 +40,7 @@ void GameState::Init(GameStateHandles aStateHandle, InputMapper* aInputMapper, T
 	myInputMapper = aInputMapper;
 	myTimer = aTimer;
 	myPlayer.SetInput(aInputMapper);
+	myPlayer.SetFlipbookManager(&myFlipbookManager);
 	myStateHandles = aStateHandle;
 	myDebugAnimationPlayer.Init();
 
@@ -53,11 +54,14 @@ void GameState::Init(GameStateHandles aStateHandle, InputMapper* aInputMapper, T
 	myFlipbookManager.RegisterFlipBook(FlipBookPresets::METAL_CRATE_HIT, FlipbookHandle::MetalCrateHit);
 	myFlipbookManager.RegisterFlipBook(FlipBookPresets::ENEMY_HIT, FlipbookHandle::EnemyHit);
 	myFlipbookManager.RegisterFlipBook(FlipBookPresets::STEAM_ENVIRONMENT, FlipbookHandle::SteamEnvironment, true);
+	myFlipbookManager.RegisterFlipBook(FlipBookPresets::SHELL_EJECT, FlipbookHandle::ShellEject);
+	myFlipbookManager.RegisterFlipBook(FlipBookPresets::BULLET_EJECT, FlipbookHandle::BulletEject);
 
 	myFlipbookManager.InitPersistentFlipbooks();
 	myFlipbookManager.SetPersistentInstanceFlipbook(PersistentInstanceHandle::ShotgunFire, FlipbookHandle::ShotgunFire);
 	myFlipbookManager.SetPersistentInstanceFlipbook(PersistentInstanceHandle::PowerShotFire, FlipbookHandle::PowershotFire);
 	myFlipbookManager.SetPersistentInstanceFlipbook(PersistentInstanceHandle::RevolverFire, FlipbookHandle::RevolverFire);
+
 }
 
 void GameState::OnPush()

@@ -3,6 +3,7 @@
 #include "tge/drawers/SpriteDrawer.h"
 #include "tge/graphics/GraphicsEngine.h"
 #include "tge/texture/TextureManager.h"
+#include "tge/graphics/GraphicsStateStack.h"
 
 void FlipbookManager::RegisterFlipBook(const FlipBookPresets::FlipbookPreset aPreset, const FlipbookHandle aHandle, const bool aLooping)
 {
@@ -112,7 +113,6 @@ void FlipbookManager::PlayAt(FlipbookHandle aHandle, Tga::Matrix4x4f aTransform,
 
 	Flipbook3DInstance newInstance
 	{
-		.id = static_cast<unsigned int>(myFlipbookInstances.size()),
 		.flipbookHandle = aHandle,
 		.transform = aTransform,
 		.frameUpdateRate = aTimeStep,
@@ -172,7 +172,6 @@ void FlipbookManager::PlayAt(FlipbookHandle aHandle, Tga::Matrix4x4f aTransform,
 {
 	Flipbook3DInstance newInstance
 	{
-		.id = static_cast<unsigned int>(myFlipbookInstances.size()),
 		.flipbookHandle = aHandle,
 		.transform =(aTransform * aSize),
 		.frameUpdateRate = aTimeStep
@@ -199,7 +198,6 @@ void FlipbookManager::PlayAt(FlipbookHandle aHandle, Tga::Vector2f aPosition, Tg
 
 void FlipbookManager::Update(const float aDeltaTime)
 {
-	//TODO: AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 	std::erase_if(myFlipbookInstances, [this](const FlipbookInstance& aFlipbookInstance)
 	{
 		return (!myFlipbooks[(int)aFlipbookInstance.flipbookHandle].looping &&
@@ -282,6 +280,11 @@ void FlipbookManager::Render() const
 
 		const std::vector<UV>& uvMap = myFlipbooks[(int)instance.flipbookHandle].uvMap;
 
+		if (instance.ignoreDepth)
+		{
+			engine.GetGraphicsEngine().GetGraphicsStateStack().SetDepthStencilState(Tga::DepthStencilState::ReadOnlyLessOrEqual);
+		}
+
 		if (instance.flipped)
 		{
 			Tga::Sprite2DInstanceData spriteInstance
@@ -317,6 +320,10 @@ void FlipbookManager::Render() const
 				.myRotation = instance.rotation
 			};
 			spriteDrawer.Draw(myFlipbooks[(int)instance.flipbookHandle].spriteData, spriteInstance);
+		}
+		if (instance.ignoreDepth)
+		{
+			engine.GetGraphicsEngine().GetGraphicsStateStack().SetDepthStencilState(Tga::DepthStencilState::WriteLess);
 		}
 	}
 

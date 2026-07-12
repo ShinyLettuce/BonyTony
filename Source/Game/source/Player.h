@@ -5,6 +5,7 @@
 #include "PlayerUpdateResult.h"
 #include "Physics.h"
 #include "SceneLoader.h"
+#include "FlipbookManager.h"
 
 class Player
 {
@@ -26,6 +27,7 @@ class Player
 	public:
 	
 		void SetInput(InputMapper* anInputMapper);
+		void SetFlipbookManager(FlipbookManager* aFlipbookManager) { myFlipbookManager = aFlipbookManager; };
 		
 		void Init(const SceneLoader::PlayerConfig& aPlayerConfig);
 		
@@ -170,4 +172,5 @@ class Player
 		Gun myPowerShot {}; // Based on ShotGun other than physics variables, will drain Shotgun bullets
 
 		Camera* myCamera;
+		FlipbookManager* myFlipbookManager;
 };

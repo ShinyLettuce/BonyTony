@@ -28,11 +28,11 @@ void Player::Init(const SceneLoader::PlayerConfig& aPlayerConfig)
 	myRevolverModelInstance = aPlayerConfig.revolverModelInstance;
 	myShotgunModelInstance = aPlayerConfig.shotgunModelInstance;
 	myPosition = aPlayerConfig.position;
-	myGroundedGravity = aPlayerConfig.playerGroundedGravity; 
-	mySize = aPlayerConfig.size; 
+	myGroundedGravity = aPlayerConfig.playerGroundedGravity;
+	mySize = aPlayerConfig.size;
 	myGroundedFriction = aPlayerConfig.playerGroundedFriction;
 	myAirFriction = aPlayerConfig.playerAirFriction;
-	
+
 	myShotgun.enabled = true;
 	myShotgun.clip = aPlayerConfig.shotgunData.maxClip;
 	myShotgun.maxClip = aPlayerConfig.shotgunData.maxClip;
@@ -42,7 +42,7 @@ void Player::Init(const SceneLoader::PlayerConfig& aPlayerConfig)
 	myShotgun.fallTime = aPlayerConfig.shotgunData.fallTime;
 	myShotgun.timeToMaxDistance = aPlayerConfig.shotgunData.timeToMaxDistance;
 	myShotgun.gravityConstant = aPlayerConfig.shotgunData.gravityConstant;
-	myShotgun.ready = true; 
+	myShotgun.ready = true;
 	myShotgunBulletAmount = aPlayerConfig.shotgunBulletAmount;
 	myShotgunBulletSpreadAngle = aPlayerConfig.shotgunSpreadAngle;
 	myShotgunHangtime = aPlayerConfig.shotgunHangtime;
@@ -62,8 +62,8 @@ void Player::Init(const SceneLoader::PlayerConfig& aPlayerConfig)
 	myBulletTimeTimeScale = aPlayerConfig.bulletTimeTimeScale;
 	myBulletTimeLerpToSpeed = aPlayerConfig.bulletTimeLerpToSpeed;
 	myBulletTimeLerpFromSpeed = aPlayerConfig.bulletTimeLerpFromSpeed;
-	myTimeInBulletTime= aPlayerConfig.timeInBulletTime;
-	
+	myTimeInBulletTime = aPlayerConfig.timeInBulletTime;
+
 	myPowerShot.enabled = false;
 	myPowerShot.clip = aPlayerConfig.powerShotData.maxClip;
 	myPowerShot.maxClip = aPlayerConfig.powerShotData.maxClip;
@@ -73,8 +73,8 @@ void Player::Init(const SceneLoader::PlayerConfig& aPlayerConfig)
 	myPowerShot.fallTime = aPlayerConfig.powerShotData.fallTime;
 	myPowerShot.timeToMaxDistance = aPlayerConfig.powerShotData.timeToMaxDistance;
 	myPowerShot.gravityConstant = aPlayerConfig.powerShotData.gravityConstant;
-	myPowerShot.ready = true; 
-	
+	myPowerShot.ready = true;
+
 	Tga::Engine* engine = Tga::Engine::GetInstance();
 	Tga::Vector2ui intResolution = engine->GetRenderSize();
 	myScreenResolution = { static_cast<float>(intResolution.x), static_cast<float>(intResolution.y) };
@@ -168,10 +168,10 @@ PlayerUpdateResult Player::Update(const float aDeltaTime, Camera& aCamera)
 
 	UpdateNormalizedAim(aCamera);
 
-	#if !defined(_RETAIL)
+#if !defined(_RETAIL)
 	ImGuiUpdate(aDeltaTime); //TODO !!! DO NOT SHIP
-	#endif
-	
+#endif
+
 	if (myIsFrozen)
 	{
 		action = PlayerUpdateResult::Action::Stunned;
@@ -204,9 +204,9 @@ PlayerUpdateResult Player::Update(const float aDeltaTime, Camera& aCamera)
 				ShootShotgun(aCamera);
 				action = PlayerUpdateResult::Action::Shotgun;
 				myShotgunWasFiredThisFrame = true;
-			}	
+			}
 		}
-		else 
+		else
 		{
 			ShootShotgun(aCamera);
 			action = PlayerUpdateResult::Action::Shotgun;
@@ -235,20 +235,20 @@ PlayerUpdateResult Player::Update(const float aDeltaTime, Camera& aCamera)
 	{
 		AudioManager::GetAudioPoolByHandle(AudioHandles::revolverShotNoAmmo).Play();
 	}
-	
+
 	myVelocity.y += GetGravity(aDeltaTime) * aDeltaTime * 0.5f;
-	
+
 	//TODO !!! TEMP DO NOT SHIP
 	if (myInputMapper->IsActionActive(GameAction::DebugReload))
 	{
-		Reload(); 
+		Reload();
 	}
 
-	if (myIsGrounded && myShotgun.ready && myRevolver.ready &&(myShotgun.clip < myShotgun.maxClip || myRevolver.clip < myRevolver.maxClip))
+	if (myIsGrounded && myShotgun.ready && myRevolver.ready && (myShotgun.clip < myShotgun.maxClip || myRevolver.clip < myRevolver.maxClip))
 	{
 		Reload();
 	}
-	
+
 	if (!myShotgun.ready)
 	{
 		if ((myShotgun.timeBetweenShots < myShotgun.currentLockTime))
@@ -260,7 +260,7 @@ PlayerUpdateResult Player::Update(const float aDeltaTime, Camera& aCamera)
 			myShotgun.currentLockTime += aDeltaTime;
 		}
 	}
-	
+
 	if (myRevolverTimeSinceInput >= 0.f)
 	{
 		myRevolverTimeSinceInput -= aDeltaTime;
@@ -279,7 +279,7 @@ PlayerUpdateResult Player::Update(const float aDeltaTime, Camera& aCamera)
 	}
 
 	//This is only used for Breaking metal crates, The powershot is only reliant on the Shotgun to fire
-	if (!myPowerShot.ready) 
+	if (!myPowerShot.ready)
 	{
 		if ((myPowerShot.timeBetweenShots < myPowerShot.currentLockTime))
 		{
@@ -290,10 +290,10 @@ PlayerUpdateResult Player::Update(const float aDeltaTime, Camera& aCamera)
 			myPowerShot.currentLockTime += aDeltaTime;
 		}
 	}
-	
+
 	DecayXVelocity(aDeltaTime);
 
-	return PlayerUpdateResult { 
+	return PlayerUpdateResult{
 		.action = action,
 		.position = myPosition,
 		.velocity = myVelocity };
@@ -334,7 +334,7 @@ void Player::AnimateWeapons(float aDeltaTime)
 
 	const Tga::Vector2f worldRight = Tga::Vector2f{ 1.0f, 0.0f };
 	const Tga::Vector2f worldUp = Tga::Vector2f{ 0.0f, 1.0f };
-	
+
 	Tga::Matrix4x4f& revolverTransform = myRevolverModelInstance.GetTransform();
 	if (myRevolver.enabled)
 	{
@@ -391,7 +391,7 @@ void Player::AnimateWeapons(float aDeltaTime)
 
 		const Tga::Vector3f forward = up.Cross(right);
 
-		shotgunTransform.SetPosition(Tga::Vector3f{ (myPosition + pivot + (myNormalizedShotgunAim * shotgunDistance * Tga::Vector2f{ 1.0f, 0.7f })), weaponForwardOffset});
+		shotgunTransform.SetPosition(Tga::Vector3f{ (myPosition + pivot + (myNormalizedShotgunAim * shotgunDistance * Tga::Vector2f{ 1.0f, 0.7f })), weaponForwardOffset });
 		shotgunTransform.SetRight(right);
 		shotgunTransform.SetForward(forward);
 		shotgunTransform.SetUp(up);
@@ -458,7 +458,7 @@ void Player::AnimateWobble(float aDeltaTime)
 	myModelInstance.GetTransform().SetRotation(Tga::Vector3f{ 0.0f, currentYAngle, currentZAngle * MathUtils::LerpClamped(0.0f, 1.0f, std::abs(myVelocity.x) / maxVelocity) });
 }
 
-float Player::GetGravity([[maybe_unused]]float aDeltaTime)
+float Player::GetGravity([[maybe_unused]] float aDeltaTime)
 {
 	if (myIsGrounded)
 	{
@@ -474,10 +474,10 @@ float Player::GetGravity([[maybe_unused]]float aDeltaTime)
 			myShotgunHangtimeTimer += aDeltaTime;
 			return myAirResistance * 0.5f;
 		}
-		
+
 		return myFallGravity;
 	}
-	
+
 	return myAirResistance;
 }
 
@@ -507,7 +507,7 @@ void Player::ShootRevolver(Camera& aCamera)
 		//Empty Clip sound
 
 		//Update UI
-		
+
 		constexpr float minYVelocity = 800.0f;
 
 		if (myVelocity.y < minYVelocity)
@@ -529,12 +529,12 @@ void Player::ShootRevolver(Camera& aCamera)
 				myVelocity.x = minXVelocity;
 			}
 		}
-		
+
 		if (myVelocity.y > 0.f)
 		{
 			myIsGrounded = false;
 		}
-		
+
 		//myVelocity = myIsGrounded ? -(1.0f) * (myForceVelocity * myNormalizedAim) : myVelocity + -(1.0f) * (myForceVelocity * myNormalizedAim);
 	}
 }
@@ -585,7 +585,7 @@ void Player::ShootPowerShot(Camera& aCamera)
 		myShotgun.ready = false;
 		myPowerShot.currentLockTime = 0.f;
 		myPowerShot.ready = false;
-		myShotgun.clip = 0; 
+		myShotgun.clip = 0;
 
 		//Empty Clip sound
 
@@ -620,7 +620,7 @@ void Player::UpdateNormalizedAim(Camera& aCamera)
 	if (myInputMapper->GetIsUsingMouse())
 	{
 		Tga::Vector3f mouseToWorld = aCamera.GetScreenToWorldPoint(myInputMapper->GetMousePositionYDown());
-		myNormalizedShotgunAim = (Tga::Vector2f (mouseToWorld.x, mouseToWorld.y) - GetShotOrigin()).GetNormalized();
+		myNormalizedShotgunAim = (Tga::Vector2f(mouseToWorld.x, mouseToWorld.y) - GetShotOrigin()).GetNormalized();
 		myNormalizedRevolverAim = myNormalizedShotgunAim;
 	}
 	else
@@ -640,7 +640,7 @@ void Player::UpdateNormalizedAim(Camera& aCamera)
 
 Tga::Vector2f Player::GetShotOrigin() const
 {
-	return Tga::Vector2f { myPosition.x, myPosition.y + myPlayerArmPivotHeight };
+	return Tga::Vector2f{ myPosition.x, myPosition.y + myPlayerArmPivotHeight };
 }
 
 Tga::Vector2f Player::GetShotgunBarrelEndPoint() const
@@ -674,6 +674,13 @@ void Player::Reload()
 {
 	myShotgun.clip = myShotgun.maxClip;
 	myRevolver.clip = myRevolver.maxClip;
+
+	myFlipbookManager->PlayAt(FlipbookHandle::ShellEject, myPosition, 0, myNormalizedShotgunAim.x < 0);
+
+	if (myRevolver.enabled)
+	{
+		myFlipbookManager->PlayAt(FlipbookHandle::BulletEject, myPosition, 0, myNormalizedShotgunAim.x < 0);
+	}
 
 	AudioManager::GetAudioPoolByHandle(AudioHandles::reload).Play();
 	//Update UI
@@ -709,8 +716,8 @@ void Player::SetPosition(const Tga::Vector2f& aPosition)
 {
 	myPosition = aPosition;
 	Tga::Matrix4x4f& instanceTransform = myModelInstance.GetTransform();
-	instanceTransform(4,1) = myPosition.x;
-	instanceTransform(4,2) = myPosition.y;
+	instanceTransform(4, 1) = myPosition.x;
+	instanceTransform(4, 2) = myPosition.y;
 }
 
 void Player::SetVelocity(const Tga::Vector2f& aVelocity)
@@ -756,7 +763,7 @@ Tga::Vector2f Player::GetRevolverPosition() const
 Tga::Vector2f Player::GetShotgunPosition() const
 {
 	Tga::Vector3f shotgunPosition = myShotgunModelInstance.GetTransform().GetPosition();
-	return {shotgunPosition.x, shotgunPosition.y};
+	return { shotgunPosition.x, shotgunPosition.y };
 }
 
 Tga::Vector2f Player::GetPosition() const
@@ -902,11 +909,11 @@ float Player::GetBulletTimeLerpFromSpeed() const
 
 #pragma endregion
 
-void Player::ImGuiUpdate([[maybe_unused]]float aDeltaTime)
+void Player::ImGuiUpdate([[maybe_unused]] float aDeltaTime)
 {
 	ImGui::Begin("Player");
 	//all code here
-	
+
 	if (ImGui::Button("Teleport to end"))
 	{
 		SceneLoader::SceneConfig sceneConfig = SceneLoader::GetActiveScene();
@@ -934,40 +941,40 @@ void Player::ImGuiUpdate([[maybe_unused]]float aDeltaTime)
 	ImGui::DragFloat("Bullet Time Lerp To Speed", &myBulletTimeLerpToSpeed);
 	ImGui::DragFloat("Bullet Time Lerp From Speed", &myBulletTimeLerpFromSpeed);
 	ImGui::DragFloat("Bullet Time In Bullet time", &myTimeInBulletTime);
-	
+
 	ImGui::Text("\nShotgun");
 	ImGui::DragFloat("Shotgun Gravity", &myShotgun.gravityConstant);
 	ImGui::DragFloat("Shotgun FallTime", &myShotgun.fallTime);
 	ImGui::DragFloat("Shotgun Knockback Distance", &myShotgun.maxDistance);
 	ImGui::DragFloat("Shotgun Knockback Duration", &myShotgun.timeToMaxDistance);
 	ImGui::DragFloat("Shotgun Hangtime", &myShotgunHangtime);
-	
+
 	ImGui::Text("\nRevolver");
 	ImGui::DragFloat("Revolver Gravity", &myRevolver.gravityConstant);
 	ImGui::DragFloat("Revolver FallTime", &myRevolver.fallTime);
 	ImGui::DragFloat("Revolver Knockback Distance", &myRevolver.maxDistance);
 	ImGui::DragFloat("Revolver Knockback Duration", &myRevolver.timeToMaxDistance);
-	
+
 	ImGui::Text("\nPowerShot");
 	ImGui::DragFloat("Power Shot Gravity", &myPowerShot.gravityConstant);
 	ImGui::DragFloat("Power Shot FallTime", &myPowerShot.fallTime);
 	ImGui::DragFloat("Power Shot Knockback Distance", &myPowerShot.maxDistance);
 	ImGui::DragFloat("Power Shot Knockback Duration", &myPowerShot.timeToMaxDistance);
 	ImGui::DragFloat("Power Shot BreakPower Duration", &myPowerShot.timeBetweenShots);
-	
+
 	ImGui::Text("\nRealtime Calculated Variables");
 	ImGui::Text("Air Resistance: %f", myAirResistance);
 	ImGui::Text("Fall Gravity: %f", myFallGravity);
 	ImGui::Text("Force: %f", myForceVelocity);
 	ImGui::Text("X Velocity: %.3f", myVelocity.x / 100.0f);
 	ImGui::Text("Y Velocity: %.3f", myVelocity.y / 100.0f);
-	ImGui::Text("Friction Calc: %f", (1 - 1/(myIsGrounded ? myGroundedFriction : myAirFriction)));
+	ImGui::Text("Friction Calc: %f", (1 - 1 / (myIsGrounded ? myGroundedFriction : myAirFriction)));
 	ImGui::Text("Grounded: %s", (myIsGrounded ? "true" : "false"));
 	ImGui::Text("Fall Gravity: %s", (myShotgunHangtimeTimer > myShotgunHangtime ? "true" : "false"));
 	ImGui::Text("ShotGunHangtime Timer: %f", myShotgunHangtimeTimer);
-	
+
 	ImGui::End();
-	
+
 }
 
 void Player::Render()
@@ -975,7 +982,7 @@ void Player::Render()
 	Tga::Engine& engine = *Tga::Engine::GetInstance();
 	Tga::GraphicsEngine& graphicsEngine = engine.GetGraphicsEngine();
 	Tga::ModelDrawer& modelDrawer = graphicsEngine.GetModelDrawer();
-	
+
 	if (myModelInstance.IsValid())
 	{
 		modelDrawer.Draw(myModelInstance);
