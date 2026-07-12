@@ -509,6 +509,7 @@ void GameState::Render()
 			.radius = lightRadius
 		});
 	}
+
 	{
 		myCamera.Prepare();
 
