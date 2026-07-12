@@ -10,5 +10,13 @@
 
 namespace GameStateUpdate
 {
-	void PlayerSweep(const std::vector<SceneLoader::TileConfig>& aTiles, std::vector<CrateUpdater::Crate>& aCrates, CrateUpdater& aCrateUpdater, Player& aPlayer, PlayerUpdateResult& aPlayerUpdateResult, FlipbookManager* aFlipbookManager, FlipbookManager::FlipbookHandle anMetalCrateHit, const float aDeltaTime, const float aTickRate);
+	void PlayerSweep(
+		const std::vector<SceneLoader::TileConfig>& aTiles,
+		std::vector<CrateUpdater::Crate>& aCrates,
+		CrateUpdater& aCrateUpdater, Player& aPlayer,
+		PlayerUpdateResult& aPlayerUpdateResult,
+		FlipbookManager* aFlipbookManager,
+		const float aDeltaTime,
+		const float aTickRate
+	);
 }

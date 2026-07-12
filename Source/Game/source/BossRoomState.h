@@ -47,7 +47,6 @@ private:
 	Timer* myTimer;
 	
 	FlipbookManager myFlipBookManager;
-	FlipbookManager::FlipbookHandle mySpeechBubbleFlipbookHandle;
 	Tga::Vector2f mySpeechBubbleOffset = { -300.f, 350.f };
 	static constexpr float mySpeechBubbleSpeed = 0.125f;
 	static constexpr float mySpeechBubbleSize = 0.7f;

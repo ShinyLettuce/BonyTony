@@ -32,32 +32,6 @@ struct GameStateHandles
 	StateHandle bossRoomState;
 	StateHandle popUpState;
 };
-                                                  
-struct TonyFlipbookHandles
-{
-	FlipbookManager::FlipbookHandle tonyFireShotgun;
-	FlipbookManager::FlipbookHandle tonyTrailFireShotgun;
-	FlipbookManager::FlipbookHandle tonyFirePowershot;
-	FlipbookManager::FlipbookHandle tonyTrailFirePowershot; 
-	FlipbookManager::FlipbookHandle tonyFireRevolver;
-
-	FlipbookManager::PersistentInstanceHandle tonyFireShotgunInstance;
-	FlipbookManager::PersistentInstanceHandle tonyFirePowerShotInstance;
-	FlipbookManager::PersistentInstanceHandle tonyFireRevolverInstance;
-};
-
-struct EnvironmentFlipbookHandles
-{
-	FlipbookManager::FlipbookHandle environmentHit;
-	FlipbookManager::FlipbookHandle crateHit;
-	FlipbookManager::FlipbookHandle metalCrateHit;
-	FlipbookManager::FlipbookHandle enemyHit;
-};
-
-struct RepeatingFlipbookHandles
-{
-	FlipbookManager::FlipbookHandle steamEnvironment;
-};
 
 class GameState : public State
 {
@@ -92,9 +66,6 @@ private:
 	AmbienceManager myAmbienceManager;
 	LevelTrigger myLevelTrigger;
 	FlipbookManager myFlipbookManager;
-	TonyFlipbookHandles myTonyFlipbookHandles;
-	EnvironmentFlipbookHandles myEnvironmentFlipbookHandles;
-	RepeatingFlipbookHandles myLoopingFlipbookHandles;
 	FullscreenImage myFadeInOut;
 		
 	GameStateHandles myStateHandles;

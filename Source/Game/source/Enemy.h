@@ -22,10 +22,13 @@ class Player;
 class Enemy
 {
 	public:
-		void Init(const SceneLoader::EnemyConfig& aEnemyConfig, const SceneLoader::EnemySharedConfig* aSharedConfig,
-		          std::vector<Projectile>* aProjectileCollection,
-		          FlipbookManager* aFlipbookManager, FlipbookManager::FlipbookHandle* aFireMeleeFlipbookHandle,
-		          FlipbookManager::FlipbookHandle* aFireRevolverFlipbookHandle);
+		void Init(
+			const SceneLoader::EnemyConfig& aEnemyConfig,
+			const SceneLoader::EnemySharedConfig* aSharedConfig,
+		    std::vector<Projectile>* aProjectileCollection,
+		    FlipbookManager* aFlipbookManager
+		);
+
 		void Update(const float aDeltaTime, const Tga::Vector2f aPlayerPosition);
 		void Render();
 
@@ -52,12 +55,7 @@ class Enemy
 
 	private:
 
-		struct EnemyFlipBookData
-		{
-			FlipbookManager* aFlipbookManager;
-			FlipbookManager::FlipbookHandle* aFireMeleeHandle;
-			FlipbookManager::FlipbookHandle* aFireRevolverHandle;
-		};
+		FlipbookManager* myFlipbookManager;
 		
 		enum class EnemyState
 		{
@@ -83,7 +81,6 @@ class Enemy
 		Tga::Vector2f myNormalizedAim;
 
 		const SceneLoader::EnemySharedConfig* mySharedConfig = nullptr;
-		EnemyFlipBookData myFlipbookData;
 
 		std::shared_ptr<Tga::AnimationPlayer> myIdleAnimation;
 		std::shared_ptr<Tga::AnimationPlayer> myDeathAnimation;
