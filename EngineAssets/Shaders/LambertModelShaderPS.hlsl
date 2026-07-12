@@ -43,54 +43,38 @@ PixelOutput main(ModelVertexToPixel input)
     float3 fx = fxTexture.Sample(defaultSampler, scaledUV).rgb;
 
     float emissive = fx.r;
-	
 
-
-    float3 ambiance = AmbientLightColor.rgb * EvaluateAmbianceLambert(
+    float3 ambiance = 1.0f * EvaluateAmbianceLambert(
 		environmentTexture, pixelNormal, albedo.rgb
 	);
-
-	float3 directionalLight;
-
-
-	if (DirectionalLightSoftness == 0.f)
-	{
-        directionalLight = EvaluateDirectionalLightLambert(
-			albedo.rgb, pixelNormal,
-			DirectionalLightColor.xyz, DirectionalLightTransform._m02_m12_m22);
-	}
-	
-	else 
-	{
-        directionalLight = EvaluateSoftDirectionalLightLambert(
-			albedo.rgb, pixelNormal, DirectionalLightSoftness,
-			DirectionalLightColor.xyz, DirectionalLightTransform._m02_m12_m22);
-	}
-
 	
 	float3 pointLights = 0; // <- The sum of all point lights.
 	for(unsigned int p = 0; p < NumberOfLights; p++)
 	{
-		if (myPointLights[p].Radius == 0.f)
-		{
-            pointLights += EvaluatePointLightLambert(
-				albedo.rgb, pixelNormal,
-				myPointLights[p].Color.rgb, myPointLights[p].Range, myPointLights[p].Position.xyz,
-				input.worldPosition.xyz);
-		}
-		else
-		{
-			pointLights += EvaluateSoftAreaLightLambert(
-				albedo.rgb, pixelNormal,
-				myPointLights[p].Color.rgb, myPointLights[p].Radius, myPointLights[p].Range, myPointLights[p].Position.xyz,
-				input.worldPosition.xyz);
-		}
+        //pointLights += EvaluatePointLightLambert(
+		//	albedo.rgb, 
+		//	float3(0.0f, 0.0f, -1.0f),
+		//	myPointLights[p].Color.rgb, 
+		//	myPointLights[p].Range, 
+		//	myPointLights[p].Position.xyz,
+		//	input.worldPosition.xyz
+		//);
+		
+        pointLights += EvaluateSoftAreaLightLambert(
+			albedo.rgb, 
+			float3(0.0f, 0.0f, -1.0f),
+			myPointLights[p].Color.rgb, 
+			myPointLights[p].Radius, 
+			myPointLights[p].Range, 
+			myPointLights[p].Position.xyz,
+			input.worldPosition.xyz
+		);
     }
 	
 	float3 emissiveAlbedo = albedo.rgb * emissive;
-	float3 radiance = directionalLight + ambiance + pointLights + emissiveAlbedo;
+	float3 radiance = /*directionalLight +*/ ambiance + pointLights + emissiveAlbedo;
 
-    result.color.rgb = (float3) pointLights;
+    result.color.rgb = ambiance + pointLights;
 	result.color.a = albedo.a;
 	return result;
 }

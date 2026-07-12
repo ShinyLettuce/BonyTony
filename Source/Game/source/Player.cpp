@@ -95,6 +95,10 @@ PlayerUpdateResult Player::Update(const float aDeltaTime, Camera& aCamera)
 {
 	PlayerUpdateResult::Action action = PlayerUpdateResult::Action::None;
 
+	myTimeSinceFiredShotgun += Tga::Engine::GetInstance()->GetDeltaTime();
+	myTimeSinceFiredRevolver += Tga::Engine::GetInstance()->GetDeltaTime();
+	myTimeSinceFiredPowerShot += Tga::Engine::GetInstance()->GetDeltaTime();
+
 	myRevolverWasFiredThisFrame = false;
 	myShotgunWasFiredThisFrame = false;
 	myPowershotWasFiredThisFrame = false;
@@ -391,7 +395,7 @@ void Player::AnimateWeapons(float aDeltaTime)
 
 		const Tga::Vector3f forward = up.Cross(right);
 
-		shotgunTransform.SetPosition(Tga::Vector3f{ (myPosition + pivot + (myNormalizedShotgunAim * shotgunDistance * Tga::Vector2f{ 1.0f, 0.7f })), weaponForwardOffset});
+		shotgunTransform.SetPosition(Tga::Vector3f{ (myPosition + pivot + (myNormalizedShotgunAim * shotgunDistance * Tga::Vector2f{ 1.0f, 0.2f })), weaponForwardOffset});
 		shotgunTransform.SetRight(right);
 		shotgunTransform.SetForward(forward);
 		shotgunTransform.SetUp(up);
@@ -489,6 +493,7 @@ void Player::ShootRevolver(Camera& aCamera)
 {
 	if (myRevolver.enabled)
 	{
+		myTimeSinceFiredRevolver = 0.0f;
 		myRevolverTimeSincePreviousShot = 0.0f;
 		myRevolverPreviousShotDirection = myNormalizedRevolverAim;
 
@@ -543,6 +548,8 @@ void Player::ShootShotgun(Camera& aCamera)
 {
 	if (myShotgun.enabled)
 	{
+		myTimeSinceFiredShotgun = 0.0f;
+
 		CalculateVelocity(myShotgun);
 
 		aCamera.Shake(7.f, 5.f, 0.5f);
@@ -573,6 +580,8 @@ void Player::ShootPowerShot(Camera& aCamera)
 {
 	if (myPowerShot.enabled)
 	{
+		myTimeSinceFiredPowerShot = 0.0f;
+
 		CalculateVelocity(myPowerShot);
 
 		aCamera.Shake(10.f, 10.f, 0.4f);

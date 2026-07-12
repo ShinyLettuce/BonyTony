@@ -667,7 +667,7 @@ namespace SceneLoader
 
 			if (id == "tile"_tgaid || id == "Tile"_tgaid ||
 				id == "TileFull_Level1"_tgaid || id == "TileHalf_Level1"_tgaid || id == "TileSlim_Level1"_tgaid ||
-				id == "TileFull_Level2"_tgaid || id == "TileHalf_Level2"_tgaid || id == "TileSlim_Level2"_tgaid ||
+				id == "TileFull_Level2"_tgaid || id == "TileHalf_Level2"_tgaid ||
 				id == "TileFullHighligh_Level2"_tgaid)
 				{
 				TileConfig tileConfig;
@@ -679,6 +679,15 @@ namespace SceneLoader
 				tileConfig.position = Tga::Vector2f{ position.x, position.y };
 
 				sceneConfig.tileConfigs.emplace_back(std::move(tileConfig));
+			}
+			else if (id == "CornerPieceL"_tgaid || id == "CornerPieceR"_tgaid ||
+				id == "Borderwall"_tgaid ||
+				id == "BackGroundBlock_2"_tgaid || id == "BackGroundBlock_4"_tgaid || id == "TileSlim_Level2"_tgaid)
+			{
+				ModelConfig modelConfig;
+				modelConfig.modelInstance = cso.GetFirstModelInstance();
+
+				sceneConfig.unlitModelConfigs.push_back(modelConfig);
 			}
 			else if (id == "Crate_Wood"_tgaid || id == "Crate_Metal"_tgaid)
 			{
