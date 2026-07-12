@@ -51,7 +51,7 @@ public:
 	void Update();
 	void Prepare();
 
-	bool IsPointWithinFrustum(const Tga::Vector3f& aPoint) const;
+	bool IsPointWithinFrustum(const Tga::Vector3f& aPoint, float aRadius) const;
 
 	void DrawScreenToWorldDebugGizmos(Tga::Vector2f aScreenPoint);
 private:

@@ -198,6 +198,7 @@ namespace SceneLoader
 		std::vector<CrateConfig> crateConfigs;
 		std::vector<PickupConfig> pickupConfigs;
 		std::vector<Ambience> ambiences;
+		std::vector<ModelConfig> transparentObjectConfig;
 	};
 
 	void Init();

@@ -170,10 +170,49 @@ void Camera::Prepare()
 	graphicsStateStack.SetCamera(*myCamera);
 }
 
-bool Camera::IsPointWithinFrustum(const Tga::Vector3f& aPoint) const
+bool Camera::IsPointWithinFrustum(const Tga::Vector3f& aPoint, float aRadius) const
 {	
-	Frustum frustum = GetFrustum();
-	return IsPointWithinFrustum(frustum, aPoint);
+	const Tga::Matrix4x4f& projection = myCamera->GetProjection();
+
+	//Get camera information
+	const float aspectRatio = (float)Tga::Engine::GetInstance()->GetRenderSize().x / (float)Tga::Engine::GetInstance()->GetRenderSize().y;
+	const float halfHorizontalFoVRad = atan(1.0f / projection(1, 1));
+	const float halfVerticalFovRad = halfHorizontalFoVRad / aspectRatio;
+
+	//Lambda to rotate a vector around an arbitrary axis
+	auto rotateAroundArbitraryAxis = [](Tga::Vector3<float> aVectorToRotate, Tga::Vector3<float> aRotationAxis, float aAngle) {
+		return aVectorToRotate * Tga::Matrix3x3<float>{
+			cos(aAngle) + (aRotationAxis.x * aRotationAxis.x * (1.0f - cos(aAngle))), aRotationAxis.x* aRotationAxis.y* (1.0f - cos(aAngle)) - aRotationAxis.z * sin(aAngle), aRotationAxis.x* aRotationAxis.z* (1.0f - cos(aAngle)) + aRotationAxis.y * sin(aAngle),
+			aRotationAxis.y* aRotationAxis.x* (1.0f - cos(aAngle)) + aRotationAxis.z * sin(aAngle), cos(aAngle) + aRotationAxis.y * aRotationAxis.y * (1.0f - cos(aAngle)), aRotationAxis.y* aRotationAxis.z* (1.0f - cos(aAngle)) - aRotationAxis.x * sin(aAngle),
+			aRotationAxis.z* aRotationAxis.x* (1.0f - cos(aAngle)) - aRotationAxis.y * sin(aAngle), aRotationAxis.z* aRotationAxis.y* (1.0f - cos(aAngle)) + aRotationAxis.x * sin(aAngle), cos(aAngle) + aRotationAxis.z * aRotationAxis.z * (1.0f - cos(aAngle))
+		};
+	};
+
+	const Tga::Matrix4x4f& transform = myCamera->GetTransform();
+	const Tga::Vector3f position = transform.GetPosition();
+
+	//Rotate camera direction vectors with FOV angles to get normals to all the planes
+	Tga::Vector3f rightPlaneNormal = rotateAroundArbitraryAxis(transform.GetRight(), transform.GetUp(), -halfHorizontalFoVRad);
+	Tga::Vector3f leftPlaneNormal = rotateAroundArbitraryAxis(-1.f * transform.GetRight(), transform.GetUp(), halfHorizontalFoVRad);
+	Tga::Vector3f upPlaneNormal = rotateAroundArbitraryAxis(transform.GetUp(), transform.GetRight(), halfVerticalFovRad);
+	Tga::Vector3f downPlaneNormal = rotateAroundArbitraryAxis(-1.f * transform.GetUp(), transform.GetRight(), -halfVerticalFovRad);
+
+	const int frustumPlaneCount = 4;
+	Tga::Vector3f frustumPlaneNormals[frustumPlaneCount] = { rightPlaneNormal, leftPlaneNormal, upPlaneNormal, downPlaneNormal };
+
+	bool isWithinFrustum = true;
+
+	for (int i = 0; i < frustumPlaneCount; ++i)
+	{
+		// Assume a default scaling of 5
+		if (frustumPlaneNormals[i].Dot(aPoint - position) > 5.0f * aRadius)
+		{
+			isWithinFrustum = false;
+			break;
+		}
+	}
+
+	return isWithinFrustum;
 }
 
 void Camera::DrawScreenToWorldDebugGizmos(Tga::Vector2f aScreenPoint)
