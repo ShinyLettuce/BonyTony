@@ -29,6 +29,11 @@
 #include "Options.h"
 #include "PopUpState.h"
 
+#if !defined(_RETAIL)
+#include <nlohmann/json.hpp>
+#include <fstream>
+#endif
+
 GameState::GameState()
 {
 	Tga::Engine* engine = Tga::Engine::GetInstance();
@@ -470,6 +475,59 @@ void GameState::Render()
 #if !defined(_RETAIL)
 	if (ImGui::Begin("Muzzle Flash", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 	{
+		if (ImGui::Button("Save")) {
+			nlohmann::json json;
+
+			json["Shotgun"]["Intensity"] = shotgunLightIntensity;
+			json["Shotgun"]["Range"] = shotgunLightRange;
+			json["Shotgun"]["Radius"] = shotgunLightRadius;
+			json["Shotgun"]["Duration"] = shotgunLightDuration;
+
+			json["Revolver"]["Intensity"] = revolverLightIntensity;
+			json["Revolver"]["Range"] = revolverLightRange;
+			json["Revolver"]["Radius"] = revolverLightRadius;
+			json["Revolver"]["Duration"] = revolverLightDuration;
+
+			json["PowerShot"]["Intensity"] = powerShotLightIntensity;
+			json["PowerShot"]["Range"] = powerShotLightRange;
+			json["PowerShot"]["Radius"] = powerShotLightRadius;
+			json["PowerShot"]["Duration"] = powerShotLightDuration;
+
+			std::filesystem::path path = Tga::Settings::GameAssetRoot() / "MuzzleFlashSettings.json";
+			std::ofstream fs(path, std::ios::out | std::ios::trunc);
+
+			fs::permissions(path, fs::perms::all);
+			fs << json.dump();
+		}
+
+		ImGui::SameLine();
+
+		if (ImGui::Button("Load")) {
+			nlohmann::json json;
+
+			std::filesystem::path path = Tga::Settings::GameAssetRoot() / "MuzzleFlashSettings.json";
+			std::ifstream fs(path, std::ios::in);
+
+			fs >> json;
+
+			shotgunLightIntensity = json["Shotgun"]["Intensity"];
+			shotgunLightRange = json["Shotgun"]["Range"];
+			shotgunLightRadius = json["Shotgun"]["Radius"];
+			shotgunLightDuration = json["Shotgun"]["Duration"];
+
+			revolverLightIntensity = json["Revolver"]["Intensity"];
+			revolverLightRange = json["Revolver"]["Range"];
+			revolverLightRadius = json["Revolver"]["Radius"];
+			revolverLightDuration = json["Revolver"]["Duration"];
+
+			powerShotLightIntensity = json["PowerShot"]["Intensity"];
+			powerShotLightRange = json["PowerShot"]["Range"];
+			powerShotLightRadius = json["PowerShot"]["Radius"];
+			powerShotLightDuration = json["PowerShot"]["Duration"];
+		}
+
+		ImGui::Spacing();
+
 		ImGui::TextDisabled("Shotgun Light Settings");
 		ImGui::Separator();
 		ImGui::DragFloat("Shotgun Intensity", &shotgunLightIntensity, 0.1f);
