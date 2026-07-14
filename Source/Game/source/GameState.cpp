@@ -451,62 +451,81 @@ void GameState::Render()
 	Tga::Vector2f playerPosition2d = myPlayer.GetPosition();
 	Tga::Vector3f playerPosition3d(playerPosition2d, 0.0f);
 
-	static float lightIntensity = 2.0f;
-	static float lightRange = 50.0f;
-	static float lightRadius = 200.0f;
+	static float shotgunLightIntensity = 2.0f;
+	static float revolverLightIntensity = 1.0f;
+	static float powerShotLightIntensity = 2.4f;
+
+	static float shotgunLightRange = 50.0f;
+	static float revolverLightRange = 50.0f;
+	static float powerShotLightRange = 50.0f;
+
+	static float shotgunLightRadius = 200.0f;
+	static float revolverLightRadius = 200.0f;
+	static float powerShotLightRadius = 200.0f;
+
+	static float shotgunLightDuration = 0.06f;
+	static float revolverLightDuration = 0.05f;
+	static float powerShotLightDuration = 0.07f;
 
 #if !defined(_RETAIL)
-	if (ImGui::Begin("Lights", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+	if (ImGui::Begin("Muzzle Flash", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 	{
-		ImGui::DragFloat("Red", &lightIntensity, 0.1f);
-		ImGui::DragFloat("Range", &lightRange, 1.0f);
-		ImGui::DragFloat("Radius", &lightRadius, 1.0f);
+		ImGui::TextDisabled("Shotgun Light Settings");
+		ImGui::Separator();
+		ImGui::DragFloat("Shotgun Intensity", &shotgunLightIntensity, 0.1f);
+		ImGui::DragFloat("Shotgun Range", &shotgunLightRange, 0.1f);
+		ImGui::DragFloat("Shotgun Radius", &shotgunLightRadius, 0.1f);
+		ImGui::DragFloat("Shotgun Duration", &shotgunLightDuration, 0.01f);
+		ImGui::TextDisabled("Revolver Light Settings");
+		ImGui::Separator();
+		ImGui::DragFloat("Revolver Intensity", &revolverLightIntensity, 0.1f);
+		ImGui::DragFloat("Revolver Range", &revolverLightRange, 0.1f);
+		ImGui::DragFloat("Revolver Radius", &revolverLightRadius, 0.1f);
+		ImGui::DragFloat("Revolver Duration", &revolverLightDuration, 0.01f);
+		ImGui::TextDisabled("PowerShot Light Settings");
+		ImGui::Separator();
+		ImGui::DragFloat("PowerShot Intensity", &powerShotLightIntensity, 0.1f);
+		ImGui::DragFloat("PowerShot Range", &powerShotLightRange, 0.1f);
+		ImGui::DragFloat("PowerShot Radius", &powerShotLightRadius, 0.1f);
+		ImGui::DragFloat("PowerShot Duration", &powerShotLightDuration, 0.01f);
 	}
 	ImGui::End();
 #endif
 
-	const float shotgunLightDuration = 0.06f;
-	const float revolverLightDuration = 0.05f;
-	const float powerShotLightDuration = 0.07f;
-
-	const float shotgunLightIntensityMultiplier = 1.0f;
-	const float revolverLightIntensityMultiplier = 0.5f;
-	const float powerShotLightIntensityMultiplier = 1.2f;
-
 	graphicsStateStack.Push();
 	if (myPlayer.GetTimeSinceFiredShotgun() < shotgunLightDuration)
 	{
-		const float intensity = lightIntensity * shotgunLightIntensityMultiplier;
+		const float intensity = shotgunLightIntensity;
 
 		graphicsStateStack.AddPointLight(Tga::PointLight{
 			.position = playerPosition3d,
 			.color = Tga::Color{ intensity * 0.5f, intensity * 0.7f, intensity * 1.0f, 1.0f },
-			.range = lightRange * 100.0f,
-			.radius = lightRadius
+			.range = shotgunLightRange * 100.0f,
+			.radius = shotgunLightRadius
 		});
 	}
 
 	if (myPlayer.GetTimeSinceFiredRevolver() < revolverLightDuration)
 	{
-		const float intensity = lightIntensity * revolverLightIntensityMultiplier;
+		const float intensity = revolverLightIntensity;
 
 		graphicsStateStack.AddPointLight(Tga::PointLight{
 			.position = playerPosition3d,
 			.color = Tga::Color{ intensity * 0.5f, intensity * 0.7f, intensity * 1.0f, 1.0f },
-			.range = lightRange * 100.0f,
-			.radius = lightRadius
+			.range = revolverLightRange * 100.0f,
+			.radius = revolverLightRadius
 		});
 	}
 
 	if (myPlayer.GetTimeSinceFiredPowerShot() < powerShotLightDuration)
 	{
-		const float intensity = lightIntensity * powerShotLightIntensityMultiplier;
+		const float intensity = powerShotLightIntensity;
 
 		graphicsStateStack.AddPointLight(Tga::PointLight{
 			.position = playerPosition3d,
 			.color = Tga::Color{ intensity * 0.5f, intensity * 0.7f, intensity * 1.0f, 1.0f },
-			.range = lightRange * 100.0f,
-			.radius = lightRadius
+			.range = powerShotLightRange * 100.0f,
+			.radius = powerShotLightRadius
 		});
 	}
 
