@@ -60,6 +60,8 @@ private:
 
 	Tga::ModelDrawer myModelDrawer;
 
+	Tga::Vector2f myCameraTargetPosition;
+
 	EnemyUpdater myEnemyUpdater;
 	CrateUpdater myCrateUpdater;
 	PickupUpdater myPickupUpdater;

@@ -44,9 +44,12 @@ class Player
 		void StopVelocityY();
 		void SetGrounded(bool aIsGroundedBool);
 		void SetPosition(const Tga::Vector2f& aPosition);
+		void SetPosition3d(const Tga::Vector3f& aPosition);
 		void SetVelocity(const Tga::Vector2f& aVelocity);
 		void SetFrozen(bool aIsFrozen);
 		void UpdateNormalizedAim(Camera& aCamera);
+
+		void SetDummyState(bool aState);
 
 		float GetShotgunSpreadAngle() const;
 		int GetShotgunBulletAmount() const;
@@ -85,6 +88,7 @@ class Player
 
 		float GetGravity(float aDeltaTime);
 		Tga::Vector2f GetPosition() const;
+		Tga::Vector3f GetPosition3d() const;
 		/// <summary>
 		///	Returns width, height
 		/// </summary>
@@ -106,6 +110,10 @@ class Player
 		float GetTimeSinceFiredPowerShot() const { return myTimeSinceFiredPowerShot; }
 	
 		void FreezeTheShotgunSoThatItCanOnlyPointRightAndCantBeMovedWithMouseOrControllerOrAnyOtherInputDeviceForThatMatter();
+
+		float myTimeSinceFiredShotgun;
+		float myTimeSinceFiredRevolver;
+		float myTimeSinceFiredPowerShot;
 	private:
 
 		void ImGuiUpdate(float aDeltaTime);
@@ -122,14 +130,13 @@ class Player
 		/// </summary>
 		void CalculateVelocity(const Gun& aGun);
 		
+		bool myDummyState = false;
+		float myDepth;
+
 		bool myPlayerStunned = false;
 		bool myIsGrounded = false;
 		bool myIsFrozen = false;
 		
-		float myTimeSinceFiredShotgun;
-		float myTimeSinceFiredRevolver;
-		float myTimeSinceFiredPowerShot;
-
 		float myStunDuration = 0;
 		float myPlayerArmPivotHeight = 0;
 		float myStunTimer = 0;

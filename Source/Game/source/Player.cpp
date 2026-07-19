@@ -21,6 +21,8 @@ void Player::SetInput(InputMapper* anInputMapper)
 
 void Player::Init(const SceneLoader::PlayerConfig& aPlayerConfig)
 {
+	myDepth = false;
+	myDummyState = false;
 	myIsFrozen = false;
 	myPlayerArmPivotHeight = aPlayerConfig.playerArmPivotHeight;
 	myStunDuration = aPlayerConfig.stunDuration;
@@ -94,6 +96,13 @@ void Player::Init(const SceneLoader::PlayerConfig& aPlayerConfig)
 PlayerUpdateResult Player::Update(const float aDeltaTime, Camera& aCamera)
 {
 	PlayerUpdateResult::Action action = PlayerUpdateResult::Action::None;
+
+	if (myDummyState) {
+		return PlayerUpdateResult{
+			.action = action,
+			.position = myPosition,
+			.velocity = myVelocity };
+	}
 
 	myTimeSinceFiredShotgun += Tga::Engine::GetInstance()->GetDeltaTime();
 	myTimeSinceFiredRevolver += Tga::Engine::GetInstance()->GetDeltaTime();
@@ -305,6 +314,10 @@ PlayerUpdateResult Player::Update(const float aDeltaTime, Camera& aCamera)
 
 void Player::LateUpdate(const float aDeltaTime)
 {
+	if (myDummyState) {
+		return;
+	}
+
 	AnimateWeapons(aDeltaTime);
 	AnimateWobble(aDeltaTime);
 
@@ -496,8 +509,11 @@ void Player::ShootRevolver(Camera& aCamera)
 		myTimeSinceFiredRevolver = 0.0f;
 		myRevolverTimeSincePreviousShot = 0.0f;
 		myRevolverPreviousShotDirection = myNormalizedRevolverAim;
-
-		CalculateVelocity(myRevolver);
+		
+		if (!myDummyState) 
+		{
+			CalculateVelocity(myRevolver);
+		}
 
 		aCamera.Shake(3.f, 7.f, 0.4f);
 
@@ -513,31 +529,34 @@ void Player::ShootRevolver(Camera& aCamera)
 
 		//Update UI
 
-		constexpr float minYVelocity = 800.0f;
-
-		if (myVelocity.y < minYVelocity)
+		if (!myDummyState) 
 		{
-			myVelocity.y = minYVelocity;
-		}
+			constexpr float minYVelocity = 800.0f;
 
-		constexpr float minXVelocity = 300.0f;
-
-		if (std::abs(myVelocity.x) < minXVelocity)
-		{
-			const Tga::Vector2f right = Tga::Vector2f{ 1.0f, 0.0f };
-			if (myNormalizedRevolverAim.Dot(right) > 0.0f)
+			if (myVelocity.y < minYVelocity)
 			{
-				myVelocity.x = -minXVelocity;
+				myVelocity.y = minYVelocity;
 			}
-			else
-			{
-				myVelocity.x = minXVelocity;
-			}
-		}
 
-		if (myVelocity.y > 0.f)
-		{
-			myIsGrounded = false;
+			constexpr float minXVelocity = 300.0f;
+
+			if (std::abs(myVelocity.x) < minXVelocity)
+			{
+				const Tga::Vector2f right = Tga::Vector2f{ 1.0f, 0.0f };
+				if (myNormalizedRevolverAim.Dot(right) > 0.0f)
+				{
+					myVelocity.x = -minXVelocity;
+				}
+				else
+				{
+					myVelocity.x = minXVelocity;
+				}
+			}
+
+			if (myVelocity.y > 0.f)
+			{
+				myIsGrounded = false;
+			}
 		}
 
 		//myVelocity = myIsGrounded ? -(1.0f) * (myForceVelocity * myNormalizedAim) : myVelocity + -(1.0f) * (myForceVelocity * myNormalizedAim);
@@ -647,6 +666,11 @@ void Player::UpdateNormalizedAim(Camera& aCamera)
 	}
 }
 
+void Player::SetDummyState(bool aState)
+{
+	myDummyState = aState;
+}
+
 Tga::Vector2f Player::GetShotOrigin() const
 {
 	return Tga::Vector2f{ myPosition.x, myPosition.y + myPlayerArmPivotHeight };
@@ -729,6 +753,16 @@ void Player::SetPosition(const Tga::Vector2f& aPosition)
 	instanceTransform(4, 2) = myPosition.y;
 }
 
+void Player::SetPosition3d(const Tga::Vector3f& aPosition)
+{
+	myPosition = Tga::Vector2f{ aPosition.x, aPosition.y };
+	myDepth = aPosition.z;
+	Tga::Matrix4x4f& instanceTransform = myModelInstance.GetTransform();
+	instanceTransform(4, 1) = myPosition.x;
+	instanceTransform(4, 2) = myPosition.y;
+	instanceTransform(4, 3) = myDepth;
+}
+
 void Player::SetVelocity(const Tga::Vector2f& aVelocity)
 {
 	myVelocity = aVelocity;
@@ -778,6 +812,11 @@ Tga::Vector2f Player::GetShotgunPosition() const
 Tga::Vector2f Player::GetPosition() const
 {
 	return myPosition;
+}
+
+Tga::Vector3f Player::GetPosition3d() const
+{
+	return Tga::Vector3f{ myPosition.x, myPosition.y, myDepth };
 }
 
 Tga::Vector2f Player::GetSize() const
@@ -994,7 +1033,14 @@ void Player::Render()
 
 	if (myModelInstance.IsValid())
 	{
-		modelDrawer.Draw(myModelInstance);
+		Tga::ModelInstance modelInstance = myModelInstance;
+		Tga::Matrix4x4f& transform = modelInstance.GetTransform();
+		transform.Translate(Tga::Vector3f{ 0.0f, 0.0f, myDepth });
+		modelDrawer.Draw(modelInstance);
+	}
+
+	if (myDummyState) {
+		return;
 	}
 
 	if (myRevolver.enabled && myRevolverModelInstance.IsValid())

@@ -4,6 +4,8 @@
 
 namespace MathUtils
 {
+    const float Pi = 3.14159265359f;
+
     int Modulo(int aNum, int aMod);
     float Min(float aA, float aB);
     float Max(float aA, float aB);
