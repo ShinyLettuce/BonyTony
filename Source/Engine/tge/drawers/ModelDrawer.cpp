@@ -57,6 +57,12 @@ bool ModelDrawer::Init()
 		return false;
 	}
 
+	myPlantShader = std::make_unique<ModelShader>();
+	if (!myPlantShader->Init("shaders/plant_shader_VS", "shaders/model_shader_PS"))
+	{
+		return false;
+	}
+
 	return true;
 }
 
@@ -88,6 +94,11 @@ void ModelDrawer::DrawPbr(const AnimatedModelInstance& modelInstance)
 void ModelDrawer::DrawPbr(const ModelInstance& modelInstance)
 {
 	modelInstance.Render(*myPbrShader);
+}
+
+void Tga::ModelDrawer::DrawPlant(const ModelInstance& modelInstance)
+{
+	modelInstance.Render(*myPlantShader);
 }
 
 void ModelDrawer::Draw(const AnimatedModelInstance& modelInstance, const ModelShader& shader)
