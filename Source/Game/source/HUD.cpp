@@ -140,11 +140,15 @@ void HUD::UpdateAimLine(const AimLineContext& aContext)
 	Tga::Vector2f baseAimlineSize{ myAimlineData.myTexture->CalculateTextureSize() };
 	Tga::Vector2f scaledAimlineSize = baseAimlineSize * uiScale;
 
+	float alphaReverseDecay = 0.15f;
+	float initialAlpha = 0.1f;
+
 	for (int i = 0; i < static_cast<int>(Aimline::SPRITE_AMOUNT); i++)
 	{
 		aimline->aimlineInstances.at(i).myRotation = angle;
 		aimline->aimlineInstances.at(i).myPosition = aContext.aimOrigin + aContext.aimDirection * (scaledAimlineSize.y * static_cast<float>(i + 1) + (UI.aimLineGapSize * uiScale));
 		aimline->aimlineInstances.at(i).mySize = scaledAimlineSize;
+		aimline->aimlineInstances.at(i).myColor.a = initialAlpha + std::min(i * alphaReverseDecay, 1.f - initialAlpha);
 	}
 
 	aimline->origin = aContext.aimOrigin;
