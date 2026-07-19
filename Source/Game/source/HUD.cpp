@@ -12,10 +12,53 @@
 #include "Options.h"
 #include "imgui/imgui.h"
 
+
+void HUD::Shake(const float aAmplitude, const float aFrequency, const float aDuration, ShakeData& aShakeData)
+{
+	aShakeData.time = static_cast<float>(myTimer->GetTotalTime());
+	aShakeData.amplitude = aAmplitude;
+	aShakeData.frequency = aFrequency;
+	aShakeData.duration = aDuration;
+	aShakeData.remaining = aDuration;
+}
+
+Tga::Vector2f HUD::GetShakeOffset(ShakeData& aShakeData)
+{
+	constexpr float pi = 3.1415927f;
+	constexpr float tau = 2.0f * pi;
+
+	if (aShakeData.remaining > 0.0f)
+	{
+		aShakeData.remaining -= myTimer->GetDeltaTime();
+
+		const float scale = aShakeData.remaining / aShakeData.duration;
+
+		const float frequency = aShakeData.frequency * tau * scale;
+		const float amplitude = aShakeData.amplitude * scale * scale;
+
+		const float cos = std::cos(aShakeData.time + aShakeData.remaining * frequency) * amplitude;
+		const float sin = std::sin(aShakeData.time + aShakeData.remaining * frequency) * amplitude;
+
+		Tga::Vector2f shakeOffset;
+
+		shakeOffset.x = cos;
+		shakeOffset.y = sin;
+
+		return shakeOffset;
+	}
+	else
+	{
+		return Tga::Vector2f{ 0.0f, 0.0f };
+	}
+}
+
 void HUD::Init(const int aShotgunMaxClip, const int aRevolverMaxClip, float const aAimMagnitude, Timer* aTimer)
 {
 	myShellInstances.clear();
 	myBulletInstances.clear();
+
+	myShellShakeData.clear();
+	myBulletShakeData.clear();
 
 	myAimMagnitude = aAimMagnitude;
 
@@ -32,6 +75,9 @@ void HUD::Init(const int aShotgunMaxClip, const int aRevolverMaxClip, float cons
 
 	myShellInstances.resize(aShotgunMaxClip);
 	myBulletInstances.resize(aRevolverMaxClip);
+
+	myShellShakeData.resize(aShotgunMaxClip);
+	myBulletShakeData.resize(aRevolverMaxClip);
 
 	myTimer = aTimer;
 
@@ -183,7 +229,7 @@ void HUD::UpdateAimLine(const AimLineContext& aContext)
 	}
 }
 
-void HUD::RenderClips(const int aShotgunClip, const bool aRevolverReady, const int aRevolverClip) const
+void HUD::RenderClips(const int aShotgunClip, const bool aRevolverReady, const int aRevolverClip)
 {
 	const Tga::Engine& engine = *Tga::Engine::GetInstance();
 	Tga::GraphicsEngine& graphicsEngine = engine.GetGraphicsEngine();
@@ -193,13 +239,15 @@ void HUD::RenderClips(const int aShotgunClip, const bool aRevolverReady, const i
 
 	for (int i = 0; i < myShellInstances.size(); i++)
 	{
+		Tga::Sprite2DInstanceData spriteToDraw = myShellInstances.at(i);
+		spriteToDraw.myPosition = myShellInstances.at(i).myPosition + GetShakeOffset(myShellShakeData.at(i));
 		if (i < aShotgunClip)
 		{
-			spriteDrawer.Draw(myShellData, myShellInstances.at(i));
+			spriteDrawer.Draw(myShellData, spriteToDraw);
 		}
 		else
 		{
-			spriteDrawer.Draw(mySpentShellData, myShellInstances.at(i));
+			spriteDrawer.Draw(mySpentShellData, spriteToDraw);
 		}
 	}
 
@@ -211,13 +259,15 @@ void HUD::RenderClips(const int aShotgunClip, const bool aRevolverReady, const i
 
 	for (int i = 0; i < myBulletInstances.size(); i++)
 	{
+		Tga::Sprite2DInstanceData spriteToDraw = myBulletInstances.at(i);
+		spriteToDraw.myPosition = myBulletInstances.at(i).myPosition + GetShakeOffset(myBulletShakeData.at(i));
 		if (i < aRevolverClip)
 		{
-			spriteDrawer.Draw(myBulletData, myBulletInstances.at(i));
+			spriteDrawer.Draw(myBulletData, spriteToDraw);
 		}
 		else
 		{
-			spriteDrawer.Draw(mySpentBulletData, myBulletInstances.at(i));
+			spriteDrawer.Draw(mySpentBulletData, spriteToDraw);
 		}
 	}
 
