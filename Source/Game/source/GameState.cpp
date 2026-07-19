@@ -204,8 +204,8 @@ StateUpdateResult GameState::Update()
 
 	const float deltaTime = myTimer->GetDeltaTime();
 
-	static float cameraFollowDecay = 4.0f;
-	static float cameraHorizontalFollowCoefficient = 0.0f;
+	static float cameraFollowDecay = 4.0f; // 2.0f;
+	static float cameraHorizontalFollowCoefficient = 0.2f; // 0.35f;
 	static float cameraDepth = SceneLoader::GetActiveScene().cameraConfig.depth;
 
 #if !defined(_RETAIL)
