@@ -29,19 +29,35 @@ struct AimLineContext
 
 class HUD
 {
+private:
+    struct ShakeData;
 public:
     void Init(const int aShotgunMaxClip, const int aRevolverMaxClip, const float aAimMagnitude, Timer* aTimer);
     
     void UpdateAimLine(const AimLineContext& aContext);
     
-    void RenderClips(const int aShotgunClip, const bool aRevolverReady, const int aRevolverClip) const;
+    void RenderClips(const int aShotgunClip, const bool aRevolverReady, const int aRevolverClip);
     void RenderAimline();
     void RenderHitPoint(Camera& aCamera);
     void RenderVignette();
     
     void PositionElements(const int aShotgunMaxClip, const int aRevolverMaxClip);
+
+    void Shake(const float aAmplitude, const float aFrequency, const float aDuration, ShakeData& aShakeData);
+    Tga::Vector2f GetShakeOffset(ShakeData& aShakeData);
+    ShakeData& GetShellShakeData(int aIndex) { return myShellShakeData[aIndex]; }
+    ShakeData& GetBulletShakeData(int aIndex) { return myBulletShakeData[aIndex]; }
     
 private:
+    struct ShakeData
+    {
+        float time;
+        float amplitude;
+        float frequency;
+        float duration;
+        float remaining;
+    };
+
     struct UIConfig
     {
         //Textures  
@@ -100,6 +116,9 @@ private:
     
     std::vector<Tga::Sprite2DInstanceData> myShellInstances;
     std::vector<Tga::Sprite2DInstanceData> myBulletInstances;
+
+    std::vector<ShakeData> myShellShakeData;
+    std::vector<ShakeData> myBulletShakeData;
     
     Timer* myTimer;
 

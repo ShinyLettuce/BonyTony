@@ -288,11 +288,17 @@ StateUpdateResult GameState::Update()
 
 		if (playerUpdateResult.action == PlayerUpdateResult::Action::Revolver && myPlayer.GetIsRevolverEnabled())
 		{
+			myHUD.Shake(30.f, 4.f, 0.4f, myHUD.GetBulletShakeData(myPlayer.GetRevolverClip()));
 			myFlipbookManager.PlayPersistent(PersistentInstanceHandle::RevolverFire, 0.007f);
 			GameStateUpdate::RevolverRaycast(scene.tileConfigs, enemies, crates, myCrateUpdater, myPlayer, &myFlipbookManager);
 		}
 		if (playerUpdateResult.action == PlayerUpdateResult::Action::Shotgun || playerUpdateResult.action == PlayerUpdateResult::Action::PowerShot)
 		{
+			if (playerUpdateResult.action == PlayerUpdateResult::Action::PowerShot)
+			{
+				myHUD.Shake(30.f, -4.f, 0.4f, myHUD.GetShellShakeData(myPlayer.GetShotgunClip() + 1));
+			}
+			myHUD.Shake(30.f, -4.f, 0.4f, myHUD.GetShellShakeData(myPlayer.GetShotgunClip()));
 			Tga::Vector2f shotgunAimDir = myPlayer.GetNormalizedShotgunAim();
 			Tga::Vector2f forward{ 1.f, 0.f };
 			const float angle = std::atan2f(forward.Cross(shotgunAimDir), forward.Dot(shotgunAimDir));
