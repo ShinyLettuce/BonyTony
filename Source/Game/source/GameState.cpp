@@ -29,10 +29,8 @@
 #include "Options.h"
 #include "PopUpState.h"
 
-#if !defined(_RETAIL)
 #include <nlohmann/json.hpp>
 #include <fstream>
-#endif
 
 GameState::GameState()
 {
@@ -206,7 +204,7 @@ StateUpdateResult GameState::Update()
 
 	const float deltaTime = myTimer->GetDeltaTime();
 
-	static float cameraFollowDecay = 2.0f;
+	static float cameraFollowDecay = 4.0f;
 	static float cameraHorizontalFollowCoefficient = 0.35f;
 	static float cameraDepth = SceneLoader::GetActiveScene().cameraConfig.depth;
 
@@ -229,9 +227,26 @@ StateUpdateResult GameState::Update()
 #endif
 
 	Tga::Vector2f playerPosition = myPlayer.GetPosition();
-	playerPosition.x *= cameraHorizontalFollowCoefficient;
-	myCamera.MoveTowardsPosition(playerPosition, cameraFollowDecay, deltaTime);
+	if (myInputMapper->GetIsUsingMouse())
+	{
+		playerPosition.x *= cameraHorizontalFollowCoefficient;
+		Tga::Vector2ui renderSize = Tga::Engine::GetInstance()->GetRenderSize();
+		Tga::Vector2f resolution{ renderSize };
+		Tga::Vector2f mousePosition = myInputMapper->GetMousePositionYUp();
+		mousePosition = mousePosition / resolution;
+		mousePosition *= 2.0f;
+		mousePosition.x -= 1.0f;
+		mousePosition.y -= 1.0f;
+		myCameraTargetPosition = playerPosition + mousePosition * 50.0f;
+	}
+	else
+	{
+		myCameraTargetPosition = playerPosition;
+	}
+
+	myCamera.MoveTowardsPosition(myCameraTargetPosition, cameraFollowDecay, deltaTime);
 	myCamera.Update();
+
 
 	myEnemyUpdater.Update(myTimer->GetDeltaTime(), myPlayer.GetPosition());
 	myAmbienceManager.Update(myPlayer.GetPosition());
@@ -400,48 +415,43 @@ StateUpdateResult GameState::Update()
 		{
 			if (myPlayer.GetIsRevolverEnabled())
 			{
-				myHUD.UpdateAimLine(
-					{
+				myHUD.UpdateAimLine({
 								.type = AimLineType::Second,
 								.aimOrigin = myPlayer.GetShotOrigin(),
 								.aimDirection = myPlayer.GetNormalizedRevolverAim(),
 								.tiles = scene.tileConfigs,
 								.enemies = enemies,
 								.crates = crates,
-					}
-					);
+					});
 			}
 			else
 			{
-				myHUD.UpdateAimLine(
-					{
+				myHUD.UpdateAimLine({
 						.type = AimLineType::First,
 						.aimOrigin = myPlayer.GetShotOrigin(),
 						.aimDirection = myPlayer.GetNormalizedShotgunAim(),
 						.tiles = scene.tileConfigs,
 						.enemies = enemies,
 						.crates = crates,
-					}
-					);
+					});
 			}
 		}
 		else
 		{
-			myHUD.UpdateAimLine(
-				{
+			myHUD.UpdateAimLine({
 						.type = AimLineType::First,
 						.aimOrigin = myPlayer.GetShotOrigin(),
 						.aimDirection = myPlayer.GetNormalizedShotgunAim(),
 						.tiles = scene.tileConfigs,
 						.enemies = enemies,
 						.crates = crates,
-				}
-				);
+				});
 		}
 	}
 
 	return StateUpdateResult::CreateContinue();
 }
+
 
 void GameState::Render()
 {
@@ -471,6 +481,33 @@ void GameState::Render()
 	static float shotgunLightDuration = 0.06f;
 	static float revolverLightDuration = 0.05f;
 	static float powerShotLightDuration = 0.07f;
+
+	static bool initialized{ false };
+	if (!initialized) {
+		initialized = true;
+
+		nlohmann::json json;
+
+		std::filesystem::path path = Tga::Settings::GameAssetRoot() / "MuzzleFlashSettings.json";
+		std::ifstream fs(path, std::ios::in);
+
+		fs >> json;
+
+		shotgunLightIntensity = json["Shotgun"]["Intensity"];
+		shotgunLightRange = json["Shotgun"]["Range"];
+		shotgunLightRadius = json["Shotgun"]["Radius"];
+		shotgunLightDuration = json["Shotgun"]["Duration"];
+
+		revolverLightIntensity = json["Revolver"]["Intensity"];
+		revolverLightRange = json["Revolver"]["Range"];
+		revolverLightRadius = json["Revolver"]["Radius"];
+		revolverLightDuration = json["Revolver"]["Duration"];
+
+		powerShotLightIntensity = json["PowerShot"]["Intensity"];
+		powerShotLightRange = json["PowerShot"]["Range"];
+		powerShotLightRadius = json["PowerShot"]["Radius"];
+		powerShotLightDuration = json["PowerShot"]["Duration"];
+	}
 
 #if !defined(_RETAIL)
 	if (ImGui::Begin("Muzzle Flash", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
@@ -560,7 +597,7 @@ void GameState::Render()
 			.color = Tga::Color{ intensity * 0.5f, intensity * 0.7f, intensity * 1.0f, 1.0f },
 			.range = shotgunLightRange * 100.0f,
 			.radius = shotgunLightRadius
-		});
+			});
 	}
 
 	if (myPlayer.GetTimeSinceFiredRevolver() < revolverLightDuration)
@@ -572,7 +609,7 @@ void GameState::Render()
 			.color = Tga::Color{ intensity * 0.5f, intensity * 0.7f, intensity * 1.0f, 1.0f },
 			.range = revolverLightRange * 100.0f,
 			.radius = revolverLightRadius
-		});
+			});
 	}
 
 	if (myPlayer.GetTimeSinceFiredPowerShot() < powerShotLightDuration)
@@ -584,7 +621,7 @@ void GameState::Render()
 			.color = Tga::Color{ intensity * 0.5f, intensity * 0.7f, intensity * 1.0f, 1.0f },
 			.range = powerShotLightRange * 100.0f,
 			.radius = powerShotLightRadius
-		});
+			});
 	}
 
 	{
@@ -733,7 +770,7 @@ void GameState::Render()
 		graphicsStateStack.Pop();
 	}
 	graphicsStateStack.Pop();
-	
+
 	// Draw screenspace hud
 
 	graphicsStateStack.Push();
