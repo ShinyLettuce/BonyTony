@@ -689,6 +689,13 @@ namespace SceneLoader
 
 				sceneConfig.unlitModelConfigs.push_back(modelConfig);
 			}
+			else if (id == "PotPlant1"_tgaid || id == "PotPlant2"_tgaid || id == "PotPlant3"_tgaid)
+			{
+				ModelConfig modelConfig;
+				modelConfig.modelInstance = cso.GetFirstModelInstance();
+
+				sceneConfig.plants.push_back(modelConfig);
+			}
 			else if (id == "Crate_Wood"_tgaid || id == "Crate_Metal"_tgaid)
 			{
 				CrateConfig crateConfig;

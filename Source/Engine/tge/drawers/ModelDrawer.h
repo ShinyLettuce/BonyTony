@@ -30,6 +30,7 @@ namespace Tga
 		void DrawLambert(const ModelInstance& modelInstance);
 		void DrawPbr(const AnimatedModelInstance& modelInstance);
 		void DrawPbr(const ModelInstance& modelInstance);
+		void DrawPlant(const ModelInstance& modelInstance);
 
 		void Draw(const AnimatedModelInstance& modelInstance, const ModelShader& shader);
 		void Draw(const ModelInstance& modelInstance, const ModelShader& shader);
@@ -47,6 +48,7 @@ namespace Tga
 		std::unique_ptr<ModelShader> myPbrAnimatedModelShader;
 		std::unique_ptr<ModelShader> myLambertShader;
 		std::unique_ptr<ModelShader> myLambertAnimatedModelShader;
+		std::unique_ptr<ModelShader> myPlantShader;
 
 		bool myIsLoaded = false;
 		bool myIsInBatch = false;

@@ -195,6 +195,7 @@ namespace SceneLoader
 		std::vector<EnemyConfig> enemieyConfigs; // �ndra till 'enemyConfigs' ifall du �r sn�ll
 		std::vector<TileConfig> tileConfigs;
 		std::vector<ModelConfig> unlitModelConfigs;
+		std::vector<ModelConfig> plants;
 		std::vector<ModelConfig> modelConfigs;
 		std::vector<CrateConfig> crateConfigs;
 		std::vector<PickupConfig> pickupConfigs;

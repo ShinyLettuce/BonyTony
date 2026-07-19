@@ -205,7 +205,7 @@ StateUpdateResult GameState::Update()
 	const float deltaTime = myTimer->GetDeltaTime();
 
 	static float cameraFollowDecay = 4.0f;
-	static float cameraHorizontalFollowCoefficient = 0.35f;
+	static float cameraHorizontalFollowCoefficient = 0.0f;
 	static float cameraDepth = SceneLoader::GetActiveScene().cameraConfig.depth;
 
 #if !defined(_RETAIL)
@@ -697,6 +697,29 @@ void GameState::Render()
 			if (myCamera.IsPointWithinFrustum(object.modelInstance.GetTransform().GetPosition(), maxRadius))
 			{
 				myModelDrawer.Draw(object.modelInstance);
+			}
+		}
+
+		// Draw plants
+
+		for (const auto& object : sceneConfig.plants)
+		{
+			Tga::Model& model = *object.modelInstance.GetModel();
+
+			float maxRadius = 0.0f;
+			for (int i = 0; i < model.GetMeshCount(); ++i)
+			{
+				const Tga::Model::MeshData& meshData = model.GetMeshData(i);
+				const float radius = meshData.Bounds.Radius;
+				if (maxRadius < radius)
+				{
+					maxRadius = radius;
+				}
+			}
+
+			if (myCamera.IsPointWithinFrustum(object.modelInstance.GetTransform().GetPosition(), maxRadius))
+			{
+				myModelDrawer.DrawPlant(object.modelInstance);
 			}
 		}
 
