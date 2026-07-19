@@ -81,7 +81,7 @@ void BossRoomState::OnPush()
 	const Tga::Vector3f bossPos3D = myBoss.animatedModelInstance->GetTransform().GetPosition();
 	const Tga::Vector2f bossPos2D = {bossPos3D.x, bossPos3D.y};
 	const Tga::Vector2f speechBubblePos = bossPos2D + mySpeechBubbleOffset;
-	myFlipBookManager.PlayAt(FlipbookHandle::BossSpeechBubble, speechBubblePos, mySpeechBubbleSize ,mySpeechBubbleSpeed, 0.f);
+	myFlipBookManager.PlayAt(FlipbookHandle::BossSpeechBubble, speechBubblePos, 0.f, mySpeechBubbleSize ,mySpeechBubbleSpeed);
 }
 
 void BossRoomState::OnPop()

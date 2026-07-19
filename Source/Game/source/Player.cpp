@@ -684,11 +684,11 @@ void Player::Reload()
 	myShotgun.clip = myShotgun.maxClip;
 	myRevolver.clip = myRevolver.maxClip;
 
-	myFlipbookManager->PlayAt(FlipbookHandle::ShellEject, myPosition, 0, myNormalizedShotgunAim.x < 0);
+	myFlipbookManager->PlayAt(FlipbookHandle::ShellEject, myPosition, 0.f, { 1.f, 1.f }, 0.01f, myNormalizedShotgunAim.x < 0);
 
 	if (myRevolver.enabled)
 	{
-		myFlipbookManager->PlayAt(FlipbookHandle::BulletEject, myPosition, 0, myNormalizedShotgunAim.x < 0);
+		myFlipbookManager->PlayAt(FlipbookHandle::BulletEject, myPosition, 0.f, { 1.f, 1.f }, 0.01f, myNormalizedShotgunAim.x < 0);
 	}
 
 	AudioManager::GetAudioPoolByHandle(AudioHandles::reload).Play();

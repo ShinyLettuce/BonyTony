@@ -10,7 +10,7 @@ void FlipbookManager::RegisterFlipBook(const FlipBookPresets::FlipbookPreset aPr
 	Flipbook& currentFlipbook = myFlipbooks[(int)aHandle];
 
 	currentFlipbook.looping = aLooping;
-	
+
 	Tga::Engine& engine = *Tga::Engine::GetInstance();
 	currentFlipbook.spriteData.myTexture = engine.GetTextureManager().GetTexture(aPreset.flipbookAssetPath);
 	currentFlipbook.frameAmount = aPreset.frameAmount;
@@ -48,9 +48,9 @@ void FlipbookManager::InitPersistentFlipbooks()
 void FlipbookManager::RemoveAllLoopingInstances()
 {
 	std::erase_if(myFlipbookInstances, [this](const FlipbookInstance& aFlipbookInstance)
-	{
-		return myFlipbooks[(int)aFlipbookInstance.flipbookHandle].looping;
-	});
+		{
+			return myFlipbooks[(int)aFlipbookInstance.flipbookHandle].looping;
+		});
 }
 
 void FlipbookManager::SetPersistentInstanceFlipbook(PersistentInstanceHandle anInstanceHandle, FlipbookHandle aFlipbookHandle)
@@ -76,37 +76,6 @@ void FlipbookManager::MovePersistent(PersistentInstanceHandle anInstanceHandle, 
 	myPersistentFlipbook3DInstances[(int)anInstanceHandle].transform = aTransform;
 }
 
-void FlipbookManager::PlayAt(FlipbookHandle aHandle, Tga::Vector2f aPosition, float aRotation)
-{
-	Tga::Vector2ui size = myFlipbooks[(int)aHandle].spriteData.myTexture->CalculateTextureSize();
-
-	FlipbookInstance newInstance
-	{
-		.flipbookHandle = aHandle,
-		.position = aPosition,
-		.rotation = aRotation,
-		.size = { static_cast<float>(size.x), static_cast<float>(size.y) }
-	};
-
-	myFlipbookInstances.emplace_back(newInstance);
-}
-
-void FlipbookManager::PlayAt(FlipbookHandle aHandle, Tga::Vector2f aPosition, float aTimeStep, float aRotation)
-{
-	Tga::Vector2ui size = myFlipbooks[(int)aHandle].spriteData.myTexture->CalculateTextureSize();
-
-	FlipbookInstance newInstance
-	{
-		.flipbookHandle = aHandle,
-		.position = aPosition,
-		.rotation = aRotation,
-		.frameUpdateRate = aTimeStep,
-		.size = { static_cast<float>(size.x), static_cast<float>(size.y) }
-	};
-
-	myFlipbookInstances.emplace_back(newInstance);
-}
-
 void FlipbookManager::PlayAt(FlipbookHandle aHandle, Tga::Matrix4x4f aTransform, float aTimeStep)
 {
 	Tga::Vector2ui size = myFlipbooks[(int)aHandle].spriteData.myTexture->CalculateTextureSize();
@@ -121,76 +90,18 @@ void FlipbookManager::PlayAt(FlipbookHandle aHandle, Tga::Matrix4x4f aTransform,
 	myFlipbook3DInstances.emplace_back(newInstance);
 }
 
-void FlipbookManager::PlayAt(FlipbookHandle aHandle, Tga::Vector2f aPosition, float aRotation, bool aFlipped)
+void FlipbookManager::PlayAt(FlipbookHandle aHandle, Tga::Vector2f aPosition, float aRotation, Tga::Vector2f aSize, float aTimeStep, bool aFlipped)
 {
-	Tga::Vector2ui size = myFlipbooks[(int)aHandle].spriteData.myTexture->CalculateTextureSize();
+	Tga::Vector2ui spriteSize = myFlipbooks[(int)aHandle].spriteData.myTexture->CalculateTextureSize();
 
 	FlipbookInstance newInstance
 	{
 		.flipped = aFlipped,
-		.flipbookHandle = aHandle,
-		.position = aPosition,
-		.rotation = aRotation,
-		.size = { static_cast<float>(size.x), static_cast<float>(size.y) }
-	};
-
-	myFlipbookInstances.emplace_back(newInstance);
-}
-
-void FlipbookManager::PlayAt(FlipbookHandle aHandle, Tga::Vector2f aPosition, Tga::Vector2f aSize, float aRotation)
-{
-	Tga::Vector2ui spriteSize = myFlipbooks[(int)aHandle].spriteData.myTexture->CalculateTextureSize();
-
-	FlipbookInstance newInstance
-	{
-		.flipbookHandle = aHandle,
-		.position = aPosition,
-		.rotation = aRotation,
-		.size = { static_cast<float>(spriteSize.x) * aSize.x, static_cast<float>(spriteSize.y) * aSize.y }
-	};
-
-	myFlipbookInstances.emplace_back(newInstance);
-}
-
-void FlipbookManager::PlayAt(FlipbookHandle aHandle, Tga::Vector2f aPosition, Tga::Vector2f aSize, float aTimeStep,float aRotation)
-{
-	Tga::Vector2ui spriteSize = myFlipbooks[(int)aHandle].spriteData.myTexture->CalculateTextureSize();
-
-	FlipbookInstance newInstance
-	{
 		.flipbookHandle = aHandle,
 		.position = aPosition,
 		.rotation = aRotation,
 		.frameUpdateRate = aTimeStep,
-		.size = { static_cast<float>(spriteSize.x) * aSize.x, static_cast<float>(spriteSize.y) * aSize.y }
-	};
-
-	myFlipbookInstances.emplace_back(newInstance);
-}
-
-void FlipbookManager::PlayAt(FlipbookHandle aHandle, Tga::Matrix4x4f aTransform, float aSize, float aTimeStep)
-{
-	Flipbook3DInstance newInstance
-	{
-		.flipbookHandle = aHandle,
-		.transform =(aTransform * aSize),
-		.frameUpdateRate = aTimeStep
-	};
-
-	myFlipbook3DInstances.emplace_back(newInstance);
-}
-
-void FlipbookManager::PlayAt(FlipbookHandle aHandle, Tga::Vector2f aPosition, Tga::Vector2f aSize, float aRotation, bool aFlipped)
-{
-	Tga::Vector2ui spriteSize = myFlipbooks[(int)aHandle].spriteData.myTexture->CalculateTextureSize();
-	
-	FlipbookInstance newInstance
-	{
-		.flipped = aFlipped,
-		.flipbookHandle = aHandle,
-		.position = aPosition,
-		.rotation = aRotation,
-		.size = { static_cast<float>(spriteSize.x) * aSize.x, static_cast<float>(spriteSize.y) * aSize.y }
+		.size = { static_cast<float>(spriteSize.x) * aSize.x, static_cast<float>(spriteSize.y) * aSize.y },
 	};
 
 	myFlipbookInstances.emplace_back(newInstance);
@@ -199,21 +110,21 @@ void FlipbookManager::PlayAt(FlipbookHandle aHandle, Tga::Vector2f aPosition, Tg
 void FlipbookManager::Update(const float aDeltaTime)
 {
 	std::erase_if(myFlipbookInstances, [this](const FlipbookInstance& aFlipbookInstance)
-	{
-		return (!myFlipbooks[(int)aFlipbookInstance.flipbookHandle].looping &&
-			(myFlipbooks[(int)aFlipbookInstance.flipbookHandle].frameAmount * myFlipbooks[(int)aFlipbookInstance.flipbookHandle].frameAmount) < aFlipbookInstance.frameIndex);
-	});
+		{
+			return (!myFlipbooks[(int)aFlipbookInstance.flipbookHandle].looping &&
+				(myFlipbooks[(int)aFlipbookInstance.flipbookHandle].frameAmount * myFlipbooks[(int)aFlipbookInstance.flipbookHandle].frameAmount) < aFlipbookInstance.frameIndex);
+		});
 
 	std::erase_if(myFlipbook3DInstances, [this](const Flipbook3DInstance& aFlipbookInstance)
-	{
-		return (!myFlipbooks[(int)aFlipbookInstance.flipbookHandle].looping &&
-			(myFlipbooks[(int)aFlipbookInstance.flipbookHandle].frameAmount * myFlipbooks[(int)aFlipbookInstance.flipbookHandle].frameAmount) < aFlipbookInstance.frameIndex);
-	});
-	
+		{
+			return (!myFlipbooks[(int)aFlipbookInstance.flipbookHandle].looping &&
+				(myFlipbooks[(int)aFlipbookInstance.flipbookHandle].frameAmount * myFlipbooks[(int)aFlipbookInstance.flipbookHandle].frameAmount) < aFlipbookInstance.frameIndex);
+		});
+
 	for (FlipbookInstance& flipbookInstance : myFlipbookInstances)
 	{
 		flipbookInstance.timer += aDeltaTime;
-		
+
 		if (flipbookInstance.timer >= flipbookInstance.frameUpdateRate)
 		{
 			flipbookInstance.frameIndex++;
@@ -222,7 +133,7 @@ void FlipbookManager::Update(const float aDeltaTime)
 
 		if (myFlipbooks[(int)flipbookInstance.flipbookHandle].looping &&
 			(myFlipbooks[(int)flipbookInstance.flipbookHandle].frameAmount * myFlipbooks[(int)flipbookInstance.flipbookHandle].frameAmount
-			<= flipbookInstance.frameIndex))
+				<= flipbookInstance.frameIndex))
 		{
 			flipbookInstance.frameIndex = 0;
 		}
@@ -231,7 +142,7 @@ void FlipbookManager::Update(const float aDeltaTime)
 	for (Flipbook3DInstance& flipbookInstance : myFlipbook3DInstances)
 	{
 		flipbookInstance.timer += aDeltaTime;
-		
+
 		if (flipbookInstance.timer >= flipbookInstance.frameUpdateRate)
 		{
 			flipbookInstance.frameIndex++;
@@ -240,7 +151,7 @@ void FlipbookManager::Update(const float aDeltaTime)
 
 		if (myFlipbooks[(int)flipbookInstance.flipbookHandle].looping &&
 			(myFlipbooks[(int)flipbookInstance.flipbookHandle].frameAmount * myFlipbooks[(int)flipbookInstance.flipbookHandle].frameAmount
-			<= flipbookInstance.frameIndex))
+				<= flipbookInstance.frameIndex))
 		{
 			flipbookInstance.frameIndex = 0;
 		}
@@ -249,7 +160,7 @@ void FlipbookManager::Update(const float aDeltaTime)
 	for (Flipbook3DInstance& flipbookInstance : myPersistentFlipbook3DInstances)
 	{
 		flipbookInstance.timer += aDeltaTime;
-		
+
 		if (flipbookInstance.timer >= flipbookInstance.frameUpdateRate)
 		{
 			flipbookInstance.frameIndex++;
@@ -336,40 +247,37 @@ void FlipbookManager::Render() const
 			continue;
 		}
 
+		Tga::Sprite3DInstanceData spriteInstance;
+
+		spriteInstance.myTransform = instance.transform;
+		spriteInstance.myColor = { 1.f, 1.f, 1.f, 1.f };
+
 		const std::vector<UV>& uvMap = myFlipbooks[(int)instance.flipbookHandle].uvMap;
 
 		if (instance.flipped)
 		{
-			Tga::Sprite3DInstanceData spriteInstance
+			spriteInstance.myTextureRect =
 			{
-				.myTransform = instance.transform,
-				.myTextureRect =
-				{
-					.myStartX = uvMap[instance.frameIndex].end.x,
-					.myStartY = uvMap[instance.frameIndex].start.y,
-					.myEndX = uvMap[instance.frameIndex].start.x,
-					.myEndY = uvMap[instance.frameIndex].end.y
-				},
+				.myStartX = uvMap[instance.frameIndex].end.x,
+				.myStartY = uvMap[instance.frameIndex].start.y,
+				.myEndX = uvMap[instance.frameIndex].start.x,
+				.myEndY = uvMap[instance.frameIndex].end.y
 			};
-			spriteDrawer.Draw(myFlipbooks[(int)instance.flipbookHandle].spriteData, spriteInstance);
 		}
 		else
 		{
-			Tga::Sprite3DInstanceData spriteInstance
+			spriteInstance.myTextureRect =
 			{
-				.myTransform = instance.transform,
-				.myTextureRect =
-				{
-					.myStartX = uvMap[instance.frameIndex].start.x,
-					.myStartY = uvMap[instance.frameIndex].start.y,
-					.myEndX = uvMap[instance.frameIndex].end.x,
-					.myEndY = uvMap[instance.frameIndex].end.y
-				},
+				.myStartX = uvMap[instance.frameIndex].start.x,
+				.myStartY = uvMap[instance.frameIndex].start.y,
+				.myEndX = uvMap[instance.frameIndex].end.x,
+				.myEndY = uvMap[instance.frameIndex].end.y
 			};
-			
-			spriteDrawer.Draw(myFlipbooks[(int)instance.flipbookHandle].spriteData, spriteInstance);
-		}
+		};
+
+		spriteDrawer.Draw(myFlipbooks[(int)instance.flipbookHandle].spriteData, spriteInstance);
 	}
+
 
 	for (auto& instance : myPersistentFlipbook3DInstances)
 	{
@@ -381,20 +289,18 @@ void FlipbookManager::Render() const
 		}
 
 		const std::vector<UV>& uvMap = myFlipbooks[(int)instance.flipbookHandle].uvMap;
+
+		Tga::Sprite3DInstanceData spriteInstance;
+
+		spriteInstance.myTransform = instance.transform;
+
+		spriteInstance.myTextureRect =
 		{
-			Tga::Sprite3DInstanceData spriteInstance
-			{
-				.myTransform = instance.transform,
-				.myTextureRect =
-				{
-					.myStartX = uvMap[instance.frameIndex].start.x,
-					.myStartY = uvMap[instance.frameIndex].start.y,
-					.myEndX = uvMap[instance.frameIndex].end.x,
-					.myEndY = uvMap[instance.frameIndex].end.y
-				},
-			};
-			
-			spriteDrawer.Draw(myFlipbooks[(int)instance.flipbookHandle].spriteData, spriteInstance);
-		}
+			.myStartX = uvMap[instance.frameIndex].start.x,
+			.myStartY = uvMap[instance.frameIndex].start.y,
+			.myEndX = uvMap[instance.frameIndex].end.x,
+			.myEndY = uvMap[instance.frameIndex].end.y
+		};
+		spriteDrawer.Draw(myFlipbooks[(int)instance.flipbookHandle].spriteData, spriteInstance);
 	}
 }

@@ -12,6 +12,8 @@ namespace FlipBookPresets
 	{
 		const char* flipbookAssetPath;
 		unsigned int frameAmount;
+		float timeStep;
+		float size;
 	};
 
 	inline constexpr FlipbookPreset TONY_SHOTGUN_FIRE
@@ -52,12 +54,15 @@ namespace FlipBookPresets
 	inline constexpr FlipbookPreset ENEMY_HIT
 	{
 		.flipbookAssetPath = "textures/Flipbooks/T_EnemyHit_flip.DDS",
-		.frameAmount = 4
+		.frameAmount = 4,
+		.timeStep = 0.038f,
+		.size = 600.f
 	};
 	inline constexpr FlipbookPreset ENVIRONMENT_HIT
 	{
 		.flipbookAssetPath = "textures/Flipbooks/T_EnvironmentHit_flip.DDS",
-		.frameAmount = 3
+		.frameAmount = 3,
+		.timeStep = 0.022f
 	};
 	inline constexpr FlipbookPreset CRATE_HIT
 	{
@@ -127,14 +132,8 @@ class FlipbookManager
 		void PlayPersistent(PersistentInstanceHandle anInstanceHandle, float aFrameUpdateRate);
 		void MovePersistent(PersistentInstanceHandle anInstanceHandle, Tga::Matrix4x4f aTransform);
 
-		void PlayAt(FlipbookHandle aHandle, Tga::Vector2f aPosition, float aRotation);
-		void PlayAt(FlipbookHandle aHandle, Tga::Vector2f aPosition, float aTimeStep, float aRotation);
-		void PlayAt(FlipbookHandle aHandle, Tga::Matrix4x4f aTransform, float aTimeStep);
-		void PlayAt(FlipbookHandle aHandle, Tga::Vector2f aPosition, float aRotation, bool aFlipped);
-		void PlayAt(FlipbookHandle aHandle, Tga::Vector2f aPosition, Tga::Vector2f aSize, float aRotation);
-		void PlayAt(FlipbookHandle aHandle, Tga::Vector2f aPosition, Tga::Vector2f aSize, float aTimeStep, float aRotation);
-		void PlayAt(FlipbookHandle aHandle, Tga::Matrix4x4f aTransform, float aSize, float aTimeStep);
-		void PlayAt(FlipbookHandle aHandle, Tga::Vector2f aPosition, Tga::Vector2f aSize, float aRotation, bool aFlipped);
+		void PlayAt(FlipbookHandle aHandle, Tga::Vector2f aPosition, float aRotation = 0.f, Tga::Vector2f aSize = { 1.f, 1.f }, float aTimeStep = 0.01f, bool aFlipped = false);
+		void PlayAt(FlipbookHandle aHandle, Tga::Matrix4x4f aTransform, float aTimeStep = 0.01f);
 
 		//Updates state of all following flipbooks, and removes flipbook instances that have finished
 		void Update(float aDeltaTime);
