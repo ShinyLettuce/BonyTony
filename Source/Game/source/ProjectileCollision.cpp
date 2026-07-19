@@ -41,7 +41,14 @@ namespace GameStateUpdate
 				projectile.Hit();
 				const Tga::Vector2f dir = projectileToTiles.normal * -1.f;
 				const float angle = std::atan2f(forward.Cross(dir), forward.Dot(dir));
-				aFlipbookManager->PlayAt(FlipbookHandle::EnvironmentHit, projectile.GetPosition() + dir * projectile.GetVelocity().Length() * projectileToTiles.pointOfCollisionAlongVelocity, angle + randomizationAngle * MathUtils::RandFloat(-1, 1));
+
+				aFlipbookManager->PlayAt(
+					FlipbookHandle::EnvironmentHit,
+					projectile.GetPosition() + dir * projectile.GetVelocity().Length() * projectileToTiles.pointOfCollisionAlongVelocity,
+					angle + randomizationAngle * MathUtils::RandFloat(-1, 1),
+					{1.f, 1.f},
+					0.01f
+				);
 			}
 		}
 

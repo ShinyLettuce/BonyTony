@@ -84,7 +84,7 @@ void GameState::OnPush()
 	myShotgunMaxClip = sceneConfig.playerConfig.shotgunData.maxClip;
 	myRevolverMaxClip = sceneConfig.playerConfig.revolverData.maxClip;
 
-	myHUD.Init(sceneConfig.playerConfig.shotgunData.maxClip, sceneConfig.playerConfig.revolverData.maxClip, myPlayer.GetRevolverRange());
+	myHUD.Init(sceneConfig.playerConfig.shotgunData.maxClip, sceneConfig.playerConfig.revolverData.maxClip, myPlayer.GetRevolverRange(), myTimer);
 	myEnemyUpdater.Init(sceneConfig.enemieyConfigs, &sceneConfig.enemySharedConfig);
 	myCrateUpdater.Init(sceneConfig.crateConfigs);
 	myPickupUpdater.Init(sceneConfig.pickupConfigs);

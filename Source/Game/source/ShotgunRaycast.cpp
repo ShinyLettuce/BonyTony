@@ -124,20 +124,34 @@ namespace GameStateUpdate
 				{
 					enemy.Kill();
 					aPlayer.Reload();
+
+					Tga::Matrix4x4f vfxTransform;
+					vfxTransform = Tga::Matrix4x4f::CreateFromScale(FlipBookPresets::ENEMY_HIT.size);
+
+					vfxTransform.SetPosition(
+						Tga::Vector3f{ enemy.GetPosition().x - 0.5f * FlipBookPresets::ENEMY_HIT.size,
+						enemy.GetPosition().y + 60.f + (0.5f * FlipBookPresets::ENEMY_HIT.size), -50.f }
+					);
+
 					aFlipbookManager->PlayAt(
 						FlipbookHandle::EnemyHit,
-						Tga::Vector2f{enemy.GetPosition().x, enemy.GetPosition().y + 50.f},
-						randomizationAngle * MathUtils::RandFloat(-1, 1) + startAngle + deltaAngle * i
+						vfxTransform,
+						FlipBookPresets::ENEMY_HIT.timeStep
 					);
 				}
 			}
 			
+
 			if (Physics::AreCollisionResultsEqual(revolverClosestCollisionResult, &rayAndTile[i]) && rayAndTile[i].didCollide)
 			{
 				// We hit a tile
-				aFlipbookManager->PlayAt(FlipbookHandle::EnvironmentHit,
+				aFlipbookManager->PlayAt(
+					FlipbookHandle::EnvironmentHit,
 					aPlayer.GetShotOrigin() + aimDir * aPlayer.GetShotgunRange() * revolverClosestCollisionResult->pointOfCollisionAlongVelocity,
-					environmentHitAngleOffset + randomizationAngle * MathUtils::RandFloat(-1, 1) + startAngle + deltaAngle * i);
+					environmentHitAngleOffset + randomizationAngle * MathUtils::RandFloat(-1, 1) + startAngle + deltaAngle * i,
+					{1.f,1.f},
+					FlipBookPresets::ENVIRONMENT_HIT.timeStep
+				);
 			}
 			
 			if (Physics::AreCollisionResultsEqual(revolverClosestCollisionResult, &rayAndCrate[i]) && rayAndCrate[i].didCollide)

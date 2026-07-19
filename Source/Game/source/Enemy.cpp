@@ -173,7 +173,7 @@ void Enemy::Update(const float aDeltaTime, const Tga::Vector2f aPlayerPosition)
 			
 			const Tga::Vector2f forward{ 1.f, 0.f };
 			const float angle = std::atan2f(forward.Cross(myNormalizedAim), forward.Dot(myNormalizedAim));
-			myFlipbookManager->PlayAt(FlipbookHandle::EnemyRevolverFire, myShotSpawnPosition + myNormalizedAim * 100.f, Tga::Vector2f{0.4f, 0.4f}, angle);
+			myFlipbookManager->PlayAt(FlipbookHandle::EnemyRevolverFire, myShotSpawnPosition + myNormalizedAim * 100.f, angle, Tga::Vector2f{0.4f, 0.4f});
 		}
 	}
 }
@@ -304,7 +304,7 @@ void Enemy::PerformMelee()
 	myAnimationState = EnemyState::MeleeAttack;
 	myMeleeAnimation->SetTime(0.0f);
 	myMeleeAnimation->Play();
-	myFlipbookManager->PlayAt(FlipbookHandle::EnemyBaseballFire, myPosition + Tga::Vector2f{0.f, 100.f}, Tga::Vector2f{0.8f, 0.8f}, 0.f, !myIsAimingRight);
+	myFlipbookManager->PlayAt(FlipbookHandle::EnemyBaseballFire, myPosition + Tga::Vector2f{0.f, 100.f}, 0.f, Tga::Vector2f{ 0.8f, 0.8f }, 0.02f, !myIsAimingRight);
 }
 
 void Enemy::Kill()

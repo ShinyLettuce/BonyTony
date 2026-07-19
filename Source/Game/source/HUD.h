@@ -5,6 +5,7 @@
 #include "CrateUpdater.h"
 #include "Enemy.h"
 #include "tge/sprite/sprite.h"
+#include "Timer.h"
 
 class InputMapper;
 class Camera;
@@ -29,7 +30,7 @@ struct AimLineContext
 class HUD
 {
 public:
-    void Init(const int aShotgunMaxClip, const int aRevolverMaxClip, const float aAimMagnitude);
+    void Init(const int aShotgunMaxClip, const int aRevolverMaxClip, const float aAimMagnitude, Timer* aTimer);
     
     void UpdateAimLine(const AimLineContext& aContext);
     
@@ -100,5 +101,7 @@ private:
     std::vector<Tga::Sprite2DInstanceData> myShellInstances;
     std::vector<Tga::Sprite2DInstanceData> myBulletInstances;
     
+    Timer* myTimer;
+
     float myAimMagnitude = 0;
 };
