@@ -12,7 +12,7 @@
 #include "Options.h"
 #include "imgui/imgui.h"
 
-void HUD::Init(const int aShotgunMaxClip, const int aRevolverMaxClip, float const aAimMagnitude)
+void HUD::Init(const int aShotgunMaxClip, const int aRevolverMaxClip, float const aAimMagnitude, Timer* aTimer)
 {
 	myShellInstances.clear();
 	myBulletInstances.clear();
@@ -32,6 +32,8 @@ void HUD::Init(const int aShotgunMaxClip, const int aRevolverMaxClip, float cons
 
 	myShellInstances.resize(aShotgunMaxClip);
 	myBulletInstances.resize(aRevolverMaxClip);
+
+	myTimer = aTimer;
 
 	PositionElements(aShotgunMaxClip, aRevolverMaxClip);
 }
@@ -157,7 +159,7 @@ void HUD::UpdateAimLine(const AimLineContext& aContext)
 		aimline->hitPointInstance.myPosition = { pos.x, pos.y + (size.y * 0.5f) };
 
 		aimline->hitPointInstance.myColor = { 249.f / 255.f, 145.f / 255.f, 140.f / 255.f, 1.f };
-		aimline->hitPointInstance.mySize = hitTexSize * uiScale * UI.hitPointScaleHighlight; 
+		aimline->hitPointInstance.mySize = (hitTexSize * uiScale * UI.hitPointScaleHighlight) + Tga::Vector2f{ sin(myFirstAimline.hitPointInstance.myRotation * 2.f) * 20.f + 20.f };
 	}
 	else if (distanceToClosestCollision == aimToCrates.pointOfCollisionAlongVelocity && aContext.crates.size() != 0)
 	{
@@ -166,14 +168,14 @@ void HUD::UpdateAimLine(const AimLineContext& aContext)
 		aimline->hitPointInstance.myPosition = { pos.x, pos.y + (size.y * 0.5f) };
 
 		aimline->hitPointInstance.myColor = { 1.f, 1.f, 1.f, 1.f };  
-		aimline->hitPointInstance.mySize = hitTexSize * uiScale * UI.hitPointScaleHighlight;
+		aimline->hitPointInstance.mySize = (hitTexSize * uiScale * UI.hitPointScaleHighlight) + Tga::Vector2f{ sin(myFirstAimline.hitPointInstance.myRotation * 2.f) * 20.f + 20.f };
 	}
 	else
 	{
 		aimline->hitPointInstance.myPosition = aimline->end;
 
 		aimline->hitPointInstance.myColor = { 1.f, 1.f, 1.f, 1.f };
-		aimline->hitPointInstance.mySize = hitTexSize * uiScale * UI.hitPointScaleNormal; 
+		aimline->hitPointInstance.mySize = (hitTexSize * uiScale * UI.hitPointScaleNormal) + Tga::Vector2f{ sin(myFirstAimline.hitPointInstance.myRotation * 2.f) * 15.f };
 	}
 }
 
@@ -265,6 +267,12 @@ void HUD::RenderHitPoint(Camera& aCamera)
 	Tga::SpriteDrawer& spriteDrawer = graphicsEngine.GetSpriteDrawer();
 
 	Tga::DX11::SetDepthEnabled(false);
+
+	static float lol = 0;
+	lol += myTimer->GetDeltaTime();
+
+	myFirstAimline.hitPointInstance.myRotation += myTimer->GetDeltaTime();
+	mySecondAimline.hitPointInstance.myRotation += myTimer->GetDeltaTime();
 
 	if (myFirstAimline.shouldRender)
 	{
