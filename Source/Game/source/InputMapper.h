@@ -33,6 +33,8 @@ enum class GameAction
     SkipCutscene,
     LSPress,
     RSPress,
+    WaddleLeft,
+    WaddleRight,
     Count,
 };
 

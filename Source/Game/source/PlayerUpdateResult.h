@@ -8,6 +8,8 @@ struct PlayerUpdateResult
 		Revolver,
 		PowerShot,
 		Stunned,
+		WaddleLeft,
+		WaddleRight,
 		None
 	};
 

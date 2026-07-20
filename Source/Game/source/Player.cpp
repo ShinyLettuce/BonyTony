@@ -21,8 +21,6 @@ void Player::SetInput(InputMapper* anInputMapper)
 
 void Player::Init(const SceneLoader::PlayerConfig& aPlayerConfig)
 {
-	myDepth = false;
-	myDummyState = false;
 	myIsFrozen = false;
 	myPlayerArmPivotHeight = aPlayerConfig.playerArmPivotHeight;
 	myStunDuration = aPlayerConfig.stunDuration;
@@ -97,13 +95,7 @@ PlayerUpdateResult Player::Update(const float aDeltaTime, Camera& aCamera)
 {
 	PlayerUpdateResult::Action action = PlayerUpdateResult::Action::None;
 
-	if (myDummyState) {
-		return PlayerUpdateResult{
-			.action = action,
-			.position = myPosition,
-			.velocity = myVelocity };
-	}
-
+	myTimeSinceWaddle += Tga::Engine::GetInstance()->GetDeltaTime();
 	myTimeSinceFiredShotgun += Tga::Engine::GetInstance()->GetDeltaTime();
 	myTimeSinceFiredRevolver += Tga::Engine::GetInstance()->GetDeltaTime();
 	myTimeSinceFiredPowerShot += Tga::Engine::GetInstance()->GetDeltaTime();
@@ -162,6 +154,24 @@ PlayerUpdateResult Player::Update(const float aDeltaTime, Camera& aCamera)
 		};
 	}
 #endif
+
+	if (myInputMapper->IsActionActive(GameAction::WaddleLeft) && !myInputMapper->IsActionActive(GameAction::WaddleRight))
+	{
+		if (Waddle(*myCamera, -1))
+		{
+			action = PlayerUpdateResult::Action::WaddleLeft;
+		}
+
+		
+	}
+
+	if (myInputMapper->IsActionActive(GameAction::WaddleRight) && !myInputMapper->IsActionActive(GameAction::WaddleLeft))
+	{
+		if (Waddle(*myCamera, 1))
+		{
+			action = PlayerUpdateResult::Action::WaddleRight;
+		}	
+	}
 
 	// Quick and dirty fix so that the player acts differently in the boss room
 	if (myFreezeShotgunSoThatItOnlyPointsRightAndCantBeMovedWithMouseOrController)
@@ -314,10 +324,6 @@ PlayerUpdateResult Player::Update(const float aDeltaTime, Camera& aCamera)
 
 void Player::LateUpdate(const float aDeltaTime)
 {
-	if (myDummyState) {
-		return;
-	}
-
 	AnimateWeapons(aDeltaTime);
 	AnimateWobble(aDeltaTime);
 
@@ -510,10 +516,7 @@ void Player::ShootRevolver(Camera& aCamera)
 		myRevolverTimeSincePreviousShot = 0.0f;
 		myRevolverPreviousShotDirection = myNormalizedRevolverAim;
 		
-		if (!myDummyState) 
-		{
-			CalculateVelocity(myRevolver);
-		}
+		CalculateVelocity(myRevolver);
 
 		aCamera.Shake(3.f, 7.f, 0.4f);
 
@@ -529,38 +532,74 @@ void Player::ShootRevolver(Camera& aCamera)
 
 		//Update UI
 
-		if (!myDummyState) 
+		constexpr float minYVelocity = 800.0f;
+
+		if (myVelocity.y < minYVelocity)
 		{
-			constexpr float minYVelocity = 800.0f;
+			myVelocity.y = minYVelocity;
+		}
 
-			if (myVelocity.y < minYVelocity)
+		constexpr float minXVelocity = 300.0f;
+
+		if (std::abs(myVelocity.x) < minXVelocity)
+		{
+			const Tga::Vector2f right = Tga::Vector2f{ 1.0f, 0.0f };
+			if (myNormalizedRevolverAim.Dot(right) > 0.0f)
 			{
-				myVelocity.y = minYVelocity;
+				myVelocity.x = -minXVelocity;
 			}
-
-			constexpr float minXVelocity = 300.0f;
-
-			if (std::abs(myVelocity.x) < minXVelocity)
+			else
 			{
-				const Tga::Vector2f right = Tga::Vector2f{ 1.0f, 0.0f };
-				if (myNormalizedRevolverAim.Dot(right) > 0.0f)
-				{
-					myVelocity.x = -minXVelocity;
-				}
-				else
-				{
-					myVelocity.x = minXVelocity;
-				}
+				myVelocity.x = minXVelocity;
 			}
+		}
 
-			if (myVelocity.y > 0.f)
-			{
-				myIsGrounded = false;
-			}
+		if (myVelocity.y > 0.f)
+		{
+			myIsGrounded = false;
 		}
 
 		//myVelocity = myIsGrounded ? -(1.0f) * (myForceVelocity * myNormalizedAim) : myVelocity + -(1.0f) * (myForceVelocity * myNormalizedAim);
 	}
+}
+
+bool Player::Waddle(Camera& aCamera, int direction)
+{
+	aCamera;
+
+	if (myIsGrounded && myTimeSinceWaddle >= 0.5f)
+	{
+		myTimeSinceWaddle = 0.0f;
+
+		//aCamera.Shake(3.f, 3.f * direction, 0.3f);
+
+		myInputMapper->AddRumble(0.4f, 0.1f, 0.1f);
+
+		//AudioManager::GetAudioPoolByHandle(AudioHandles::revolverShot).Play();
+
+		constexpr float minYVelocity = 370.0f;
+
+		if (myVelocity.y < minYVelocity)
+		{
+			myVelocity.y = minYVelocity;
+		}
+
+		constexpr float minXVelocity = 130.0f;
+
+		if (std::abs(myVelocity.x) < minXVelocity)
+		{
+			myVelocity.x = minXVelocity * direction;
+		}
+
+		if (myVelocity.y > 0.f)
+		{
+			myIsGrounded = false;
+		}
+
+		return true;
+	}
+	
+	return false;
 }
 
 void Player::ShootShotgun(Camera& aCamera)
@@ -666,11 +705,6 @@ void Player::UpdateNormalizedAim(Camera& aCamera)
 	}
 }
 
-void Player::SetDummyState(bool aState)
-{
-	myDummyState = aState;
-}
-
 Tga::Vector2f Player::GetShotOrigin() const
 {
 	return Tga::Vector2f{ myPosition.x, myPosition.y + myPlayerArmPivotHeight };
@@ -753,16 +787,6 @@ void Player::SetPosition(const Tga::Vector2f& aPosition)
 	instanceTransform(4, 2) = myPosition.y;
 }
 
-void Player::SetPosition3d(const Tga::Vector3f& aPosition)
-{
-	myPosition = Tga::Vector2f{ aPosition.x, aPosition.y };
-	myDepth = aPosition.z;
-	Tga::Matrix4x4f& instanceTransform = myModelInstance.GetTransform();
-	instanceTransform(4, 1) = myPosition.x;
-	instanceTransform(4, 2) = myPosition.y;
-	instanceTransform(4, 3) = myDepth;
-}
-
 void Player::SetVelocity(const Tga::Vector2f& aVelocity)
 {
 	myVelocity = aVelocity;
@@ -812,11 +836,6 @@ Tga::Vector2f Player::GetShotgunPosition() const
 Tga::Vector2f Player::GetPosition() const
 {
 	return myPosition;
-}
-
-Tga::Vector3f Player::GetPosition3d() const
-{
-	return Tga::Vector3f{ myPosition.x, myPosition.y, myDepth };
 }
 
 Tga::Vector2f Player::GetSize() const
@@ -1033,14 +1052,7 @@ void Player::Render()
 
 	if (myModelInstance.IsValid())
 	{
-		Tga::ModelInstance modelInstance = myModelInstance;
-		Tga::Matrix4x4f& transform = modelInstance.GetTransform();
-		transform.Translate(Tga::Vector3f{ 0.0f, 0.0f, myDepth });
-		modelDrawer.Draw(modelInstance);
-	}
-
-	if (myDummyState) {
-		return;
+		modelDrawer.Draw(myModelInstance);
 	}
 
 	if (myRevolver.enabled && myRevolverModelInstance.IsValid())

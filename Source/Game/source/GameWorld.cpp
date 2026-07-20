@@ -95,6 +95,9 @@ void GameWorld::BindInputs()
 	myInputMapper->BindKeyAction('S', GameAction::UIDown);
 	myInputMapper->BindKeyAction('A', GameAction::UILeft);
 	myInputMapper->BindKeyAction('D', GameAction::UIRight);
+
+	myInputMapper->BindKeyAction('A', GameAction::WaddleLeft);
+	myInputMapper->BindKeyAction('D', GameAction::WaddleRight);
 	
 	myInputMapper->BindKeyAction(VK_UP, GameAction::UIUp);
 	myInputMapper->BindKeyAction(VK_DOWN, GameAction::UIDown);
