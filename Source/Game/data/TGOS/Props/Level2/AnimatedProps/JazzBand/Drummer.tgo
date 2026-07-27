@@ -6,6 +6,17 @@
       "group": "",
       "is-dynamic": false,
       "is-per-instance": false,
+      "name": "Animation",
+      "type": "Animation Clip",
+      "value": {
+        "clip_path": "models\\Characters\\JazzBand\\A_Drummer_Playing.fbx"
+      }
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
       "name": "Mesh",
       "type": "Model",
       "value": {
