@@ -1,0 +1,20 @@
+{
+  "name": "TileHalf2_Level1(2)",
+  "object-definition": "TileHalf2_Level1",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    400.0,
+    5200.0,
+    0.0
+  ]
+}
