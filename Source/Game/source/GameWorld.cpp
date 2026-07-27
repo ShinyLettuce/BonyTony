@@ -98,6 +98,9 @@ void GameWorld::BindInputs()
 
 	myInputMapper->BindKeyAction('A', GameAction::WaddleLeft);
 	myInputMapper->BindKeyAction('D', GameAction::WaddleRight);
+
+	myInputMapper->BindGamePadButtonAction(XINPUT_GAMEPAD_DPAD_LEFT, GameAction::WaddleLeft);
+	myInputMapper->BindGamePadButtonAction(XINPUT_GAMEPAD_DPAD_RIGHT, GameAction::WaddleRight);
 	
 	myInputMapper->BindKeyAction(VK_UP, GameAction::UIUp);
 	myInputMapper->BindKeyAction(VK_DOWN, GameAction::UIDown);
