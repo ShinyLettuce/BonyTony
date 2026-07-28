@@ -22,6 +22,7 @@
 #include "HUD.h"
 #include "LevelTrigger.h"
 #include "FullscreenImage.h"
+#include "InteractablePropUpdater.h"
 
 
 struct GameStateHandles
@@ -64,6 +65,7 @@ private:
 
 	EnemyUpdater myEnemyUpdater;
 	CrateUpdater myCrateUpdater;
+	AnimatedPropUpdater myInteractablePropUpdater;
 	PickupUpdater myPickupUpdater;
 	AmbienceManager myAmbienceManager;
 	LevelTrigger myLevelTrigger;

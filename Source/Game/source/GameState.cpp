@@ -31,6 +31,7 @@
 
 #include <nlohmann/json.hpp>
 #include <fstream>
+#include <tge/input/InputManager.h>
 
 GameState::GameState()
 {
@@ -89,6 +90,7 @@ void GameState::OnPush()
 	myCrateUpdater.Init(sceneConfig.crateConfigs);
 	myPickupUpdater.Init(sceneConfig.pickupConfigs);
 	myAmbienceManager.Init(&sceneConfig.ambiences);
+	myInteractablePropUpdater.Init(sceneConfig.interactablePropConfigs);
 
 	LevelTrigger::AudioSequenceData levelTriggerAudioSequenceData{};
 
@@ -247,10 +249,15 @@ StateUpdateResult GameState::Update()
 	myCamera.MoveTowardsPosition(myCameraTargetPosition, cameraFollowDecay, deltaTime);
 	myCamera.Update();
 
+	if (myInputMapper->GetInputManager()->IsKeyPressed('T'))
+	{
+		myInteractablePropUpdater.PlayAnimation(0);
+	}
 
 	myEnemyUpdater.Update(myTimer->GetDeltaTime(), myPlayer.GetPosition());
 	myAmbienceManager.Update(myPlayer.GetPosition());
 	myCrateUpdater.Update(myTimer->GetDeltaTime());
+	myInteractablePropUpdater.Update(myTimer->GetDeltaTime());
 
 	const SceneLoader::PickupType nextPickupType = myPickupUpdater.Update(myPlayer);
 	PopUp::locNextPopupType = nextPickupType;
@@ -276,21 +283,21 @@ StateUpdateResult GameState::Update()
 		std::vector<Enemy>& enemies = *myEnemyUpdater.GetEnemies();
 		std::vector<Projectile>* projectiles = myEnemyUpdater.GetProjectiles();
 
-		GameStateUpdate::PlayerGroundCheck(crates, myPlayer, playerUpdateResult, scene.tileConfigs);
+		GameStateUpdate::PlayerGroundCheck(crates, myPlayer, playerUpdateResult, scene.tileConfigs, myInteractablePropUpdater);
 
 		int iterations = 5;
 		float tickrate = 1 / static_cast<float>(iterations);
 		for (int i = 0; i < iterations; ++i)
 		{
 			GameStateUpdate::PlayerSweep(scene.tileConfigs, crates, myCrateUpdater, myPlayer, playerUpdateResult,
-				&myFlipbookManager, deltaTime, tickrate);
+				&myFlipbookManager, myInteractablePropUpdater, deltaTime, tickrate);
 		}
 
 		if (playerUpdateResult.action == PlayerUpdateResult::Action::Revolver && myPlayer.GetIsRevolverEnabled())
 		{
 			myHUD.Shake(30.f, 4.f, 0.4f, myHUD.GetBulletShakeData(myPlayer.GetRevolverClip()));
 			myFlipbookManager.PlayPersistent(PersistentInstanceHandle::RevolverFire, 0.007f);
-			GameStateUpdate::RevolverRaycast(scene.tileConfigs, enemies, crates, myCrateUpdater, myPlayer, &myFlipbookManager);
+			GameStateUpdate::RevolverRaycast(scene.tileConfigs, enemies, crates, myCrateUpdater, myPlayer, &myFlipbookManager, myInteractablePropUpdater);
 		}
 		if (playerUpdateResult.action == PlayerUpdateResult::Action::Shotgun || playerUpdateResult.action == PlayerUpdateResult::Action::PowerShot)
 		{
@@ -315,7 +322,7 @@ StateUpdateResult GameState::Update()
 				myFlipbookManager.PlayAt(FlipbookHandle::PowershotFireTrail, myPlayer.GetShotgunPosition() + (shotgunAimDir * trailOffset), angle);
 			}
 
-			GameStateUpdate::ShotgunRaycast(myPlayer, scene.tileConfigs, enemies, crates, myCrateUpdater, &myFlipbookManager);
+			GameStateUpdate::ShotgunRaycast(myPlayer, scene.tileConfigs, enemies, crates, myCrateUpdater, &myFlipbookManager, myInteractablePropUpdater);
 		}
 
 		GameStateUpdate::EnemyCollision(enemies, myPlayer, scene.tileConfigs);
@@ -636,6 +643,7 @@ void GameState::Render()
 		myPlayer.Render();
 		myEnemyUpdater.Render();
 		myCrateUpdater.Render();
+		myInteractablePropUpdater.Render();
 		myPickupUpdater.Render();
 		myLevelTrigger.Render();
 

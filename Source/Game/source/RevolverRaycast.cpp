@@ -6,7 +6,7 @@ namespace GameStateUpdate
 {
 	void RevolverRaycast(const std::vector<SceneLoader::TileConfig>& aTiles, std::vector<Enemy>& aEnemies,
 	                     std::vector<CrateUpdater::Crate>& aCrates, CrateUpdater& aCrateUpdater, Player& aPlayer,
-	                     FlipbookManager* aFlipbookManager)
+	                     FlipbookManager* aFlipbookManager, AnimatedPropUpdater& aPropUpdater)
 	{
 		if (!aPlayer.GetIsRevolverEnabled())
 		{
@@ -74,7 +74,27 @@ namespace GameStateUpdate
 				};
 			}
 		);
-		Physics::CollisionResult* revolverCollisions[]{ &rayAndEnemy, &rayAndTile, &rayAndCrate };
+
+		Physics::CollisionResult rayAndProp = Physics::RaycastAABBCollisionOverContainer<AnimatedPropUpdater::AnimatedProp>(
+			Physics::Ray{
+				.origin = aPlayer.GetShotOrigin(),
+				.direction = aPlayer.GetNormalizedRevolverAim(),
+				.magnitude = aPlayer.GetRevolverRange(),
+			},
+			aPropUpdater.GetInteractableProps(),
+			[](const AnimatedPropUpdater::AnimatedProp& prop)
+			{
+				Tga::Vector3f position = prop.animatedModelInstance->GetTransform().GetPosition();
+				Tga::Vector3f bounds = prop.animatedModelInstance->GetModel()->GetMeshData(0).Bounds.BoxExtents;
+
+				return Physics::AABB{
+					.position = Tga::Vector2f{position.x, position.y},
+					.size = prop.size
+				};
+			}
+		);
+
+		Physics::CollisionResult* revolverCollisions[]{ &rayAndEnemy, &rayAndTile, &rayAndCrate, &rayAndProp };
 
 		Physics::CollisionResult* revolverClosestCollisionResult{ &rayAndEnemy };
 		for (Physics::CollisionResult* result : revolverCollisions)
@@ -153,6 +173,10 @@ namespace GameStateUpdate
 					angle + randomizationAngle * MathUtils::RandFloat(-1, 1)
 				);
 			}
+		}
+		if (Physics::AreCollisionResultsEqual(revolverClosestCollisionResult, &rayAndProp) && rayAndProp.didCollide)
+		{
+			aPropUpdater.PlayAnimation(rayAndProp.indexToEntityCollidedWith);
 		}
 	}
 }

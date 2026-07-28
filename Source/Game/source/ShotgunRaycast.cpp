@@ -4,49 +4,40 @@
 
 namespace GameStateUpdate
 {
-	void ShotgunRaycast(Player& aPlayer, const std::vector<SceneLoader::TileConfig>& aTiles,
-	                    std::vector<Enemy>& aEnemies, std::vector<CrateUpdater::Crate>& aCrates,
-	                    CrateUpdater& aCrateUpdater, FlipbookManager* aFlipbookManager)
+	void ShotgunRaycast(
+		Player& aPlayer,
+		const std::vector<SceneLoader::TileConfig>& aTiles,
+	    std::vector<Enemy>& aEnemies, std::vector<CrateUpdater::Crate>& aCrates,
+	    CrateUpdater& aCrateUpdater,
+		FlipbookManager* aFlipbookManager,
+		AnimatedPropUpdater& aPropUpdater
+	)
 	{
 		const int numberOfShots = aPlayer.GetShotgunBulletAmount();
 
-		std::vector<Physics::CollisionResult> rayAndEnemy = Physics::RaycastConeAABBCollisionOverContainer<Enemy>(
-			Physics::Ray{
+		Physics::Ray shotgunAimLine = Physics::Ray{
 				.origin = {aPlayer.GetPosition().x, aPlayer.GetPosition().y + 50.f},
 				.direction = aPlayer.GetNormalizedShotgunAim(),
 				.magnitude = aPlayer.GetShotgunRange()
-			},
+		};
+
+		std::vector<Physics::CollisionResult> rayAndEnemy = Physics::RaycastConeAABBCollisionOverContainer<Enemy>(
+			shotgunAimLine,
 			numberOfShots,
 			aPlayer.GetShotgunSpreadAngle(),
 			aEnemies,
 			[](const Enemy& enemy)
 			{
-				if (enemy.GetIsAlive())
-				{
-					return Physics::AABB{
+				return Physics::AABB{
 						.position = enemy.GetPosition(),
 						.velocity = Tga::Vector2f{ 0.0f, 0.0f },
-						.size = Tga::Vector2f{ 100.0f, 100.0f }
-
-					};
-				}
-				else
-				{
-					return Physics::AABB{
-						.position = enemy.GetPosition(),
-						.velocity = Tga::Vector2f{ 0.0f, 0.0f },
-						.size = Tga::Vector2f{ 0.f, 0.0f }
-					};
-				}
+						.size = enemy.GetIsAlive() ? Tga::Vector2f{ 100.0f, 100.0f } : Tga::Vector2f{ 0.f, 0.0f }
+				};
 			}
 		);
 
 		std::vector<Physics::CollisionResult> rayAndCrate = Physics::RaycastConeAABBCollisionOverContainer<CrateUpdater::Crate>(
-			Physics::Ray{
-				.origin = {aPlayer.GetPosition().x, aPlayer.GetPosition().y + 50.f},
-				.direction = aPlayer.GetNormalizedShotgunAim(),
-				.magnitude = aPlayer.GetShotgunRange()
-			},
+			shotgunAimLine,
 			numberOfShots,
 			aPlayer.GetShotgunSpreadAngle(),
 			aCrates,
@@ -59,12 +50,23 @@ namespace GameStateUpdate
 			}
 		);
 
+		std::vector<Physics::CollisionResult> rayAndProp = Physics::RaycastConeAABBCollisionOverContainer<AnimatedPropUpdater::AnimatedProp>(
+			shotgunAimLine,
+			numberOfShots,
+			aPlayer.GetShotgunSpreadAngle(),
+			aPropUpdater.GetInteractableProps(),
+			[](const AnimatedPropUpdater::AnimatedProp& prop)
+			{
+				Tga::Vector3f position = prop.animatedModelInstance->GetTransform().GetPosition();
+				return Physics::AABB{
+					.position = Tga::Vector2f{position.x, position.y},
+					.size = prop.size
+				};
+			}
+		);
+
 		std::vector<Physics::CollisionResult> rayAndTile = Physics::RaycastConeAABBCollisionOverContainer<SceneLoader::TileConfig>(
-			Physics::Ray{
-				.origin = {aPlayer.GetPosition().x, aPlayer.GetPosition().y + 50.f},
-				.direction = aPlayer.GetNormalizedShotgunAim(),
-				.magnitude = aPlayer.GetShotgunRange()
-			},
+			shotgunAimLine,
 			numberOfShots,
 			aPlayer.GetShotgunSpreadAngle(),
 			aTiles,
@@ -99,7 +101,7 @@ namespace GameStateUpdate
 		for (int i = 0; i < numberOfShots; ++i)
 		{
 			
-			Physics::CollisionResult* revolverCollisions[]{ &rayAndEnemy[i], &rayAndTile[i], &rayAndCrate[i] };
+			Physics::CollisionResult* revolverCollisions[]{ &rayAndEnemy[i], &rayAndTile[i], &rayAndCrate[i], &rayAndProp[i]};
 			Physics::CollisionResult* revolverClosestCollisionResult{ &rayAndEnemy[i] };
 
 			for (Physics::CollisionResult* result : revolverCollisions)
@@ -179,6 +181,18 @@ namespace GameStateUpdate
 						randomizationAngle * MathUtils::RandFloat(-1, 1) + startAngle + deltaAngle * i
 					);
 				}
+			}
+
+			if (Physics::AreCollisionResultsEqual(revolverClosestCollisionResult, &rayAndProp[i]) && rayAndProp[i].didCollide)
+			{
+				aPropUpdater.PlayAnimation(rayAndProp[i].indexToEntityCollidedWith);
+				aFlipbookManager->PlayAt(
+					FlipbookHandle::EnvironmentHit,
+					aPlayer.GetShotOrigin() + aimDir * aPlayer.GetShotgunRange() * revolverClosestCollisionResult->pointOfCollisionAlongVelocity,
+					environmentHitAngleOffset + randomizationAngle * MathUtils::RandFloat(-1, 1) + startAngle + deltaAngle * i,
+					{ 1.f,1.f },
+					FlipBookPresets::ENVIRONMENT_HIT.timeStep
+				);
 			}
 		}
 		//std::erase_if(aCrates, [](const CrateUpdater::Crate& aCrate) { return aCrate.dead; });

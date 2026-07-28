@@ -150,6 +150,18 @@ namespace SceneLoader
 		Tga::Vector2f size;
 	};
 
+	struct AnimatedPropConfig
+	{
+		std::shared_ptr<Tga::AnimatedModelInstance> animatedModelInstance;
+		Tga::AnimationClipReference interactionClipReference;
+		Tga::Vector2f size = { 0,0 };
+
+		bool collideable = false;
+		bool interactable = false;
+		bool looping = false;
+		bool oneTimeTriggerable = false;
+	};
+
 	struct ModelConfig
 	{
 		Tga::ModelInstance modelInstance;
@@ -201,6 +213,7 @@ namespace SceneLoader
 		std::vector<PickupConfig> pickupConfigs;
 		std::vector<Ambience> ambiences;
 		std::vector<ModelConfig> transparentObjectConfig;
+		std::vector<AnimatedPropConfig> interactablePropConfigs;
 	};
 
 	void Init();

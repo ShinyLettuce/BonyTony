@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "FlipbookManager.h"
+#include "InteractablePropUpdater.h"
 
 namespace GameStateUpdate
 {
@@ -16,6 +17,7 @@ namespace GameStateUpdate
 		CrateUpdater& aCrateUpdater, Player& aPlayer,
 		PlayerUpdateResult& aPlayerUpdateResult,
 		FlipbookManager* aFlipbookManager,
+		AnimatedPropUpdater& aPropUpdater,
 		const float aDeltaTime,
 		const float aTickRate
 	);

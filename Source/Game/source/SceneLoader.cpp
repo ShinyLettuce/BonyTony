@@ -657,7 +657,7 @@ namespace SceneLoader
 			{
 				ScopedProfiler profiler("cso_load");
 				cso.Load(sceneObject, scenePropertyDefinitions);
-			}		
+			}
 
 #if defined(_DEBUG)
 			std::cout << "[SceneLoader.cpp] Loaded \"" << sceneObject->GetName() << "\"" << "\n";
@@ -669,7 +669,7 @@ namespace SceneLoader
 				id == "TileFull_Level1"_tgaid || id == "TileHalf_Level1"_tgaid || id == "TileSlim_Level1"_tgaid ||
 				id == "TileFull_Level2"_tgaid || id == "TileHalf_Level2"_tgaid ||
 				id == "TileFullHighligh_Level2"_tgaid)
-				{
+			{
 				TileConfig tileConfig;
 
 				tileConfig.modelInstance = cso.GetModelInstance("Model");
@@ -820,7 +820,7 @@ namespace SceneLoader
 
 				bossConfig.animatedModelInstance = std::make_shared<Tga::AnimatedModelInstance>(cso.GetAnimatedModelInstance("Model"));
 				bossConfig.idleClipReference = cso.GetAnimationClipReference("IdleAnimation");
-				
+
 				sceneConfig.bossConfig = bossConfig;
 			}
 			else if (id == "Pickup"_tgaid)
@@ -930,6 +930,32 @@ namespace SceneLoader
 				modelConfig.modelInstance = cso.GetFirstModelInstance();
 
 				sceneConfig.transparentObjectConfig.push_back(modelConfig);
+			}
+			else if (id == "InteractableRoulette"_tgaid || id == "InteractableSlotMachine2"_tgaid || id == "InteractableRadio"_tgaid)
+			{
+				AnimatedPropConfig prop;
+				prop.animatedModelInstance = std::make_shared<Tga::AnimatedModelInstance>(cso.GetAnimatedModelInstance("Mesh"));
+				prop.interactionClipReference = cso.GetAnimationClipReference("Animation");
+				prop.size = cso.GetVector2f("Size");
+
+				prop.interactable = true;
+				prop.collideable = true;
+
+				if (id == "InteractableRadio"_tgaid)
+				{
+					prop.oneTimeTriggerable = true;
+				}
+
+				sceneConfig.interactablePropConfigs.push_back(prop);
+			}
+			else if (id == "Bassist"_tgaid || id == "Drummer"_tgaid || id == "Pianist"_tgaid || id == "Saxophonist"_tgaid)
+			{
+				AnimatedPropConfig interactable;
+				interactable.animatedModelInstance = std::make_shared<Tga::AnimatedModelInstance>(cso.GetAnimatedModelInstance("Mesh"));
+				interactable.interactionClipReference = cso.GetAnimationClipReference("Animation");
+				interactable.looping = true;
+
+				sceneConfig.interactablePropConfigs.push_back(interactable);
 			}
 			else
 			{

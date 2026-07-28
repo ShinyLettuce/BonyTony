@@ -4,14 +4,26 @@
 
 namespace GameStateUpdate
 {
-	void PlayerSweep(const std::vector<SceneLoader::TileConfig>& aTiles, std::vector<CrateUpdater::Crate>& aCrates, CrateUpdater& aCrateUpdater, Player& aPlayer, PlayerUpdateResult& aPlayerUpdateResult, FlipbookManager* aFlipbookManager, const float aDeltaTime, const float aTickRate)
+	void PlayerSweep(
+		const std::vector<SceneLoader::TileConfig>& aTiles,
+		std::vector<CrateUpdater::Crate>& aCrates,
+		CrateUpdater& aCrateUpdater,
+		Player& aPlayer,
+		PlayerUpdateResult& aPlayerUpdateResult,
+		FlipbookManager* aFlipbookManager,
+		AnimatedPropUpdater& aPropUpdater,
+		const float aDeltaTime,
+		const float aTickRate
+	)
 	{
-		Physics::CollisionResult tileCollisionResult = Physics::SweepAABBCollisionOverContainer<SceneLoader::TileConfig>(
-			Physics::AABB{
+		Physics::AABB playerBoundingBox = {
 				.position = aPlayerUpdateResult.position,
 				.velocity = aPlayerUpdateResult.velocity,
 				.size = {50.f, 98.f},
-			},
+		};
+
+		Physics::CollisionResult tileCollisionResult = Physics::SweepAABBCollisionOverContainer<SceneLoader::TileConfig>(
+			playerBoundingBox,
 			aTiles,
 			[](const SceneLoader::TileConfig& tile) {
 				return Physics::AABB
@@ -21,12 +33,21 @@ namespace GameStateUpdate
 				};
 			}, aDeltaTime * aTickRate);
 
+		Physics::CollisionResult propCollisionResult = Physics::SweepAABBCollisionOverContainer<AnimatedPropUpdater::AnimatedProp>(
+			playerBoundingBox,
+			aPropUpdater.GetInteractableProps(),
+			[](const AnimatedPropUpdater::AnimatedProp& prop) {
+				Tga::Vector3f position = prop.animatedModelInstance->GetTransform().GetPosition();
+				
+				return Physics::AABB
+				{
+					.position = Tga::Vector2f{position.x, position.y},
+					.size = prop.size,
+				};
+			}, aDeltaTime * aTickRate);
+
 		Physics::CollisionResult crateCollisionResult = Physics::SweepAABBCollisionOverContainer<CrateUpdater::Crate>(
-			Physics::AABB{
-				.position = aPlayerUpdateResult.position,
-				.velocity = aPlayerUpdateResult.velocity,
-				.size = {50.f, 98.f},
-			},
+			playerBoundingBox,
 			aCrates,
 			[](const CrateUpdater::Crate& crate) {
 				return Physics::AABB
@@ -36,12 +57,25 @@ namespace GameStateUpdate
 				};
 			}, aDeltaTime * aTickRate);
 
-		Physics::CollisionResult collisionResult{};
 
-		const bool isTileCloser = tileCollisionResult.pointOfCollisionAlongVelocity < crateCollisionResult.pointOfCollisionAlongVelocity;
-		collisionResult = isTileCloser ? tileCollisionResult : crateCollisionResult;
+		Physics::CollisionResult* playerCollisions[]{ &tileCollisionResult, &crateCollisionResult, &propCollisionResult};
 
-		if (!isTileCloser && crateCollisionResult.didCollide && aPlayer.GetPowerBreakActive())
+		Physics::CollisionResult* playerCollisionResult{ &tileCollisionResult };
+
+		for (Physics::CollisionResult* result : playerCollisions)
+		{
+			if (result->pointOfCollisionAlongVelocity < playerCollisionResult->pointOfCollisionAlongVelocity)
+			{
+				playerCollisionResult = result;
+			}
+		}
+
+		bool isCrateCloser = Physics::AreCollisionResultsEqual(playerCollisionResult, &crateCollisionResult);
+		bool isTileCloser = Physics::AreCollisionResultsEqual(playerCollisionResult, &tileCollisionResult);
+
+		const Physics::CollisionResult collisionResult = *playerCollisionResult; // Dereferencing once instead of several times with this copy
+
+		if (isCrateCloser && crateCollisionResult.didCollide && aPlayer.GetPowerBreakActive())
 		{
 			const Tga::Vector2f forward{ 1.f, 0.f };
 			const Tga::Vector2f dir = crateCollisionResult.normal;
@@ -50,7 +84,7 @@ namespace GameStateUpdate
 			aFlipbookManager->PlayAt(FlipbookHandle::MetalCrateHit, aPlayerUpdateResult.position + (aPlayerUpdateResult.position - aCrates[collisionResult.indexToEntityCollidedWith].position) * 0.1f , angle + randomizationAngle * MathUtils::RandFloat(-1, 1));
 			aCrateUpdater.DeactivateCrate(collisionResult.indexToEntityCollidedWith);
 
-			PlayerSweep(aTiles, aCrates, aCrateUpdater, aPlayer, aPlayerUpdateResult, aFlipbookManager, aDeltaTime, aTickRate);
+			PlayerSweep(aTiles, aCrates, aCrateUpdater, aPlayer, aPlayerUpdateResult, aFlipbookManager, aPropUpdater, aDeltaTime, aTickRate);
 			return;
 		}
 		else if (isTileCloser && tileCollisionResult.didCollide && aPlayer.GetPowerBreakActive())
