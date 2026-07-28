@@ -931,7 +931,14 @@ namespace SceneLoader
 
 				sceneConfig.transparentObjectConfig.push_back(modelConfig);
 			}
-			else if (id == "InteractableRoulette"_tgaid || id == "InteractableSlotMachine2"_tgaid || id == "InteractableRadio"_tgaid)
+			else if (
+				id == "InteractableRoulette"_tgaid ||
+				id == "InteractableSlotMachine2"_tgaid ||
+				id == "InteractableRadio"_tgaid ||
+				id == "InteractableStatue"_tgaid ||
+				id == "InteractableHotelDoor"_tgaid ||
+				id == "InteractablePipe"_tgaid
+				)
 			{
 				AnimatedPropConfig prop;
 				prop.animatedModelInstance = std::make_shared<Tga::AnimatedModelInstance>(cso.GetAnimatedModelInstance("Mesh"));
@@ -941,7 +948,7 @@ namespace SceneLoader
 				prop.interactable = true;
 				prop.collideable = true;
 
-				if (id == "InteractableRadio"_tgaid)
+				if (id == "InteractableRadio"_tgaid || id == "InteractableStatue"_tgaid)
 				{
 					prop.oneTimeTriggerable = true;
 				}

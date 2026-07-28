@@ -6,6 +6,17 @@
       "group": "",
       "is-dynamic": false,
       "is-per-instance": false,
+      "name": "Animation",
+      "type": "Animation Clip",
+      "value": {
+        "clip_path": "models\\Props\\Animated_Props\\HotelDoor\\A_HotelDoor_Shoo.fbx"
+      }
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
       "name": "Mesh",
       "type": "Model",
       "value": {
@@ -37,6 +48,18 @@
           ]
         ]
       }
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Size",
+      "type": "Float2",
+      "value": [
+        50.0,
+        280.0
+      ]
     }
   ]
 }
