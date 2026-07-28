@@ -1,6 +1,6 @@
 {
-  "name": "CasinoRoom-D",
-  "object-definition": "CasinoRoom-D",
+  "name": "CornerPieceL(29)",
+  "object-definition": "CornerPieceL",
   "path": "",
   "rotation": [
     0.0,
@@ -13,8 +13,8 @@
     1.0
   ],
   "translation": [
-    0.0,
-    7500.0,
-    1300.0
+    650.0,
+    19800.0,
+    0.0
   ]
 }
