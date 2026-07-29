@@ -1,0 +1,65 @@
+{
+  "parent-object-definition": "",
+  "properties": [
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Animation",
+      "type": "Animation Clip",
+      "value": {
+        "clip_path": "models\\Props\\Animated_Props\\PoolTable\\A_PoolTable_Shot.fbx"
+      }
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Mesh",
+      "type": "Model",
+      "value": {
+        "path": "models\\Props\\Animated_Props\\PoolTable\\SK_PoolTable.fbx",
+        "textures": [
+          [
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "description": "",
+      "group": "",
+      "is-dynamic": false,
+      "is-per-instance": false,
+      "name": "Size",
+      "type": "Float2",
+      "value": [
+        350.0,
+        100.0
+      ]
+    }
+  ]
+}
