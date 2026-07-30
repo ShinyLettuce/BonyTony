@@ -12,7 +12,7 @@
         "path": "models\\Props\\SM_EN_Crate_2.fbx",
         "textures": [
           [
-            "textures\\T_BonyTony_GradientAtlas_BackGround.dds",
+            "textures\\T_BonyTony_GradientAtlas_MidGround.dds",
             "",
             "",
             ""
