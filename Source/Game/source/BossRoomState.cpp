@@ -241,6 +241,27 @@ void BossRoomState::Render()
 			modelDrawer.Draw(object.modelInstance);
 		}
 	}
+
+	for (const auto& object : sceneConfig.plants)
+	{
+		Tga::Model& model = *object.modelInstance.GetModel();
+
+		float maxRadius = 0.0f;
+		for (int i = 0; i < model.GetMeshCount(); ++i)
+		{
+			const Tga::Model::MeshData& meshData = model.GetMeshData(i);
+			const float radius = meshData.Bounds.Radius;
+			if (maxRadius < radius)
+			{
+				maxRadius = radius;
+			}
+		}
+
+		if (myCamera.IsPointWithinFrustum(object.modelInstance.GetTransform().GetPosition(), maxRadius))
+		{
+			modelDrawer.DrawPlant(object.modelInstance);
+		}
+	}
 	
 	myFlipBookManager.Render();
 
