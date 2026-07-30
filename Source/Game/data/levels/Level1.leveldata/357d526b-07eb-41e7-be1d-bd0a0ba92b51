@@ -1,0 +1,20 @@
+{
+  "name": "InteractablePipe(1)",
+  "object-definition": "InteractablePipe",
+  "path": "",
+  "rotation": [
+    180.0,
+    -6.605375690860171e-10,
+    -89.97200775146484
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    249.9998779296875,
+    1350.048828125,
+    0.0
+  ]
+}

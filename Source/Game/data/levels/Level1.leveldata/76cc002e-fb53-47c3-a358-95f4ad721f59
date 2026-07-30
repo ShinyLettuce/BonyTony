@@ -1,0 +1,20 @@
+{
+  "name": "Crate1Background(19)",
+  "object-definition": "Crate1Background",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -191.25735473632813,
+    12100.0,
+    274.33563232421875
+  ]
+}
