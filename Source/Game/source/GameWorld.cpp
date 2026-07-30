@@ -466,4 +466,5 @@ void GameWorld::InitAudioHandles()
 	AudioManager::AudioPool& mainMenuMusicPool = AudioManager::GetAudioPoolByHandle(AudioHandles::mainMenuMusic);
 	mainMenuMusicPool.AddClip("Audio/Bony_Tony_MainMenu_Loop.wav");
 
+	AudioManager::UpdateVolume(Options::masterVolume, Options::musicVolume, Options::maxVolume);
 }

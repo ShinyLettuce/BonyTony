@@ -242,6 +242,29 @@ void BossRoomState::Render()
 		}
 	}
 
+	// Draw unlit models
+
+	for (const auto& object : sceneConfig.unlitModelConfigs)
+	{
+		Tga::Model& model = *object.modelInstance.GetModel();
+
+		float maxRadius = 0.0f;
+		for (int i = 0; i < model.GetMeshCount(); ++i)
+		{
+			const Tga::Model::MeshData& meshData = model.GetMeshData(i);
+			const float radius = meshData.Bounds.Radius;
+			if (maxRadius < radius)
+			{
+				maxRadius = radius;
+			}
+		}
+
+		if (myCamera.IsPointWithinFrustum(object.modelInstance.GetTransform().GetPosition(), maxRadius))
+		{
+			modelDrawer.Draw(object.modelInstance);
+		}
+	}
+
 	for (const auto& object : sceneConfig.plants)
 	{
 		Tga::Model& model = *object.modelInstance.GetModel();
@@ -262,6 +285,18 @@ void BossRoomState::Render()
 			modelDrawer.DrawPlant(object.modelInstance);
 		}
 	}
+
+	// Draw transparent objects
+
+	graphicsStateStack.Push();
+	graphicsStateStack.SetBlendState(Tga::BlendState::AdditiveBlend);
+
+	for (SceneLoader::ModelConfig& object : sceneConfig.transparentObjectConfig)
+	{
+		modelDrawer.Draw(object.modelInstance);
+	}
+
+	graphicsStateStack.Pop();
 	
 	myFlipBookManager.Render();
 
