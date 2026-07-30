@@ -1,6 +1,6 @@
 {
-  "name": "HotelDoorClosed",
-  "object-definition": "HotelDoorClosed",
+  "name": "SideTableLamps(3)",
+  "object-definition": "SideTableLamps",
   "path": "",
   "rotation": [
     0.0,
@@ -13,8 +13,8 @@
     1.0
   ],
   "translation": [
-    -700.0,
-    20200.0,
-    46.8045539855957
+    -860.6323852539063,
+    21500.0,
+    78.59840393066406
   ]
 }

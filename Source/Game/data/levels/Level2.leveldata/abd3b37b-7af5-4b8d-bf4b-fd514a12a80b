@@ -1,6 +1,6 @@
 {
-  "name": "PotPlant3(3)",
-  "object-definition": "PotPlant3",
+  "name": "PotPlant2(18)",
+  "object-definition": "PotPlant2",
   "path": "",
   "rotation": [
     0.0,
@@ -13,8 +13,8 @@
     1.0
   ],
   "translation": [
-    845.15234375,
-    8700.0,
-    125.54219055175781
+    -454.22515869140625,
+    22800.0,
+    128.1559295654297
   ]
 }

@@ -1,6 +1,6 @@
 {
-  "name": "PotPlant3(3)",
-  "object-definition": "PotPlant3",
+  "name": "InteractableRoulette(2)",
+  "object-definition": "InteractableRoulette",
   "path": "",
   "rotation": [
     0.0,
@@ -13,8 +13,8 @@
     1.0
   ],
   "translation": [
-    845.15234375,
-    8700.0,
-    125.54219055175781
+    350.0,
+    20200.0,
+    50.0
   ]
 }

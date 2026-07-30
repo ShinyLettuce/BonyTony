@@ -1,0 +1,20 @@
+{
+  "name": "InteractableSlotMachine2(1)",
+  "object-definition": "InteractableSlotMachine2",
+  "path": "",
+  "rotation": [
+    0.0,
+    89.99996948242188,
+    0.0
+  ],
+  "scale": [
+    0.9999994039535522,
+    1.0,
+    0.9999994039535522
+  ],
+  "translation": [
+    -940.0,
+    9900.0,
+    19.999832153320313
+  ]
+}

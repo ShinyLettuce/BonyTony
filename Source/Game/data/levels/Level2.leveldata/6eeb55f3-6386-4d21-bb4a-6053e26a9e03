@@ -1,6 +1,6 @@
 {
-  "name": "Roullette",
-  "object-definition": "Roullette",
+  "name": "SideTableLamps(4)",
+  "object-definition": "SideTableLamps",
   "path": "",
   "rotation": [
     0.0,
@@ -13,8 +13,8 @@
     1.0
   ],
   "translation": [
-    865.9910278320313,
-    10700.236328125,
-    48.126304626464844
+    459.36761474609375,
+    22780.0,
+    118.59840393066406
   ]
 }
