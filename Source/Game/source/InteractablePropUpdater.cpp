@@ -3,6 +3,7 @@
 void AnimatedPropUpdater::Init(std::vector<SceneLoader::AnimatedPropConfig> aProps)
 {
 	myInteractableProps.clear();
+	myLoopingProps.clear();
 
 	for (SceneLoader::AnimatedPropConfig p : aProps)
 	{
