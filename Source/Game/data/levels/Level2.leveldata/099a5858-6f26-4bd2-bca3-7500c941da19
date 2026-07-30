@@ -1,6 +1,6 @@
 {
-  "name": "Roullette(1)",
-  "object-definition": "Roullette",
+  "name": "InteractableHotelDoor(2)",
+  "object-definition": "InteractableHotelDoor",
   "path": "",
   "rotation": [
     0.0,
@@ -13,8 +13,8 @@
     1.0
   ],
   "translation": [
-    865.9910278320313,
-    14900.236328125,
-    48.1263427734375
+    970.0,
+    800.0,
+    40.0
   ]
 }

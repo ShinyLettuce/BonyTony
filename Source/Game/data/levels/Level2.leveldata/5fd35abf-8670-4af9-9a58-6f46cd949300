@@ -1,0 +1,20 @@
+{
+  "name": "InteractableHotelDoor(1)",
+  "object-definition": "InteractableHotelDoor",
+  "path": "",
+  "rotation": [
+    -179.99989318847656,
+    0.019785350188612938,
+    -179.99989318847656
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -990.0169677734375,
+    22200.0,
+    39.879417419433594
+  ]
+}
