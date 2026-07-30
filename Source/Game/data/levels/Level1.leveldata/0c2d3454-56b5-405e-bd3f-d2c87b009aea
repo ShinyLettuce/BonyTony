@@ -1,0 +1,20 @@
+{
+  "name": "Crate1(16)",
+  "object-definition": "Crate1",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    638.7366333007813,
+    21200.0,
+    100.0
+  ]
+}

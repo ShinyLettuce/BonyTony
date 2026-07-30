@@ -1,0 +1,20 @@
+{
+  "name": "CagedWallLamp(4)",
+  "object-definition": "CagedWallLamp",
+  "path": "",
+  "rotation": [
+    8.537733720004326e-07,
+    8.337596169027961e-10,
+    1.7075466303140274e-06
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -100.0,
+    4234.05029296875,
+    150.0
+  ]
+}

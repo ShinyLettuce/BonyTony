@@ -1,0 +1,20 @@
+{
+  "name": "Pipe2Background(8)",
+  "object-definition": "Pipe2Background",
+  "path": "",
+  "rotation": [
+    89.9999771118164,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    0.9999998807907104,
+    0.9999998807907104
+  ],
+  "translation": [
+    436.5417785644531,
+    16100.0,
+    300.0
+  ]
+}

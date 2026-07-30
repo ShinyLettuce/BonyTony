@@ -1,0 +1,20 @@
+{
+  "name": "CagedWallLampBackground(9)",
+  "object-definition": "CagedWallLampBackground",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    818.9425048828125,
+    6932.07763671875,
+    350.0
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "PointLight_Level1(9)",
+  "object-definition": "PointLight_Level1",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -100.0,
+    4234.05029296875,
+    118.42033386230469
+  ]
+}

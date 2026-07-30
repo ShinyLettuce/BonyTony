@@ -1,0 +1,20 @@
+{
+  "name": "SpotLight_Level1(38)",
+  "object-definition": "SpotLight_Level1",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    0.0,
+    2960.47607421875,
+    100.0
+  ]
+}

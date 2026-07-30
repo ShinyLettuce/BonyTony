@@ -1,0 +1,20 @@
+{
+  "name": "PipeValve(26)",
+  "object-definition": "PipeValve",
+  "path": "",
+  "rotation": [
+    -45.02798080444336,
+    0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -750.0,
+    15210.7841796875,
+    100.0
+  ]
+}

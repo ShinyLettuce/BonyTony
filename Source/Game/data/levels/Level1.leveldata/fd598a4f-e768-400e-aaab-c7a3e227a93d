@@ -1,0 +1,20 @@
+{
+  "name": "Ceilinglamp(9)",
+  "object-definition": "Ceilinglamp",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    500.0,
+    15950.0,
+    50.0
+  ]
+}

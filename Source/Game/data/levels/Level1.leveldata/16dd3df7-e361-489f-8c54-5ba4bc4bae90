@@ -1,0 +1,20 @@
+{
+  "name": "Pipe1Background(26)",
+  "object-definition": "Pipe1Background",
+  "path": "",
+  "rotation": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    -550.0284423828125,
+    6049.9716796875,
+    300.00006103515625
+  ]
+}
