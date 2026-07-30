@@ -1,0 +1,20 @@
+{
+  "name": "Pipe3Background(3)",
+  "object-definition": "Pipe3Background",
+  "path": "",
+  "rotation": [
+    90.0,
+    -89.99996185302734,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    0.9999998807907104,
+    0.9999998807907104
+  ],
+  "translation": [
+    850.0,
+    7350.0,
+    299.999755859375
+  ]
+}

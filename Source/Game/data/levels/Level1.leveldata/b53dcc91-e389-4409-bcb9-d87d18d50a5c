@@ -1,0 +1,20 @@
+{
+  "name": "PipeValveBackground(7)",
+  "object-definition": "PipeValveBackground",
+  "path": "",
+  "rotation": [
+    45.02798080444336,
+    -0.0,
+    0.0
+  ],
+  "scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "translation": [
+    250.00003051757813,
+    8650.0,
+    499.999755859375
+  ]
+}
