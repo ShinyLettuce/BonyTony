@@ -198,12 +198,6 @@ StateUpdateResult GameState::Update()
 		return StateUpdateResult::CreatePush(myStateHandles.pauseState);
 	}
 
-	if (myInputMapper->IsActionJustActivated(GameAction::SkipCutscene))
-	{
-		std::cout << "[GameState.cpp] PopUp" << '\n';
-		return StateUpdateResult::CreatePush(myStateHandles.popUpState);
-	}
-
 	const float deltaTime = myTimer->GetDeltaTime();
 
 	static float cameraFollowDecay = 2.0f; // Preffered 4.0f
@@ -248,11 +242,6 @@ StateUpdateResult GameState::Update()
 
 	myCamera.MoveTowardsPosition(myCameraTargetPosition, cameraFollowDecay, deltaTime);
 	myCamera.Update();
-
-	if (myInputMapper->GetInputManager()->IsKeyPressed('T'))
-	{
-		myInteractablePropUpdater.PlayAnimation(0);
-	}
 
 	myEnemyUpdater.Update(myTimer->GetDeltaTime(), myPlayer.GetPosition());
 	myAmbienceManager.Update(myPlayer.GetPosition());
