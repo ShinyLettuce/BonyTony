@@ -466,5 +466,33 @@ void GameWorld::InitAudioHandles()
 	AudioManager::AudioPool& mainMenuMusicPool = AudioManager::GetAudioPoolByHandle(AudioHandles::mainMenuMusic);
 	mainMenuMusicPool.AddClip("Audio/Bony_Tony_MainMenu_Loop.wav");
 
+	AudioHandles::radioDestroyed = AudioManager::MakeAudioPool();
+	AudioManager::AudioPool& radioDestroyedPool = AudioManager::GetAudioPoolByHandle(AudioHandles::radioDestroyed);
+	radioDestroyedPool.AddClip("Audio/SFX/SFX_Radio_Destroyed.wav");
+
+	AudioHandles::pipeLeak = AudioManager::MakeAudioPool();
+	AudioManager::AudioPool& pipeLeakPool = AudioManager::GetAudioPoolByHandle(AudioHandles::pipeLeak);
+	pipeLeakPool.AddClip("Audio/SFX/SFX_Pipe_Leak.wav");
+
+	AudioHandles::statueDecapitated = AudioManager::MakeAudioPool();
+	AudioManager::AudioPool& statueDecapitatedPool = AudioManager::GetAudioPoolByHandle(AudioHandles::statueDecapitated);
+	statueDecapitatedPool.AddClip("Audio/SFX/SFX_Statue_Decapitate.wav");
+
+	AudioHandles::hotelDoorShoo = AudioManager::MakeAudioPool();
+	AudioManager::AudioPool& hotelDoorShooPool = AudioManager::GetAudioPoolByHandle(AudioHandles::hotelDoorShoo);
+	hotelDoorShooPool.AddClip("Audio/SFX/SFX_HotelDoor_Shoo.wav");
+
+	AudioHandles::rouletteSpinning = AudioManager::MakeAudioPool();
+	AudioManager::AudioPool& rouletteSpinningPool = AudioManager::GetAudioPoolByHandle(AudioHandles::rouletteSpinning);
+	rouletteSpinningPool.AddClip("Audio/SFX/SFX_Roulette_Spinning.wav");
+
+	AudioHandles::slotMachineJackpot = AudioManager::MakeAudioPool();
+	AudioManager::AudioPool& slotMachineJackpotPool = AudioManager::GetAudioPoolByHandle(AudioHandles::slotMachineJackpot);
+	slotMachineJackpotPool.AddClip("Audio/SFX/SFX_Slotmachine2_Jackpot.wav");
+
+	AudioHandles::poolTable = AudioManager::MakeAudioPool();
+	AudioManager::AudioPool& poolTablePool = AudioManager::GetAudioPoolByHandle(AudioHandles::poolTable);
+	poolTablePool.AddClip("Audio/SFX/SFX_PoolTable_Shot.wav");
+
 	AudioManager::UpdateVolume(Options::masterVolume, Options::musicVolume, Options::maxVolume);
 }

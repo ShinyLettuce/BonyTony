@@ -937,10 +937,20 @@ namespace SceneLoader
 				id == "InteractableRadio"_tgaid ||
 				id == "InteractableStatue"_tgaid ||
 				id == "InteractableHotelDoor"_tgaid ||
-				id == "InteractablePipe"_tgaid
+				id == "InteractablePipe"_tgaid ||
+				id == "InteractablePoolTable"_tgaid
 				)
 			{
 				AnimatedPropConfig prop;
+
+				if (id == "InteractableRoulette"_tgaid) { prop.audioHandle = AudioHandles::rouletteSpinning; }
+				if (id == "InteractableSlotMachine2"_tgaid) { prop.audioHandle = AudioHandles::slotMachineJackpot; }
+				if (id == "InteractableRadio"_tgaid) { prop.audioHandle = AudioHandles::radioDestroyed; }
+				if (id == "InteractableStatue"_tgaid) { prop.audioHandle = AudioHandles::statueDecapitated; }
+				if (id == "InteractableHotelDoor"_tgaid) { prop.audioHandle = AudioHandles::hotelDoorShoo; }
+				if (id == "InteractablePipe"_tgaid) { prop.audioHandle = AudioHandles::pipeLeak; }
+				if (id == "InteractablePoolTable"_tgaid) { prop.audioHandle = AudioHandles::poolTable; }
+
 				prop.animatedModelInstance = std::make_shared<Tga::AnimatedModelInstance>(cso.GetAnimatedModelInstance("Mesh"));
 				prop.interactionClipReference = cso.GetAnimationClipReference("Animation");
 				prop.size = cso.GetVector2f("Size");
@@ -948,7 +958,7 @@ namespace SceneLoader
 				prop.interactable = true;
 				prop.collideable = true;
 
-				if (id == "InteractableRadio"_tgaid || id == "InteractableStatue"_tgaid)
+				if (id == "InteractableRadio"_tgaid || id == "InteractableStatue"_tgaid || id == "InteractablePipe"_tgaid || id == "InteractablePoolTable"_tgaid)
 				{
 					prop.oneTimeTriggerable = true;
 				}

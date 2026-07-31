@@ -1,6 +1,7 @@
 #pragma once
 #include <tge/animation/AnimationPlayer.h>
 #include <tge/model/AnimatedModelInstance.h>
+#include "AudioManager.h"
 #include "SceneLoader.h"
 
 class AnimatedPropUpdater
@@ -13,6 +14,7 @@ public:
 		unsigned int index;
 		Tga::Vector2f size = {0,0};
 		bool oneTimeTriggerable = false;
+		AudioManager::AudioPoolHandle audioHandle;
 	};
 
 	void Init(std::vector<SceneLoader::AnimatedPropConfig> aConfigs);

@@ -79,6 +79,14 @@ namespace AudioHandles
     inline AudioManager::AudioPoolHandle level2IntroMusic;
     inline AudioManager::AudioPoolHandle level2Music;
     inline AudioManager::AudioPoolHandle gibberish;
+
+    inline AudioManager::AudioPoolHandle radioDestroyed;
+    inline AudioManager::AudioPoolHandle pipeLeak;
+    inline AudioManager::AudioPoolHandle hotelDoorShoo;
+    inline AudioManager::AudioPoolHandle rouletteSpinning;
+    inline AudioManager::AudioPoolHandle slotMachineJackpot;
+    inline AudioManager::AudioPoolHandle statueDecapitated;
+    inline AudioManager::AudioPoolHandle poolTable;
     
     inline AudioManager::AudioPoolHandle introCutscene;
     inline AudioManager::AudioPoolHandle endingCutscene;

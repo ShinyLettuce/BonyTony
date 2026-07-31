@@ -155,6 +155,7 @@ namespace SceneLoader
 		std::shared_ptr<Tga::AnimatedModelInstance> animatedModelInstance;
 		Tga::AnimationClipReference interactionClipReference;
 		Tga::Vector2f size = { 0,0 };
+		AudioManager::AudioPoolHandle audioHandle;
 
 		bool collideable = false;
 		bool interactable = false;

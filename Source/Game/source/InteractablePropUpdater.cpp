@@ -22,7 +22,8 @@ void AnimatedPropUpdater::Init(std::vector<SceneLoader::AnimatedPropConfig> aPro
 			.animatedModelInstance = p.animatedModelInstance,
 			.index = static_cast<unsigned int>(myInteractableProps.size()),
 			.size = p.size,
-			.oneTimeTriggerable = p.oneTimeTriggerable
+			.oneTimeTriggerable = p.oneTimeTriggerable,
+			.audioHandle = p.audioHandle
 		};
 
 		// hmm how to separate these
@@ -115,5 +116,6 @@ void AnimatedPropUpdater::PlayAnimation(unsigned int aIndex)
 	{
 		myInteractableProps[aIndex].animationPlayer->Stop();
 		myInteractableProps[aIndex].animationPlayer->Play();
+		AudioManager::GetAudioPoolByHandle(myInteractableProps[aIndex].audioHandle).Play();
 	}
 }
