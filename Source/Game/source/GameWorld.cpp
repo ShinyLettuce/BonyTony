@@ -496,5 +496,9 @@ void GameWorld::InitAudioHandles()
 	AudioManager::AudioPool& poolTablePool = AudioManager::GetAudioPoolByHandle(AudioHandles::poolTable);
 	poolTablePool.AddClip("Audio/SFX/SFX_PoolTable_Shot.wav");
 
+	AudioHandles::upgradePickup = AudioManager::MakeAudioPool();
+	AudioManager::AudioPool& upgradePickupPool = AudioManager::GetAudioPoolByHandle(AudioHandles::upgradePickup);
+	upgradePickupPool.AddClip("Audio/SFX/SFX_weapon_upgrade.wav");
+
 	AudioManager::UpdateVolume(Options::masterVolume, Options::musicVolume, Options::maxVolume);
 }

@@ -87,6 +87,8 @@ namespace AudioHandles
     inline AudioManager::AudioPoolHandle slotMachineJackpot;
     inline AudioManager::AudioPoolHandle statueDecapitated;
     inline AudioManager::AudioPoolHandle poolTable;
+
+    inline AudioManager::AudioPoolHandle upgradePickup;
     
     inline AudioManager::AudioPoolHandle introCutscene;
     inline AudioManager::AudioPoolHandle endingCutscene;

@@ -252,10 +252,12 @@ StateUpdateResult GameState::Update()
 	PopUp::locNextPopupType = nextPickupType;
 	if (nextPickupType == SceneLoader::PickupType::Revolver && sceneConfig.metaConfig.type == SceneLoader::SceneType::Level1)
 	{
+		AudioManager::GetAudioPoolByHandle(AudioHandles::upgradePickup).Play();
 		return StateUpdateResult::CreatePush(myStateHandles.popUpState);
 	}
 	else if (nextPickupType == SceneLoader::PickupType::PowerShot && sceneConfig.metaConfig.type == SceneLoader::SceneType::Level2)
 	{
+		AudioManager::GetAudioPoolByHandle(AudioHandles::upgradePickup).Play();
 		return StateUpdateResult::CreatePush(myStateHandles.popUpState);
 	}
 
