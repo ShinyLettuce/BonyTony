@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include "tge/sprite/sprite.h"
 #include "Timer.h"
+#include <tge/text/text.h>
 
 class InputMapper;
 class Camera;
@@ -40,6 +41,7 @@ public:
     void RenderAimline();
     void RenderHitPoint(Camera& aCamera);
     void RenderVignette();
+    void RenderTimer();
     
     void PositionElements(const int aShotgunMaxClip, const int aRevolverMaxClip);
 
@@ -119,6 +121,8 @@ private:
 
     std::vector<ShakeData> myShellShakeData;
     std::vector<ShakeData> myBulletShakeData;
+
+    Tga::Text myTimerText;
     
     Timer* myTimer;
 

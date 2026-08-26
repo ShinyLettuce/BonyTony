@@ -177,6 +177,8 @@ private:
 	Tga::Sprite2DInstanceData myMaxVolSpriteInstance;
 	Tga::SpriteSharedData myMaxVolSpriteData;
 
+	Tga::Text myLastRecordedTime;
+
 	void UpdateSliderKnobPosition();
 	void ChangeVolumeBy(int delta, int sliderIndex);
 	void ApplyContinuousVolumeMove(float aUiDt, int aDir, float aUnitsPerSeconds, int aSliderIndex);

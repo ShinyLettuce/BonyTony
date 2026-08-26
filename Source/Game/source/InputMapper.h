@@ -27,6 +27,7 @@ enum class GameAction
     PlayerShootShotgun,
     PlayerShootRevolver,
     PlayerPowerShotOverride,
+    DebugButton,
     DebugReload,
     DebugReleaseCursor,
     DebugCaptureCursor,

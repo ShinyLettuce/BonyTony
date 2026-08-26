@@ -451,6 +451,8 @@ StateUpdateResult GameState::Update()
 		}
 	}
 
+	Options::speedrunTime += deltaTime;
+
 	return StateUpdateResult::CreateContinue();
 }
 
@@ -805,6 +807,10 @@ void GameState::Render()
 		myHUD.RenderVignette();
 		myHUD.RenderClips(myPlayer.GetShotgunClip(), myPlayer.GetIsRevolverEnabled(), myPlayer.GetRevolverClip());
 		myHUD.RenderHitPoint(myCamera);
+		if (Options::enableTimer)
+		{
+			myHUD.RenderTimer();
+		}
 		if (myFadeInOut.GetAlpha() > FLT_EPSILON)
 		{
 			myFadeInOut.Render();

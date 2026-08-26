@@ -112,6 +112,8 @@ void GameWorld::BindInputs()
 	
 	myInputMapper->BindKeyAction(VK_ESCAPE, GameAction::Pause);
 	myInputMapper->BindKeyAction(VK_LBUTTON, GameAction::UILeftClick);
+
+	myInputMapper->BindKeyAction('T', GameAction::DebugButton);
 	
 	//gamepad
 	

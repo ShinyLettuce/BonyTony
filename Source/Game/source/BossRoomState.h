@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Letterbox.h"
 #include "SceneLoader.h"
+#include <tge/text/text.h>
 
 class BossRoomState : public State
 {
@@ -69,6 +70,8 @@ private:
 	Letterbox myLetterbox;
 
 	Timings myTimings;
+
+	Tga::Text myTimerText;
 
 	inline static constexpr float myCameraHorizontalOffset = -100.0f;
 

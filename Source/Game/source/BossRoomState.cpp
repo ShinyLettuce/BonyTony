@@ -12,7 +12,7 @@
 #include "Go.h"
 #include "MathUtils.h"
 #include "ResolutionManager.h"
-
+#include "Options.h"
 
 void BossRoomState::Init(StateHandle aMainMenuHandle, StateHandle aCutsceneStateHandle, InputMapper* anInputMapper, Timer* aTimer)
 {
@@ -42,6 +42,9 @@ void BossRoomState::Init(StateHandle aMainMenuHandle, StateHandle aCutsceneState
 	myTimings.gibberishDelay = 0.8f;
 	
 	myFlipBookManager.RegisterFlipBook({.flipbookAssetPath = "Sprites/T_DialogeBubble.png", .frameAmount = 2}, FlipbookHandle::BossSpeechBubble, true);
+
+	myTimerText = Tga::Text("Text/BarlowSemiCondensed-Regular.ttf", Tga::FontSize_30);
+	myTimerText.SetText("00:00");
 }
 
 void BossRoomState::OnPush()
@@ -325,5 +328,21 @@ void BossRoomState::Render()
 
 	spriteDrawer.Draw(myTutorialSharedData, tutorialInstance);
 
+	Tga::GraphicsStateStack& stack = engine->GetGraphicsEngine().GetGraphicsStateStack();
+	stack.Push();
+	stack.SetBlendState(Tga::BlendState::AlphaBlend);
+
+	myTimerText.SetPosition({ (resolution.x * 0.5f) - (myTimerText.GetWidth() * 0.5f), resolution.y * 0.74f });
+	float totalTime = Options::speedrunTime;
+	myTimerText.SetText(((std::to_string((int)(totalTime / 60) % 60)) + ":" + std::to_string((int)(totalTime) % 60)) + ":" + std::to_string((int)(totalTime * 100) % 100));
+	myTimerText.SetScale(ResolutionManager::GetUIScale());
+	myTimerText.SetColor(Tga::Color(1.f, 0.93f, 0.65f, 1.f));
+	if (Options::enableTimer)
+	{
+		myTimerText.Render();
+	}
+
 	myLetterbox.Render();
+
+	stack.Pop();
 }

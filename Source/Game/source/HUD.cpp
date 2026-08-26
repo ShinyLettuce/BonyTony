@@ -81,6 +81,9 @@ void HUD::Init(const int aShotgunMaxClip, const int aRevolverMaxClip, float cons
 
 	myTimer = aTimer;
 
+	myTimerText = Tga::Text("Text/BarlowSemiCondensed-Regular.ttf", Tga::FontSize_30);
+	myTimerText.SetText("00:00");
+
 	PositionElements(aShotgunMaxClip, aRevolverMaxClip);
 }
 
@@ -361,6 +364,13 @@ void HUD::RenderVignette()
 	spriteDrawer.Draw(myVignetteData, vignetteInstance);
 }
 
+void HUD::RenderTimer()
+{
+	float totalTime = Options::speedrunTime;
+	myTimerText.SetText(((std::to_string((int)(totalTime / 60) % 60)) + ":" + std::to_string((int)(totalTime) % 60)) + ":" + std::to_string((int)(totalTime * 100) % 100));
+	myTimerText.Render();
+}
+
 void HUD::PositionElements(const int aShotgunMaxClip, const int aRevolverMaxClip)
 {
 	const auto& engine = *Tga::Engine::GetInstance();
@@ -423,4 +433,7 @@ void HUD::PositionElements(const int aShotgunMaxClip, const int aRevolverMaxClip
 	
 	mySecondAimline.hitPointInstance.mySize = Tga::Vector2f{ myHitPointData.myTexture->CalculateTextureSize() } *uiScale * UI.hitPointScaleHighlight; 
 	mySecondAimline.hitPointInstance.myPivot = { 0.5f, 0.5f };
+
+	myTimerText.SetScale(ResolutionManager::GetUIScale());
+	myTimerText.SetPosition({ (resolution.x * 0.5f) - (myTimerText.GetWidth() * 0.5f), resolution.y * 0.05f});
 }

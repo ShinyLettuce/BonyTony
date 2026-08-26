@@ -45,6 +45,9 @@ void OptionsState::Init(InputMapper* aInputMapper, Timer* aTimer)
 	myUILastTick = std::chrono::steady_clock::now();
 	myUIHasTicked = true;
 
+	myLastRecordedTime = Tga::Text("Text/BarlowSemiCondensed-Regular.ttf", Tga::FontSize_30);
+	myLastRecordedTime.SetText("00:00");
+
 	PositionElements();
 }
 
@@ -212,6 +215,8 @@ void OptionsState::PositionElements()
 		ResolutionManager::ScaleValue(UI.maxVolPositionY)
 	};
 
+	myLastRecordedTime.SetPosition({ (resolution.x * 0.3f) - (myLastRecordedTime.GetWidth() * 0.5f), resolution.y * 0.95f });
+
 	UpdateSliderKnobPosition();
 }
 
@@ -226,13 +231,13 @@ void OptionsState::ToggleDualStick()
 	const auto& engine = *Tga::Engine::GetInstance();
 	const auto renderSize = engine.GetRenderSize();
 	const Tga::Vector2f resolution = { static_cast<float>(renderSize.x), static_cast<float>(renderSize.y) };
-	
+
 	Options::enableDualStick = !Options::enableDualStick;
 	Options::shotgunOnRS = Options::enableDualStick;
 	myDualStick.text.SetText(Options::enableDualStick ? "DualStick Enabled" : "DualStick Disabled");
 	myDualStick.text.SetScale(ResolutionManager::GetUIScale() * myDualStick.sizeMultiplier);
-	myDualStick.text.SetPosition({(resolution.x - myDualStick.text.GetWidth()) * 0.5f , resolution.y * 0.5f});
-	myDualStick.text.SetColor({1.f,1.f,1.f,1.f});
+	myDualStick.text.SetPosition({ (resolution.x - myDualStick.text.GetWidth()) * 0.5f , resolution.y * 0.5f });
+	myDualStick.text.SetColor({ 1.f,1.f,1.f,1.f });
 	myDualStick.time = 0.f;
 }
 
@@ -240,14 +245,14 @@ void OptionsState::UpdateDualStickText()
 {
 	const auto& engine = *Tga::Engine::GetInstance();
 	const auto renderSize = engine.GetRenderSize();
-	const Tga::Vector2f resolution = { static_cast<float>(renderSize.x), static_cast<float>(renderSize.y) };	
-	
+	const Tga::Vector2f resolution = { static_cast<float>(renderSize.x), static_cast<float>(renderSize.y) };
+
 	const float deltaTime = myTimer->GetDeltaTime();
 	myDualStick.time += deltaTime;
 	const float dualStickAlphaPercentage = 1.f - MathUtils::Clamp01(myDualStick.time / myDualStick.duration);
-	myDualStick.text.SetColor({1.f, 1.f, 1.f, dualStickAlphaPercentage});
+	myDualStick.text.SetColor({ 1.f, 1.f, 1.f, dualStickAlphaPercentage });
 	myDualStick.text.SetScale(ResolutionManager::GetUIScale() * myDualStick.sizeMultiplier);
-	myDualStick.text.SetPosition({(resolution.x - myDualStick.text.GetWidth()) * 0.5f , resolution.y * 0.5f});
+	myDualStick.text.SetPosition({ (resolution.x - myDualStick.text.GetWidth()) * 0.5f , resolution.y * 0.5f });
 }
 
 StateUpdateResult OptionsState::Update()
@@ -258,7 +263,7 @@ StateUpdateResult OptionsState::Update()
 	{
 		return StateUpdateResult::CreateContinue();
 	}
-	
+
 	if (myInputMapper->IsActionJustActivated(GameAction::LSPress))
 	{
 		if (myInputMapper->IsActionActive(GameAction::RSPress))
@@ -273,9 +278,14 @@ StateUpdateResult OptionsState::Update()
 			ToggleDualStick();
 		}
 	}
-	
+
+	if (myInputMapper->IsActionJustActivated(GameAction::DebugButton))
+	{
+		Options::enableTimer = !Options::enableTimer;
+	}
+
 	UpdateDualStickText();
-	
+
 	if (myInputMapper->IsActionJustActivated(GameAction::UICancel))
 	{
 		mySelectedUI = 1;
@@ -567,8 +577,14 @@ void OptionsState::Render()
 		spriteDrawer.Draw(myReturnBarSpriteData, myReturnBarSpriteInstance);
 
 	myBackButton.Render();
-	
+
 	myDualStick.text.Render();
+	if (Options::enableTimer)
+	{
+		float totalTime = Options::lastRecordedTime;
+		myLastRecordedTime.SetText(("Last Recorded Time: " + (std::to_string((int)(totalTime / 60) % 60)) + ":" + std::to_string((int)(totalTime) % 60)) + ":" + std::to_string((int)(totalTime * 100) % 100));
+		myLastRecordedTime.Render();
+	}
 }
 
 float OptionsState::GetBarLeft(const Tga::Sprite2DInstanceData& aBarInstance) const

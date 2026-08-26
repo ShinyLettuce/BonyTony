@@ -186,6 +186,8 @@ void MainMenuState::PositionElements()
 void MainMenuState::OnPush()
 {
 	AudioManager::GetAudioPoolByHandle(AudioHandles::mainMenuMusic).Play();
+	Options::lastRecordedTime = Options::speedrunTime;
+	Options::speedrunTime = 0;
 }
 
 void MainMenuState::OnPop()
